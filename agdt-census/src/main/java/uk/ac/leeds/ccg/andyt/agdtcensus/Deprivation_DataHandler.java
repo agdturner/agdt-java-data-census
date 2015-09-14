@@ -36,7 +36,7 @@ public class Deprivation_DataHandler {
 
     // most deprived areas are those with highest IMDSCore and lowest IMDRank
     public static Integer getDeprivationClass(
-            TreeMap<Integer, Integer> deprivationClasses, 
+            TreeMap<Integer, Integer> deprivationClasses,
             Deprivation_DataRecord aDeprivation_DataRecord) {
         String rankOfIMDScoreForEngland = aDeprivation_DataRecord.getRankOfIMDScoreForEngland();
         Integer rankOfIMDScoreForEnglandInteger;
@@ -97,20 +97,20 @@ public class Deprivation_DataHandler {
         File inputFile = new File(
                 directory,
                 filename);
-        BufferedReader br;
-        br = Generic_StaticIO.getBufferedReader(inputFile);
-        StreamTokenizer st;
-        st = new StreamTokenizer(br);
-        Generic_StaticIO.setStreamTokenizerSyntax5(st);
-        st.wordChars('`', '`');
-        st.wordChars('\'', '\'');
-        st.wordChars('*', '*');
-        st.wordChars('\\', '\\');
-        st.wordChars('/', '/');
-        st.wordChars('&', '&');
-        String line = "";
-        long RecordID = 0;
         try {
+            BufferedReader br;
+            br = Generic_StaticIO.getBufferedReader(inputFile);
+            StreamTokenizer st;
+            st = new StreamTokenizer(br);
+            Generic_StaticIO.setStreamTokenizerSyntax5(st);
+            st.wordChars('`', '`');
+            st.wordChars('\'', '\'');
+            st.wordChars('*', '*');
+            st.wordChars('\\', '\\');
+            st.wordChars('/', '/');
+            st.wordChars('&', '&');
+            String line = "";
+            long RecordID = 0;
             // Skip the header
             int headerLines = 1;
             for (int i = 0; i < headerLines; i++) {
@@ -156,8 +156,6 @@ public class Deprivation_DataHandler {
         }
         return result;
     }
-
-    
 
 //    /**
 //     *
@@ -337,7 +335,6 @@ public class Deprivation_DataHandler {
 //        result[1] = clientsWithoutARecognisedPostcode;
 //        return result;
 //    }
-
     // most deprived areas are those with highest IMDSCore and IMDRank
     public static Integer getDeprivationClass(
             int count,
