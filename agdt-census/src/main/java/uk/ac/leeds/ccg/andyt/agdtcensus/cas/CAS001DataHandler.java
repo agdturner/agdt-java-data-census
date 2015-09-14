@@ -139,13 +139,13 @@ public class CAS001DataHandler extends AbstractCASDataHandler {
             File sourceFile,
             long RecordID) {
         try {
-            BufferedReader aBufferedReader;
-            aBufferedReader = Generic_StaticIO.getBufferedReader(_File);
+            BufferedReader br;
+            br = Generic_StaticIO.getBufferedReader(_File);
 //                   aBufferedReader = new BufferedReader(
 //                    new InputStreamReader(
 //                    new FileInputStream(sourceFile)));
             StreamTokenizer aStreamTokenizer = 
-                    new StreamTokenizer(aBufferedReader);
+                    new StreamTokenizer(br);
             Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
             String line;
             CAS001DataRecord aCAS001DataRecord = new CAS001DataRecord();
@@ -173,6 +173,7 @@ public class CAS001DataHandler extends AbstractCASDataHandler {
                 tokenType = aStreamTokenizer.nextToken();
             }
             log("Number of Records loaded = " + RecordID);
+            br.close();
         } catch (IOException aIOException) {
             log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);

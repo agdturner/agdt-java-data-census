@@ -33,7 +33,7 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.utilities.Generic_Collections;
+import uk.ac.leeds.ccg.andyt.generic.utilities.Generic_StaticCollections;
 
 /**
  * For handling
@@ -170,7 +170,7 @@ public abstract class AbstractCASDataHandler
      * @return deep copy of <code>this.tRecordIDZoneCodeHashMap</code>
      */
     public HashMap getRecordIDZoneCode_HashMap() {
-        return Generic_Collections.deepCopy_Long_String(getRecordIDZoneCodeHashMap());
+        return Generic_StaticCollections.deepCopy_Long_String(getRecordIDZoneCodeHashMap());
     }
 
     private void initRecordIDZoneCode_HashMap() {
