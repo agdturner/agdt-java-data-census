@@ -31,15 +31,15 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Vector;
-import uk.ac.leeds.ccg.andyt.generic.execution.AgeConverter;
+import uk.ac.leeds.ccg.andyt.generic.execution.Generic_AgeConverter;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.io.AbstractDataHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataRecord;
 
 /**
  * For accessing HSARDataRecords and information about them.
  */
-public class Census_HSARDataHandler extends AbstractDataHandler {
+public class Census_HSARDataHandler extends Generic_AbstractDataHandler {
 
     /**
      * For storing all HSARDataRecords
@@ -226,7 +226,7 @@ public class Census_HSARDataHandler extends AbstractDataHandler {
         AgeSex aAgeSex;
         for (int i = 0; i < numberOfRecords; i++) {
             Age = (short) aRandom.nextInt(100);
-            aAgeClassHSARDataRecord = AgeConverter.getAgeClassHSARDataRecord(Age);
+            aAgeClassHSARDataRecord = Generic_AgeConverter.getAgeClassHSARDataRecord(Age);
             Sex = aRandom.nextBoolean();
             aAgeSex = new AgeSex(
                     aAgeClassHSARDataRecord,
@@ -272,7 +272,7 @@ public class Census_HSARDataHandler extends AbstractDataHandler {
      * The RecordID of the Census_HSARDataRecord to be returned.
      * @return 
      */
-    public AbstractDataRecord getDataRecord(long aRecordID) {
+    public Generic_AbstractDataRecord getDataRecord(long aRecordID) {
         return getHSARDataRecord(aRecordID);
     }
 
@@ -309,7 +309,7 @@ public class Census_HSARDataHandler extends AbstractDataHandler {
         AgeSex aAgeSex;
         do {
             age = aRandom.nextInt(100);
-            aAgeClassHSARDataRecord = AgeConverter.getAgeClassHSARDataRecord(age);
+            aAgeClassHSARDataRecord = Generic_AgeConverter.getAgeClassHSARDataRecord(age);
             sex = aRandom.nextBoolean();
             aAgeSex = new AgeSex(
                     aAgeClassHSARDataRecord,

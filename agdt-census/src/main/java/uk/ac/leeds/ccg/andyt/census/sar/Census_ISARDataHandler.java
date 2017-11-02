@@ -31,13 +31,13 @@ import java.util.Random;
 import java.util.Vector;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.io.AbstractDataHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataRecord;
 
 /**
  * For accessing ISARDataRecords and information about them.
  */
-public class Census_ISARDataHandler extends AbstractDataHandler {
+public class Census_ISARDataHandler extends Generic_AbstractDataHandler {
 
     /**
      * For storing ISARDataRecords.
@@ -185,7 +185,7 @@ public class Census_ISARDataHandler extends AbstractDataHandler {
      *            to be returned.
      * @return 
      */
-    public AbstractDataRecord getDataRecord(long RecordID) {
+    public Generic_AbstractDataRecord getDataRecord(long RecordID) {
         return getISARDataRecord(RecordID);
     }
 

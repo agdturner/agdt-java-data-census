@@ -18,7 +18,7 @@
  */
 package uk.ac.leeds.ccg.andyt.census.core;
 
-import uk.ac.leeds.ccg.andyt.generic.io.AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataRecord;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.Serializable;
@@ -39,7 +39,7 @@ import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
  * @see AbstractDataHandler
  */
 public abstract class Census_AbstractDataRecord
-        extends AbstractDataRecord
+        extends Generic_AbstractDataRecord
         implements Serializable, Comparable {
 
     /**
@@ -118,7 +118,7 @@ public abstract class Census_AbstractDataRecord
      * </ul>
      * to aRandomAccessFile.
      *
-     * @see AbstractDataRecord#write(RandomAccessFile)
+     * @see Generic_AbstractDataRecord#write(RandomAccessFile)
      * @param aRandomAccessFile
      *            The <code>RandomAccessFile</code> written to.
      */

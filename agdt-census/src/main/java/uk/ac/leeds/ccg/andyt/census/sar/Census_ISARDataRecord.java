@@ -21,7 +21,7 @@ package uk.ac.leeds.ccg.andyt.census.sar;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Random;
-import uk.ac.leeds.ccg.andyt.generic.io.AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
 
 /**
@@ -29,7 +29,7 @@ import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
  * the data.
  */
 public class Census_ISARDataRecord
-        extends AbstractDataRecord {
+        extends Generic_AbstractDataRecord {
 
     /*
      * Individual

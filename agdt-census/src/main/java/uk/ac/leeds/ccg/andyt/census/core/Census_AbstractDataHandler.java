@@ -34,7 +34,7 @@ import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS010DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS015DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS09bDataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS008DataRecord;
-import uk.ac.leeds.ccg.andyt.generic.io.AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataHandler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -66,7 +66,7 @@ import uk.ac.leeds.ccg.andyt.generic.utilities.Generic_Collections;
  * @see Census_AbstractDataRecord
  */
 public abstract class Census_AbstractDataHandler
-        extends AbstractDataHandler {
+        extends Generic_AbstractDataHandler {
 
     /**
      * Census_CAS001DataHandler
