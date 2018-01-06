@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing CAS KS008 Records and providing safe access to the data.
@@ -80,14 +80,14 @@ public class Census_CASKS008DataRecord extends Census_AbstractDataRecord {
 
     /** Creates a new CASKS008Record */
     public Census_CASKS008DataRecord() {
-        _Init();
+        init();
     }
 
     /**
      * Creates a new CASKS008Record
      *
      * @param initZero
-     *            To ensure initZero() is used instead of _Init()
+     *            To ensure initZero() is used instead of init()
      */
     public Census_CASKS008DataRecord(boolean initZero) {
         initZero();
@@ -115,7 +115,7 @@ public class Census_CASKS008DataRecord extends Census_AbstractDataRecord {
             fields[i] = "";
         }
         System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS008
         this.allPeople = StaticConverter.to_int(fields[1]);
@@ -148,7 +148,7 @@ public class Census_CASKS008DataRecord extends Census_AbstractDataRecord {
     public Census_CASKS008DataRecord(RandomAccessFile aRandomAccessFile)
             throws IOException {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -171,8 +171,8 @@ public class Census_CASKS008DataRecord extends Census_AbstractDataRecord {
     /**
      * Initialises all fields.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.allPeople = Integer.MIN_VALUE;
         this.peopleWithLimitingLongTermIllness = Integer.MIN_VALUE;
         this.peopleOfWorkingAgeWithLimitingLongTermIllness = Integer.MIN_VALUE;
@@ -188,7 +188,7 @@ public class Census_CASKS008DataRecord extends Census_AbstractDataRecord {
      * Initialises all fields to zero.
      */
     protected void initZero() {
-        super._Init();
+        super.init();
         this.allPeople = 0;
         this.peopleWithLimitingLongTermIllness = 0;
         this.peopleOfWorkingAgeWithLimitingLongTermIllness = 0;
@@ -412,7 +412,7 @@ public class Census_CASKS008DataRecord extends Census_AbstractDataRecord {
             long newRecordID,
             char[] newZone_Code) {
         Census_CASKS008DataRecord newCASKS008DataRecord = new Census_CASKS008DataRecord(this);
-        newCASKS008DataRecord._RecordID = newRecordID;
+        newCASKS008DataRecord.RecordID = newRecordID;
         // newCASKS008DataRecord.Zone_Code = aCASKS008DataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

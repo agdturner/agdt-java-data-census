@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
 
 /**
  * For representing CAS KS12c Records and providing safe access to the data.
@@ -83,7 +82,7 @@ public class Census_CASKS12cDataRecord extends Census_AbstractDataRecord {
 
     /** Creates a new CASKS12cRecord */
     public Census_CASKS12cDataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -93,7 +92,7 @@ public class Census_CASKS12cDataRecord extends Census_AbstractDataRecord {
      *            The CASKS12cRecord from which this is cloned.
      */
     public Census_CASKS12cDataRecord(Census_CASKS12cDataRecord cASKS12cRecord) {
-        init(cASKS12cRecord);
+        Census_CASKS12cDataRecord.this.init(cASKS12cRecord);
     }
 
     /**
@@ -116,19 +115,19 @@ public class Census_CASKS12cDataRecord extends Census_AbstractDataRecord {
             fields[i] = "";
         }
         System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS12c
-        this.femalesAged16to74InEmployment = StaticConverter.to_int(fields[1]);
-        this.femalesAged16to74InEmploymentWorkingAsManagersAndSeniorOfficials = StaticConverter.to_int(fields[2]);
-        this.femalesAged16to74InEmploymentWorkingAsProfessionalOccupations = StaticConverter.to_int(fields[3]);
-        this.femalesAged16to74InEmploymentWorkingAsAssociateProfessionalAndTechnicalOccupations = StaticConverter.to_int(fields[4]);
-        this.femalesAged16to74InEmploymentWorkingAsAdministrativeAndSecretarialOccupations = StaticConverter.to_int(fields[5]);
-        this.femalesAged16to74InEmploymentWorkingAsSkilledTradesOccupations = StaticConverter.to_int(fields[6]);
-        this.femalesAged16to74InEmploymentWorkingAsPersonalServiceOccupations = StaticConverter.to_int(fields[7]);
-        this.femalesAged16to74InEmploymentWorkingAsSalesAndCustomerServiceOccupations = StaticConverter.to_int(fields[8]);
-        this.femalesAged16to74InEmploymentWorkingAsProcessPlantAndMachineOperatives = StaticConverter.to_int(fields[9]);
-        this.femalesAged16to74InEmploymentWorkingAsElementaryOccupations = StaticConverter.to_int(fields[10]);
+        this.femalesAged16to74InEmployment = new Integer(fields[1]);
+        this.femalesAged16to74InEmploymentWorkingAsManagersAndSeniorOfficials = new Integer(fields[2]);
+        this.femalesAged16to74InEmploymentWorkingAsProfessionalOccupations = new Integer(fields[3]);
+        this.femalesAged16to74InEmploymentWorkingAsAssociateProfessionalAndTechnicalOccupations = new Integer(fields[4]);
+        this.femalesAged16to74InEmploymentWorkingAsAdministrativeAndSecretarialOccupations = new Integer(fields[5]);
+        this.femalesAged16to74InEmploymentWorkingAsSkilledTradesOccupations = new Integer(fields[6]);
+        this.femalesAged16to74InEmploymentWorkingAsPersonalServiceOccupations = new Integer(fields[7]);
+        this.femalesAged16to74InEmploymentWorkingAsSalesAndCustomerServiceOccupations = new Integer(fields[8]);
+        this.femalesAged16to74InEmploymentWorkingAsProcessPlantAndMachineOperatives = new Integer(fields[9]);
+        this.femalesAged16to74InEmploymentWorkingAsElementaryOccupations = new Integer(fields[10]);
     }
 
     /**
@@ -140,7 +139,7 @@ public class Census_CASKS12cDataRecord extends Census_AbstractDataRecord {
     public Census_CASKS12cDataRecord(RandomAccessFile aRandomAccessFile)
             throws IOException {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -164,8 +163,9 @@ public class Census_CASKS12cDataRecord extends Census_AbstractDataRecord {
     /**
      * Initialises all fields.
      */
-    protected void _Init() {
-        super._Init();
+    @Override
+    protected final void init() {
+        super.init();
         this.femalesAged16to74InEmployment = Integer.MIN_VALUE;
         this.femalesAged16to74InEmploymentWorkingAsManagersAndSeniorOfficials = Integer.MIN_VALUE;
         this.femalesAged16to74InEmploymentWorkingAsProfessionalOccupations = Integer.MIN_VALUE;
@@ -202,6 +202,7 @@ public class Census_CASKS12cDataRecord extends Census_AbstractDataRecord {
      * Returns a string description of this;
      * @return 
      */
+    @Override
     public String toString() {
         return super.toString() +
                 ", femalesAged16to74InEmployment " + femalesAged16to74InEmployment +
@@ -436,7 +437,7 @@ public class Census_CASKS12cDataRecord extends Census_AbstractDataRecord {
             long newRecordID,
             char[] newZone_Code) {
         Census_CASKS12cDataRecord newCASKS12cDataRecord = new Census_CASKS12cDataRecord(this);
-        newCASKS12cDataRecord._RecordID = newRecordID;
+        newCASKS12cDataRecord.RecordID = newRecordID;
         // newCASKS12cDataRecord.Zone_Code = aCASKS12cDataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

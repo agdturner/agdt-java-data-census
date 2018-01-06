@@ -45,7 +45,7 @@ public class Census_CASAreaEastingNorthingDataRecord extends Census_AbstractData
     protected double _Northing;
 
     public Census_CASAreaEastingNorthingDataRecord() {
-        _Init();
+        init();
     }
 
     public Census_CASAreaEastingNorthingDataRecord(Census_CASAreaEastingNorthingDataRecord a_CASAreaEastingNorthingDataRecord){
@@ -68,7 +68,7 @@ public class Census_CASAreaEastingNorthingDataRecord extends Census_AbstractData
             String line)
             throws IOException {
         String[] fields = line.split(",");
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1,11).toCharArray();
         // From Table KS002
         this._Area = new Double(fields[1]).doubleValue();
@@ -83,7 +83,7 @@ public class Census_CASAreaEastingNorthingDataRecord extends Census_AbstractData
     public Census_CASAreaEastingNorthingDataRecord(
             RandomAccessFile aRandomAccessFile)
             throws IOException {
-        this._RecordID = aRandomAccessFile.readLong();
+        this.RecordID = aRandomAccessFile.readLong();
         this.Zone_Code = new char[10];
         for (int i = 0; i < this.Zone_Code.length; i++) {
             Zone_Code[i] = aRandomAccessFile.readChar();
@@ -97,8 +97,8 @@ public class Census_CASAreaEastingNorthingDataRecord extends Census_AbstractData
      * Initialises all fields.
      */
     @Override
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this._Area = Double.MIN_VALUE;
         this._Easting = Double.MIN_VALUE;
         this._Northing = Double.MIN_VALUE;
@@ -108,7 +108,7 @@ public class Census_CASAreaEastingNorthingDataRecord extends Census_AbstractData
      * Initialises all fields.
      */
     protected void initZero() {
-        super._Init();
+        super.init();
         this._Area = 0;
         this._Easting = 0;
         this._Northing = 0;

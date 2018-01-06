@@ -68,7 +68,7 @@ public class Census_CASDataRecord_2 extends Census_CASDataRecord {
 
 	/** Creates a new CASDataRecord_2 */
 	public Census_CASDataRecord_2() {
-		_Init();
+		init();
 	}
 
 	/** Creates a new CASDataRecord_2
@@ -83,8 +83,8 @@ public class Census_CASDataRecord_2 extends Census_CASDataRecord {
 	/**
 	 * Initialises all fields.
 	 */
-	protected void _Init() {
-		super._Init();
+	protected void init() {
+		super.init();
 		this.tCASKS006DataRecord = new Census_CASKS006DataRecord();
 	}
 

@@ -59,7 +59,7 @@ public abstract class Census_AbstractDataRecord
      *            The <code>Census_AbstractDataRecord</code> used to initialise.
      */
     protected void init(Census_AbstractDataRecord aCASDataRecord) {
-        super._Init(aCASDataRecord);
+        super.init(aCASDataRecord);
         this.Zone_Code = new char[aCASDataRecord.getZone_Code().length];
         for (int i = 0; i < Zone_Code.length; i++) {
             Zone_Code[i] = aCASDataRecord.Zone_Code[i];
@@ -70,8 +70,8 @@ public abstract class Census_AbstractDataRecord
      * Initialises.
      */
     @Override
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.Zone_Code = new char[10];
         for (int i = 0; i < Zone_Code.length; i++) {
             // Zone_Code[ i ] = 'X';

@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing CAS KS017 Records and providing safe access to the data.
@@ -68,7 +68,7 @@ public class Census_CASKS017DataRecord extends Census_AbstractDataRecord {
 
     /** Creates a new CASKS017Record */
     public Census_CASKS017DataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -101,7 +101,7 @@ public class Census_CASKS017DataRecord extends Census_AbstractDataRecord {
             fields[i] = "";
         }
         System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS017
         this.allHouseholds = StaticConverter.to_int(fields[1]);
@@ -122,7 +122,7 @@ public class Census_CASKS017DataRecord extends Census_AbstractDataRecord {
     public Census_CASKS017DataRecord(RandomAccessFile aRandomAccessFile)
             throws IOException {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -143,8 +143,8 @@ public class Census_CASKS017DataRecord extends Census_AbstractDataRecord {
     /**
      * Initialise.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.allHouseholds = Integer.MIN_VALUE;
         this.householdsWith0CarsOrVans = Integer.MIN_VALUE;
         this.householdsWith1CarOrVan = Integer.MIN_VALUE;
@@ -158,7 +158,7 @@ public class Census_CASKS017DataRecord extends Census_AbstractDataRecord {
      * Initialise to zero.
      */
     protected void initZero() {
-        super._Init();
+        super.init();
         this.allHouseholds = 0;
         this.householdsWith0CarsOrVans = 0;
         this.householdsWith1CarOrVan = 0;
@@ -353,7 +353,7 @@ public class Census_CASKS017DataRecord extends Census_AbstractDataRecord {
     public Census_CASKS017DataRecord aggregate(Census_CASKS017DataRecord aCASKS017DataRecord,
             long newRecordID, char[] newZone_Code) {
         Census_CASKS017DataRecord newCASKS017DataRecord = new Census_CASKS017DataRecord(this);
-        newCASKS017DataRecord._RecordID = newRecordID;
+        newCASKS017DataRecord.RecordID = newRecordID;
         // newCASKS017DataRecord.Zone_Code = aCASKS017DataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

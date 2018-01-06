@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing CAS KS09b Records and providing safe access to the data.
@@ -99,14 +99,14 @@ public class Census_CASKS09bDataRecord extends Census_AbstractDataRecord {
 
     /** Creates a new CASKS09bRecord */
     public Census_CASKS09bDataRecord() {
-        _Init();
+        init();
     }
 
     /**
      * Creates a new CASKS09bRecord
      *
      * @param initZero
-     *            To ensure initZero() is used instead of _Init()
+     *            To ensure initZero() is used instead of init()
      */
     public Census_CASKS09bDataRecord(boolean initZero) {
         initZero();
@@ -142,7 +142,7 @@ public class Census_CASKS09bDataRecord extends Census_AbstractDataRecord {
             fields[i] = "";
         }
         System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS09b
         this.malesAged16to74 = StaticConverter.to_int(fields[1]);
@@ -170,7 +170,7 @@ public class Census_CASKS09bDataRecord extends Census_AbstractDataRecord {
     public Census_CASKS09bDataRecord(RandomAccessFile aRandomAccessFile)
             throws IOException {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -199,8 +199,8 @@ public class Census_CASKS09bDataRecord extends Census_AbstractDataRecord {
     /**
      * Initialises all fields.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.malesAged16to74 = Integer.MIN_VALUE;
         this.malesAged16to74EconomicallyActiveEmployeesPartTime = Integer.MIN_VALUE;
         this.malesAged16to74EconomicallyActiveEmployeesFullTime = Integer.MIN_VALUE;
@@ -222,7 +222,7 @@ public class Census_CASKS09bDataRecord extends Census_AbstractDataRecord {
      * Initialises all fields.
      */
     protected void initZero() {
-        super._Init();
+        super.init();
         this.malesAged16to74 = 0;
         this.malesAged16to74EconomicallyActiveEmployeesPartTime = 0;
         this.malesAged16to74EconomicallyActiveEmployeesFullTime = 0;
@@ -493,7 +493,7 @@ public class Census_CASKS09bDataRecord extends Census_AbstractDataRecord {
             long newRecordID,
             char[] newZone_Code) {
         Census_CASKS09bDataRecord newCASKS09bDataRecord = new Census_CASKS09bDataRecord(this);
-        newCASKS09bDataRecord._RecordID = newRecordID;
+        newCASKS09bDataRecord.RecordID = newRecordID;
         // newCASKS09bDataRecord.Zone_Code = aCASKS09bDataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * A <code>class</code> for representing a SWS
@@ -63,7 +63,7 @@ public class Census_SWSDataRecord extends Census_AbstractDataRecord {
     protected int _Total;
 
     public Census_SWSDataRecord() {
-        _Init();
+        init();
     }
 
     public Census_SWSDataRecord(Census_SWSDataRecord a_SWSDataRecord) {
@@ -94,7 +94,7 @@ public class Census_SWSDataRecord extends Census_AbstractDataRecord {
         // fields[ i ] = "";
         // }
         // System.arraycopy( fieldsDummy, 0, fields, 0, fields.length );
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].toCharArray();
         this._Destination_Zone_Code = fields[1].toCharArray();
         this._Total = StaticConverter.to_int(fields[2]);
@@ -113,7 +113,7 @@ public class Census_SWSDataRecord extends Census_AbstractDataRecord {
     public Census_SWSDataRecord(RandomAccessFile aRandomAccessFile)
             throws IOException {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -133,8 +133,8 @@ public class Census_SWSDataRecord extends Census_AbstractDataRecord {
      * Initialises all fields.
      */
     @Override
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this._Destination_Zone_Code = new char[10];
         for (int i = 0; i < _Destination_Zone_Code.length; i++) {
             // _Destination_Zone_Code[ i ] = 'X';
@@ -147,7 +147,7 @@ public class Census_SWSDataRecord extends Census_AbstractDataRecord {
      * Initialises all fields to zero.
      */
     protected void initZero() {
-        super._Init();
+        super.init();
         this._Destination_Zone_Code = new char[10];
         for (int i = 0; i < _Destination_Zone_Code.length; i++) {
             // _Destination_Zone_Code[ i ] = 'X';

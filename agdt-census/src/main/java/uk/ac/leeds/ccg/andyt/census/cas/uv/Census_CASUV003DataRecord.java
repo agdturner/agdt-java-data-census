@@ -22,7 +22,7 @@ import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing CAS UV003 Records and providing safe access to the data.
@@ -47,7 +47,7 @@ public class Census_CASUV003DataRecord extends Census_AbstractDataRecord {
 
     /** Creates a new CASUV003Record */
     public Census_CASUV003DataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -71,7 +71,7 @@ public class Census_CASUV003DataRecord extends Census_AbstractDataRecord {
      */
     public Census_CASUV003DataRecord(long RecordID, String line) throws IOException {
         String[] fields = line.split(",");
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table UV003
         this.allPeople = StaticConverter.to_int(fields[1]);
@@ -86,7 +86,7 @@ public class Census_CASUV003DataRecord extends Census_AbstractDataRecord {
      */
     public Census_CASUV003DataRecord(RandomAccessFile aRandomAccessFile) {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -102,8 +102,8 @@ public class Census_CASUV003DataRecord extends Census_AbstractDataRecord {
     /**
      * Initialise.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.allPeople = Integer.MIN_VALUE;
         this.males = Integer.MIN_VALUE;
         this.females = Integer.MIN_VALUE;
@@ -117,7 +117,7 @@ public class Census_CASUV003DataRecord extends Census_AbstractDataRecord {
             this.
      */
     protected void init(Census_CASUV003DataRecord aCASUV003Record) {
-        super._Init();
+        super.init();
         this.allPeople = aCASUV003Record.allPeople;
         this.males = aCASUV003Record.males;
         this.females = aCASUV003Record.females;
@@ -251,7 +251,7 @@ public class Census_CASUV003DataRecord extends Census_AbstractDataRecord {
     public Census_CASUV003DataRecord aggregate(Census_CASUV003DataRecord aCASUV003DataRecord,
             long newRecordID, char[] newZone_Code) {
         Census_CASUV003DataRecord newCASUV003DataRecord = new Census_CASUV003DataRecord(this);
-        newCASUV003DataRecord._RecordID = newRecordID;
+        newCASUV003DataRecord.RecordID = newRecordID;
         // newCASUV003DataRecord.Zone_Code = aCASUV003DataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

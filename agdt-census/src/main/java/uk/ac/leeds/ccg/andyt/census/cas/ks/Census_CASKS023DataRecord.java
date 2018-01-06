@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing CAS KS023 Records and providing safe access to the data.
@@ -131,7 +131,7 @@ public class Census_CASKS023DataRecord extends Census_AbstractDataRecord {
     // residentsInCommunalEstablishmentsWithLimitingLongTermIllnessOtherEstablishments;
     /** Creates a new CASKS023Record */
     public Census_CASKS023DataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -155,7 +155,7 @@ public class Census_CASKS023DataRecord extends Census_AbstractDataRecord {
      */
     public Census_CASKS023DataRecord(long RecordID, String line) throws IOException {
         String[] fields = line.split(",");
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS023
         this.allCommunalEstablishments = StaticConverter.to_int(fields[1]);
@@ -195,7 +195,7 @@ public class Census_CASKS023DataRecord extends Census_AbstractDataRecord {
     public Census_CASKS023DataRecord(RandomAccessFile aRandomAccessFile)
             throws IOException {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -235,8 +235,8 @@ public class Census_CASKS023DataRecord extends Census_AbstractDataRecord {
     /**
      * Initialises all fields.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.allCommunalEstablishments = Integer.MIN_VALUE;
         this.numberOfResidents = Integer.MIN_VALUE;
     // this.residentsLivingInMedicalAndCareEstablishmentsNHSPsychiatric =
@@ -636,7 +636,7 @@ public class Census_CASKS023DataRecord extends Census_AbstractDataRecord {
             long newRecordID,
             char[] newZone_Code) {
         Census_CASKS023DataRecord newCASKS023DataRecord = new Census_CASKS023DataRecord(this);
-        newCASKS023DataRecord._RecordID = newRecordID;
+        newCASKS023DataRecord.RecordID = newRecordID;
         // newCASKS023DataRecord.Zone_Code = aCASKS023DataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

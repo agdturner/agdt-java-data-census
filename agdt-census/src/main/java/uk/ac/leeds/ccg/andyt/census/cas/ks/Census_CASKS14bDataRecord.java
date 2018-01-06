@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing CAS KS14b Records and providing safe access to the data.
@@ -95,7 +95,7 @@ public class Census_CASKS14bDataRecord extends Census_AbstractDataRecord {
     // protected int malesAged16to74NotClassifiableForOtherReasons;
     /** Creates a new CASKS14bRecord */
     public Census_CASKS14bDataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -128,7 +128,7 @@ public class Census_CASKS14bDataRecord extends Census_AbstractDataRecord {
             fields[i] = "";
         }
         System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS14b
         this.malesAged16to74 = StaticConverter.to_int(fields[1]);
@@ -154,7 +154,7 @@ public class Census_CASKS14bDataRecord extends Census_AbstractDataRecord {
     public Census_CASKS14bDataRecord(RandomAccessFile aRandomAccessFile)
             throws IOException {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -180,8 +180,8 @@ public class Census_CASKS14bDataRecord extends Census_AbstractDataRecord {
     /**
      * Initialises all fields.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.malesAged16to74 = Integer.MIN_VALUE;
         this.malesAged16to74LargeEmployersAndHigherManagerialOccupations = Integer.MIN_VALUE;
         this.malesAged16to74HigherProfessionalOccupations = Integer.MIN_VALUE;
@@ -441,7 +441,7 @@ public class Census_CASKS14bDataRecord extends Census_AbstractDataRecord {
     public Census_CASKS14bDataRecord aggregate(Census_CASKS14bDataRecord aCASKS14bDataRecord,
             long newRecordID, char[] newZone_Code) {
         Census_CASKS14bDataRecord newCASKS14bDataRecord = new Census_CASKS14bDataRecord(this);
-        newCASKS14bDataRecord._RecordID = newRecordID;
+        newCASKS14bDataRecord.RecordID = newRecordID;
         // newCASKS14bDataRecord.Zone_Code = aCASKS14bDataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

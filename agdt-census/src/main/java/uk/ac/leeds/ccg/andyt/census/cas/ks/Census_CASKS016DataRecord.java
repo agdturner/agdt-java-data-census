@@ -80,7 +80,7 @@ public class Census_CASKS016DataRecord extends Census_AbstractDataRecord {
 
     /** Creates a new CASKS12bRecord */
     public Census_CASKS016DataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -97,7 +97,7 @@ public class Census_CASKS016DataRecord extends Census_AbstractDataRecord {
      * Creates a new CASKS016DataRecord
      *
      * @param initZero
-     *            To ensure initZero() is used instead of _Init()
+     *            To ensure initZero() is used instead of init()
      */
     public Census_CASKS016DataRecord(boolean initZero) {
         initZero();
@@ -110,7 +110,7 @@ public class Census_CASKS016DataRecord extends Census_AbstractDataRecord {
      */
     public Census_CASKS016DataRecord(RandomAccessFile aRandomAccessFile) {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -133,8 +133,8 @@ public class Census_CASKS016DataRecord extends Census_AbstractDataRecord {
     /**
      * Initialises.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.allHouseholdSpacesWithResidents = Integer.MIN_VALUE;
         this.allHouseholdSpacesWithNoResidentsVacant = Integer.MIN_VALUE;
         this.allHouseholdSpacesWithNoResidentsSecondResidenceHolidayAccommodation = Integer.MIN_VALUE;
@@ -151,7 +151,7 @@ public class Census_CASKS016DataRecord extends Census_AbstractDataRecord {
      * Initialises to zero.
      */
     protected void initZero() {
-        super._Init();
+        super.init();
         this.allHouseholdSpacesWithResidents = 0;
         this.allHouseholdSpacesWithNoResidentsVacant = 0;
         this.allHouseholdSpacesWithNoResidentsSecondResidenceHolidayAccommodation = 0;
@@ -367,7 +367,7 @@ public class Census_CASKS016DataRecord extends Census_AbstractDataRecord {
             long newRecordID,
             char[] newZone_Code) {
         Census_CASKS016DataRecord newCASKS016DataRecord = new Census_CASKS016DataRecord(this);
-        newCASKS016DataRecord._RecordID = newRecordID;
+        newCASKS016DataRecord.RecordID = newRecordID;
         // newCASKS016DataRecord.Zone_Code = aCASKS016DataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

@@ -22,7 +22,7 @@ import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * A <code>class</code> for representing a CAS002 Data Record and providing safe
@@ -665,7 +665,7 @@ public class Census_CAS002DataRecord extends Census_AbstractDataRecord {
 
     /** Creates a new CAS002DataRecord */
     public Census_CAS002DataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -682,7 +682,7 @@ public class Census_CAS002DataRecord extends Census_AbstractDataRecord {
      * Creates a new CAS002DataRecord
      *
      * @param initZero
-     *            To ensure initZero() is used instead of _Init()
+     *            To ensure initZero() is used instead of init()
      */
     public Census_CAS002DataRecord(boolean initZero) {
         initZero();
@@ -712,7 +712,7 @@ public class Census_CAS002DataRecord extends Census_AbstractDataRecord {
         // fields[ i ] = "";
         // }
         // System.arraycopy( fieldsDummy, 0, fields, 0, fields.length );
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table CAS002
         this.allPeopleTotal = StaticConverter.to_int(fields[1]);
@@ -883,7 +883,7 @@ public class Census_CAS002DataRecord extends Census_AbstractDataRecord {
     public Census_CAS002DataRecord(RandomAccessFile aRandomAccessFile)
             throws IOException {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -1050,8 +1050,8 @@ public class Census_CAS002DataRecord extends Census_AbstractDataRecord {
     /**
      * Initialises all fields.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.allPeopleTotal = Integer.MIN_VALUE;
         this.allPeopleMarried = Integer.MIN_VALUE;
         this.allPeopleSingle = Integer.MIN_VALUE;
@@ -1211,7 +1211,7 @@ public class Census_CAS002DataRecord extends Census_AbstractDataRecord {
      * Initialises all fields as zero.
      */
     protected void initZero() {
-        super._Init();
+        super.init();
         this.allPeopleTotal = 0;
         this.allPeopleMarried = 0;
         this.allPeopleSingle = 0;
@@ -3450,7 +3450,7 @@ public class Census_CAS002DataRecord extends Census_AbstractDataRecord {
     public Census_CAS002DataRecord aggregate(Census_CAS002DataRecord aCAS002DataRecord,
             long newRecordID, char[] newZone_Code) {
         Census_CAS002DataRecord newCAS002DataRecord = new Census_CAS002DataRecord(this);
-        newCAS002DataRecord._RecordID = newRecordID;
+        newCAS002DataRecord.RecordID = newRecordID;
         // newCAS002DataRecord.Zone_Code = aCAS002DataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

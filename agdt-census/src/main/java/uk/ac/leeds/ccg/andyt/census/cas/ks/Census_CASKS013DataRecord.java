@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing CAS KS013 Records and providing safe access to the data.
@@ -83,7 +83,7 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
 
     /** Creates a new CASKS013Record */
     public Census_CASKS013DataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -115,7 +115,7 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
                 fields[i] = "";
             }
             System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
-            this._RecordID = RecordID;
+            this.RecordID = RecordID;
             this.Zone_Code = fields[0].substring(1, 11).toCharArray();
             // From Table KS013
             this._AllPeopleAged16to74 = StaticConverter.to_int(fields[1]);
@@ -140,7 +140,7 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
                 }
                 System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
                 System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
-                this._RecordID = RecordID;
+                this.RecordID = RecordID;
                 this.Zone_Code = fields[0].substring(1, 11).toCharArray();
                 // From Table KS013
                 this._AllPeopleAged16to74 = StaticConverter.to_int(fields[1]);
@@ -163,7 +163,7 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
                 System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
                 // if ( country.equalsIgnoreCase( "England" ) ||
                 // country.equalsIgnoreCase( "Wales" ) ) {
-                this._RecordID = RecordID;
+                this.RecordID = RecordID;
                 this.Zone_Code = fields[0].substring(1, 11).toCharArray();
                 // From Table KS013
                 this._AllPeopleAged16to74 = StaticConverter.to_int(fields[1]);
@@ -192,7 +192,7 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
     public Census_CASKS013DataRecord(RandomAccessFile aRandomAccessFile)
             throws IOException {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -219,8 +219,8 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
     /**
      * Initialise.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this._AllPeopleAged16to74 = Integer.MIN_VALUE;
         this._PeopleAged16to74WithNoQualifications = Integer.MIN_VALUE;
         this._PeopleAged16to74WithHighestQualificationAttainedLevel1 = Integer.MIN_VALUE;
@@ -240,7 +240,7 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
      * Initialise to zero.
      */
     protected void initZero() {
-        super._Init();
+        super.init();
         this._AllPeopleAged16to74 = 0;
         this._PeopleAged16to74WithNoQualifications = 0;
         this._PeopleAged16to74WithHighestQualificationAttainedLevel1 = 0;
@@ -512,7 +512,7 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
             long newRecordID,
             char[] newZone_Code) {
         Census_CASKS013DataRecord newCASKS013DataRecord = new Census_CASKS013DataRecord(this);
-        newCASKS013DataRecord._RecordID = newRecordID;
+        newCASKS013DataRecord.RecordID = newRecordID;
         // newCASKS013DataRecord.Zone_Code = aCASKS013DataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

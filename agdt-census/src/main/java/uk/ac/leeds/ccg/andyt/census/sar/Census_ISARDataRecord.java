@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Random;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataRecord;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
 
 /**
  * For representing an Individual SAR Data Record and providing safe access to
@@ -407,14 +406,14 @@ public class Census_ISARDataRecord
 
     /** Creates a new ISARRecord */
     public Census_ISARDataRecord() {
-        _Init();
+        init();
     }
 
     /** Creates a new ISARRecord
      * @param _RandomAccessFile */
     public Census_ISARDataRecord(RandomAccessFile _RandomAccessFile) {
         try {
-            this._RecordID = _RandomAccessFile.readLong();
+            this.RecordID = _RandomAccessFile.readLong();
             this._ID = _RandomAccessFile.readLong();
             this._PNUM = _RandomAccessFile.readLong();
             this._SEX = _RandomAccessFile.readBoolean();
@@ -504,7 +503,7 @@ public class Census_ISARDataRecord
             this._WORKFORC = _RandomAccessFile.readShort();
             this._WRKPLCE0 = _RandomAccessFile.readShort();
         } catch (IOException ioe0) {
-            ioe0.printStackTrace();
+            ioe0.printStackTrace(System.err);
         }
     }
 
@@ -512,8 +511,8 @@ public class Census_ISARDataRecord
      * Initialises all values.
      */
     @Override
-    protected void _Init() {
-        super._Init();
+    protected final void init() {
+        super.init();
         this._ID = Long.MIN_VALUE;
         this._PNUM = Long.MIN_VALUE;
         this._SEX = false;
@@ -702,7 +701,7 @@ public class Census_ISARDataRecord
     }
 
     /**
-     * Parses line to modify this setting this._RecordID=_RecordID.
+     * Parses line to modify this setting this.RecordID=RecordID.
      * @param _RecordID
      * @param line
      *            The Comma Seperated Value <code>String</code>
@@ -721,95 +720,95 @@ public class Census_ISARDataRecord
             fields[i] = "";
         }
         System.arraycopy(fieldsDummy, 0, fields, 0, fieldsDummy.length);
-        this._RecordID = _RecordID;
-        this._ID = StaticConverter.to_long(fields[0]);
-        this._PNUM = StaticConverter.to_long(fields[1]);
-        this._ACCTYPE = StaticConverter.to_short(fields[2]);
-        this._AGE0 = StaticConverter.to_short(fields[3]);
-        this._BATHWC = StaticConverter.to_short(fields[4]);
-        this._CARS0 = StaticConverter.to_short(fields[5]);
-        this._CENHEAT0 = StaticConverter.to_short(fields[6]);
-        this._CESTATUS = StaticConverter.to_short(fields[7]);
-        this._CETYPE = StaticConverter.to_short(fields[8]);
-        this._COBIRT0 = StaticConverter.to_short(fields[9]);
-        this._COMBGN = StaticConverter.to_short(fields[10]);
-        this._COUNTRY = StaticConverter.to_short(fields[11]);
-        this._DENSITY = StaticConverter.to_short(fields[12]);
-        this._DISTMOV0 = StaticConverter.to_short(fields[13]);
-        this._DISTWRK0 = StaticConverter.to_short(fields[14]);
-        this._ECONACT = StaticConverter.to_short(fields[15]);
-        this._EDISDONO = StaticConverter.to_short(fields[16]);
-        this._ETHEW = StaticConverter.to_short(fields[17]);
-        this._ETHN = StaticConverter.to_short(fields[18]);
-        this._ETHS = StaticConverter.to_short(fields[19]);
-        this._EVERWORK = StaticConverter.to_short(fields[20]);
-        this._FAMTYP = StaticConverter.to_short(fields[21]);
-        this._FNDEPCH = StaticConverter.to_short(fields[22]);
-        this._FRECONAC = StaticConverter.to_short(fields[23]);
-        this._FRNSSEC = StaticConverter.to_short(fields[24]);
-        this._FRSEX = StaticConverter.to_short(fields[25]);
-        this._FURN = StaticConverter.to_short(fields[26]);
-        this._GAELREAD = StaticConverter.to_short(fields[27]);
-        this._GAELSPK = StaticConverter.to_short(fields[28]);
-        this._GAELSTND = StaticConverter.to_short(fields[29]);
-        this._GAELWRIT = StaticConverter.to_short(fields[30]);
-        this._GENIND = StaticConverter.to_short(fields[31]);
-        this._HEALTH = StaticConverter.to_short(fields[32]);
-        this._HEDIND = StaticConverter.to_short(fields[33]);
-        this._HEMPIND = StaticConverter.to_short(fields[34]);
-        this._HHLTHIND = StaticConverter.to_short(fields[35]);
-        this._HHSGIND = StaticConverter.to_short(fields[36]);
-        this._HNCARERS = StaticConverter.to_short(fields[37]);
-        this._HNEARNRS = StaticConverter.to_short(fields[38]);
-        this._HNELDERS = StaticConverter.to_short(fields[39]);
-        this._HNFAMS = StaticConverter.to_short(fields[40]);
-        this._HNLLTI = StaticConverter.to_short(fields[41]);
-        this._HNPRHLTH = StaticConverter.to_short(fields[42]);
-        this._HNRESDNT = StaticConverter.to_short(fields[43]);
-        this._HOURSPW = StaticConverter.to_short(fields[44]);
-        this._HOURSPWG = StaticConverter.to_short(fields[45]);
-        this._HRSOCGRD = StaticConverter.to_short(fields[46]);
-        this._INDSTRY0 = StaticConverter.to_short(fields[47]);
-        this._IRISLANG = StaticConverter.to_short(fields[48]);
-        this._ISCO = StaticConverter.to_short(fields[49]);
-        this._LASTWORK = StaticConverter.to_short(fields[50]);
-        this._LLTI = StaticConverter.to_short(fields[51]);
-        this._LOWFLOR0 = StaticConverter.to_short(fields[52]);
-        this._MARSTAT = StaticConverter.to_short(fields[53]);
-        this._MIGORGN = StaticConverter.to_short(fields[54]);
-        this._MULTETH = StaticConverter.to_short(fields[55]);
-        this._NSSEC = StaticConverter.to_short(fields[56]);
-        this._OCCUPNCY = StaticConverter.to_short(fields[57]);
-        this._ONCPERIM = StaticConverter.to_short(fields[58]);
-        this._PROFQUAL = StaticConverter.to_short(fields[59]);
-        this._PROVCARE = StaticConverter.to_short(fields[60]);
-        this._QUALVEWN = StaticConverter.to_short(fields[61]);
-        this._QUALVS = StaticConverter.to_short(fields[62]);
-        this._REGION = StaticConverter.to_short(fields[63]);
-        this._RELGEW = StaticConverter.to_short(fields[64]);
-        this._RELGS1 = StaticConverter.to_short(fields[65]);
-        this._RELIGN = StaticConverter.to_short(fields[66]);
-        this._RELTOHR = StaticConverter.to_short(fields[67]);
-        this._ROOMSFLR = StaticConverter.to_short(fields[68]);
-        this._ROOMSNUM = StaticConverter.to_short(fields[69]);
-        this._SELFCONT = StaticConverter.to_short(fields[70]);
-        this._SEX = StaticConverter.to_boolean(fields[71]);
-        this._SOCMIN = StaticConverter.to_short(fields[72]);
-        this._SOCSUBMJ = StaticConverter.to_short(fields[73]);
-        this._STAHUK = StaticConverter.to_short(fields[74]);
-        this._STUDENT = StaticConverter.to_boolean(fields[75]);
-        this._SUPERVSR = StaticConverter.to_short(fields[76]);
-        this._TENUREW = StaticConverter.to_short(fields[77]);
-        this._TENURSN = StaticConverter.to_short(fields[78]);
-        this._TERMTIME = StaticConverter.to_short(fields[79]);
-        this._TRANWRK0 = StaticConverter.to_short(fields[80]);
-        this._WLSHREAD = StaticConverter.to_short(fields[81]);
-        this._WLSHSPK = StaticConverter.to_short(fields[82]);
-        this._WLSHSTND = StaticConverter.to_short(fields[83]);
-        this._WLSHWRIT = StaticConverter.to_short(fields[84]);
-        this._WORKFORC = StaticConverter.to_short(fields[85]);
-        this._WRKPLCE0 = StaticConverter.to_short(fields[86]);
-        this._MIGIND = StaticConverter.to_short(fields[87]);
+        this.RecordID = _RecordID;
+        this._ID = new Long(fields[0]);
+        this._PNUM = new Long(fields[1]);
+        this._ACCTYPE = new Short(fields[2]);
+        this._AGE0 = new Short(fields[3]);
+        this._BATHWC = new Short(fields[4]);
+        this._CARS0 = new Short(fields[5]);
+        this._CENHEAT0 = new Short(fields[6]);
+        this._CESTATUS = new Short(fields[7]);
+        this._CETYPE = new Short(fields[8]);
+        this._COBIRT0 = new Short(fields[9]);
+        this._COMBGN = new Short(fields[10]);
+        this._COUNTRY = new Short(fields[11]);
+        this._DENSITY = new Short(fields[12]);
+        this._DISTMOV0 = new Short(fields[13]);
+        this._DISTWRK0 = new Short(fields[14]);
+        this._ECONACT = new Short(fields[15]);
+        this._EDISDONO = new Short(fields[16]);
+        this._ETHEW = new Short(fields[17]);
+        this._ETHN = new Short(fields[18]);
+        this._ETHS = new Short(fields[19]);
+        this._EVERWORK = new Short(fields[20]);
+        this._FAMTYP = new Short(fields[21]);
+        this._FNDEPCH = new Short(fields[22]);
+        this._FRECONAC = new Short(fields[23]);
+        this._FRNSSEC = new Short(fields[24]);
+        this._FRSEX = new Short(fields[25]);
+        this._FURN = new Short(fields[26]);
+        this._GAELREAD = new Short(fields[27]);
+        this._GAELSPK = new Short(fields[28]);
+        this._GAELSTND = new Short(fields[29]);
+        this._GAELWRIT = new Short(fields[30]);
+        this._GENIND = new Short(fields[31]);
+        this._HEALTH = new Short(fields[32]);
+        this._HEDIND = new Short(fields[33]);
+        this._HEMPIND = new Short(fields[34]);
+        this._HHLTHIND = new Short(fields[35]);
+        this._HHSGIND = new Short(fields[36]);
+        this._HNCARERS = new Short(fields[37]);
+        this._HNEARNRS = new Short(fields[38]);
+        this._HNELDERS = new Short(fields[39]);
+        this._HNFAMS = new Short(fields[40]);
+        this._HNLLTI = new Short(fields[41]);
+        this._HNPRHLTH = new Short(fields[42]);
+        this._HNRESDNT = new Short(fields[43]);
+        this._HOURSPW = new Short(fields[44]);
+        this._HOURSPWG = new Short(fields[45]);
+        this._HRSOCGRD = new Short(fields[46]);
+        this._INDSTRY0 = new Short(fields[47]);
+        this._IRISLANG = new Short(fields[48]);
+        this._ISCO = new Short(fields[49]);
+        this._LASTWORK = new Short(fields[50]);
+        this._LLTI = new Short(fields[51]);
+        this._LOWFLOR0 = new Short(fields[52]);
+        this._MARSTAT = new Short(fields[53]);
+        this._MIGORGN = new Short(fields[54]);
+        this._MULTETH = new Short(fields[55]);
+        this._NSSEC = new Short(fields[56]);
+        this._OCCUPNCY = new Short(fields[57]);
+        this._ONCPERIM = new Short(fields[58]);
+        this._PROFQUAL = new Short(fields[59]);
+        this._PROVCARE = new Short(fields[60]);
+        this._QUALVEWN = new Short(fields[61]);
+        this._QUALVS = new Short(fields[62]);
+        this._REGION = new Short(fields[63]);
+        this._RELGEW = new Short(fields[64]);
+        this._RELGS1 = new Short(fields[65]);
+        this._RELIGN = new Short(fields[66]);
+        this._RELTOHR = new Short(fields[67]);
+        this._ROOMSFLR = new Short(fields[68]);
+        this._ROOMSNUM = new Short(fields[69]);
+        this._SELFCONT = new Short(fields[70]);
+        this._SEX = new Boolean(fields[71]);
+        this._SOCMIN = new Short(fields[72]);
+        this._SOCSUBMJ = new Short(fields[73]);
+        this._STAHUK = new Short(fields[74]);
+        this._STUDENT = new Boolean(fields[75]);
+        this._SUPERVSR = new Short(fields[76]);
+        this._TENUREW = new Short(fields[77]);
+        this._TENURSN = new Short(fields[78]);
+        this._TERMTIME = new Short(fields[79]);
+        this._TRANWRK0 = new Short(fields[80]);
+        this._WLSHREAD = new Short(fields[81]);
+        this._WLSHSPK = new Short(fields[82]);
+        this._WLSHSTND = new Short(fields[83]);
+        this._WLSHWRIT = new Short(fields[84]);
+        this._WORKFORC = new Short(fields[85]);
+        this._WRKPLCE0 = new Short(fields[86]);
+        this._MIGIND = new Short(fields[87]);
         return true;
     }
 
@@ -1667,7 +1666,7 @@ public class Census_ISARDataRecord
             return false;
         }
         Census_ISARDataRecord aISARDataRecord = (Census_ISARDataRecord) object;
-        return this._RecordID == aISARDataRecord._RecordID;
+        return this.RecordID == aISARDataRecord.RecordID;
         //return this._ID == aISARDataRecord._ID;
     }
 

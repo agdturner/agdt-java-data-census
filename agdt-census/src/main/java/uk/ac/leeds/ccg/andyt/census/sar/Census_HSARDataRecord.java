@@ -25,7 +25,7 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataRecord;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing a Household SAR DAta Record and providing safe access to the
@@ -300,7 +300,7 @@ public class Census_HSARDataRecord extends Generic_AbstractDataRecord {
      */
     /** Creates a new HSARRecord */
     public Census_HSARDataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -310,7 +310,7 @@ public class Census_HSARDataRecord extends Generic_AbstractDataRecord {
  _AGEH;
  _SEX;
  _HRP.
-     * @param _RecordID The _RecordID that will be assigned.
+     * @param _RecordID The RecordID that will be assigned.
      * @param line The Comma Seperated Value <code>String</code>.
      * @return 
      * @throws java.io.IOException 
@@ -346,7 +346,7 @@ public class Census_HSARDataRecord extends Generic_AbstractDataRecord {
                 return false;
             }
         }
-        this._RecordID = _RecordID;
+        this.RecordID = _RecordID;
         this._HHID = Integer.valueOf(fields[0]);
         this._PNUM = StaticConverter.to_short(fields[1]);
         this._ID = StaticConverter.to_long(fields[2]);
@@ -417,7 +417,7 @@ public class Census_HSARDataRecord extends Generic_AbstractDataRecord {
             long RecordID,
             StringTokenizer aStringTokenizer)
             throws IOException {
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         Integer.parseInt(aStringTokenizer.nextToken(" "));
         this._HHID = Integer.MIN_VALUE;
         this._PNUM = Short.MIN_VALUE;
@@ -505,7 +505,7 @@ public class Census_HSARDataRecord extends Generic_AbstractDataRecord {
      * @param aRandomAccessFile */
     public Census_HSARDataRecord(RandomAccessFile aRandomAccessFile) {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this._ID = aRandomAccessFile.readLong();
             this._HHID = aRandomAccessFile.readInt();
             this._ISCO3 = aRandomAccessFile.readInt();
@@ -575,8 +575,8 @@ public class Census_HSARDataRecord extends Generic_AbstractDataRecord {
      * Initialises.
      */
     @Override
-    protected final void _Init() {
-        super._Init();
+    protected final void init() {
+        super.init();
         this._ID = Long.MIN_VALUE;
         this._HHID = Integer.MIN_VALUE;
         this._ISCO3 = Integer.MIN_VALUE;
@@ -1312,7 +1312,7 @@ public class Census_HSARDataRecord extends Generic_AbstractDataRecord {
             return false;
         }
         Census_HSARDataRecord aHSARDataRecord = (Census_HSARDataRecord) object;
-        return this._RecordID == aHSARDataRecord._RecordID;
+        return this.RecordID == aHSARDataRecord.RecordID;
     }
 
     /**

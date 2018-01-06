@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing CAS KS015 Records and providing safe access to the data. NB.
@@ -115,7 +115,7 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
 
     /** Creates a new CASKS015Record */
     public Census_CASKS015DataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -132,7 +132,7 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
      * Creates a new CASKS015DataRecord
      *
      * @param initZero
-     *            To ensure initZero() is used instead of _Init()
+     *            To ensure initZero() is used instead of init()
      */
     public Census_CASKS015DataRecord(boolean initZero) {
         initZero();
@@ -169,7 +169,7 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
         if (country.equalsIgnoreCase("Scotland")) {
             System.arraycopy(fieldsDummy, 0, fields, 0, 13);
             System.arraycopy(fieldsDummy, 16, fields, 14, 2);
-            this._RecordID = RecordID;
+            this.RecordID = RecordID;
             this.Zone_Code = fields[0].substring(1, 11).toCharArray();
             // From Table KS015
             this.peopleAged16to74InEmployment = StaticConverter.to_int(fields[1]);
@@ -189,10 +189,10 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
             this.publicTransportUsersInHouseholdsWithoutACarOrVan = StaticConverter.to_int(fields[15]);
         } else {
             if (country.equalsIgnoreCase("Northern Ireland")) {
-                _Init();
+                init();
                 fields = new String[15];
                 System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
-                this._RecordID = RecordID;
+                this.RecordID = RecordID;
                 this.Zone_Code = fields[0].substring(1, 11).toCharArray();
                 // From Table KS015
                 this.peopleAged16to74InEmployment = StaticConverter.to_int(fields[1]);
@@ -216,7 +216,7 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
                 // if ( country.equalsIgnoreCase( "England" ) ||
                 // country.equalsIgnoreCase( "Wales" ) ) {
                 System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
-                this._RecordID = RecordID;
+                this.RecordID = RecordID;
                 this.Zone_Code = fields[0].substring(1, 11).toCharArray();
                 // From Table KS015
                 this.peopleAged16to74InEmployment = StaticConverter.to_int(fields[1]);
@@ -245,7 +245,7 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
      */
     public Census_CASKS015DataRecord(RandomAccessFile tRandomAccessFile) {
         try {
-            this._RecordID = tRandomAccessFile.readLong();
+            this.RecordID = tRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = tRandomAccessFile.readChar();
@@ -273,8 +273,8 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
     /**
      * Initialises.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.peopleAged16to74InEmployment = Integer.MIN_VALUE;
         this.peopleAged16to74InEmploymentWhoWorkMainlyAtOrFromHome = Integer.MIN_VALUE;
         this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByUndergroundMetroLightRailTram = Integer.MIN_VALUE;
@@ -299,7 +299,7 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
      *            The CASKS015Record thats fields are used to initialise this.
      */
     protected void init(Census_CASKS015DataRecord aCASKS015Record) {
-        super._Init();
+        super.init();
         this.peopleAged16to74InEmployment = aCASKS015Record.peopleAged16to74InEmployment;
         this.peopleAged16to74InEmploymentWhoWorkMainlyAtOrFromHome = aCASKS015Record.peopleAged16to74InEmploymentWhoWorkMainlyAtOrFromHome;
         this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByUndergroundMetroLightRailTram = aCASKS015Record.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByUndergroundMetroLightRailTram;
@@ -321,7 +321,7 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
      * Initialises to zero.
      */
     protected void initZero() {
-        super._Init();
+        super.init();
         this.peopleAged16to74InEmployment = 0;
         this.peopleAged16to74InEmploymentWhoWorkMainlyAtOrFromHome = 0;
         this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByUndergroundMetroLightRailTram = 0;
@@ -597,7 +597,7 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
     public Census_CASKS015DataRecord aggregate(Census_CASKS015DataRecord aCASKS015DataRecord,
             long newRecordID, char[] newZone_Code) {
         Census_CASKS015DataRecord newCASKS015DataRecord = new Census_CASKS015DataRecord(this);
-        newCASKS015DataRecord._RecordID = newRecordID;
+        newCASKS015DataRecord.RecordID = newRecordID;
         // newCASKS015DataRecord.Zone_Code = aCASKS015DataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {

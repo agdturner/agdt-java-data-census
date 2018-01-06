@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.math.StaticConverter;
+import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing CASKS006DataRecords and providing safe access to the data.
@@ -103,7 +103,7 @@ public class Census_CASKS006DataRecord extends Census_AbstractDataRecord {
 
     /** Creates a new CASKS006Record */
     public Census_CASKS006DataRecord() {
-        _Init();
+        init();
     }
 
     /**
@@ -120,7 +120,7 @@ public class Census_CASKS006DataRecord extends Census_AbstractDataRecord {
      * Creates a new CASKS006DataRecord
      *
      * @param initZero
-     *            To ensure initZero() is used instead of _Init()
+     *            To ensure initZero() is used instead of init()
      */
     public Census_CASKS006DataRecord(boolean initZero) {
         initZero();
@@ -146,7 +146,7 @@ public class Census_CASKS006DataRecord extends Census_AbstractDataRecord {
             fields[i] = "";
         }
         System.arraycopy(fieldsDummy, 0, fields, 0, fields.length);
-        this._RecordID = RecordID;
+        this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS006
         this.allPeople = StaticConverter.to_int(fields[1]);
@@ -175,7 +175,7 @@ public class Census_CASKS006DataRecord extends Census_AbstractDataRecord {
      */
     public Census_CASKS006DataRecord(RandomAccessFile aRandomAccessFile) {
         try {
-            this._RecordID = aRandomAccessFile.readLong();
+            this.RecordID = aRandomAccessFile.readLong();
             this.Zone_Code = new char[10];
             for (int i = 0; i < this.Zone_Code.length; i++) {
                 Zone_Code[i] = aRandomAccessFile.readChar();
@@ -207,7 +207,7 @@ public class Census_CASKS006DataRecord extends Census_AbstractDataRecord {
      * @param aCASKS006DataRecord
      */
     protected void init(Census_CASKS006DataRecord aCASKS006DataRecord) {
-        super._Init();
+        super.init();
         this.allPeople = aCASKS006DataRecord.allPeople;
         this.whiteWhiteBritish = aCASKS006DataRecord.whiteWhiteBritish;
         this.whiteWhiteIrish = aCASKS006DataRecord.whiteWhiteIrish;
@@ -230,8 +230,8 @@ public class Census_CASKS006DataRecord extends Census_AbstractDataRecord {
     /**
      * Initialises.
      */
-    protected void _Init() {
-        super._Init();
+    protected void init() {
+        super.init();
         this.allPeople = Integer.MIN_VALUE;
         this.whiteWhiteBritish = Integer.MIN_VALUE;
         this.whiteWhiteIrish = Integer.MIN_VALUE;
@@ -255,7 +255,7 @@ public class Census_CASKS006DataRecord extends Census_AbstractDataRecord {
      * Initialises to zero.
      */
     protected void initZero() {
-        super._Init();
+        super.init();
         this.allPeople = 0;
         this.whiteWhiteBritish = 0;
         this.whiteWhiteIrish = 0;
@@ -579,7 +579,7 @@ public class Census_CASKS006DataRecord extends Census_AbstractDataRecord {
     public Census_CASKS006DataRecord aggregate(Census_CASKS006DataRecord aCASKS006DataRecord,
             long newRecordID, char[] newZone_Code) {
         Census_CASKS006DataRecord newCASKS006DataRecord = new Census_CASKS006DataRecord(this);
-        newCASKS006DataRecord._RecordID = newRecordID;
+        newCASKS006DataRecord.RecordID = newRecordID;
         // newCASKS006DataRecord.Zone_Code = aCASKS006DataRecord.Zone_Code;
         int aZone_CodeID = 0;
         for (int Zone_CodeID = 0; Zone_CodeID < newZone_Code.length; Zone_CodeID++) {
