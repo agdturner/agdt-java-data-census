@@ -31,10 +31,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Vector;
-import uk.ac.leeds.ccg.andyt.generic.execution.Generic_AgeConverter;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.data.converter.Generic_AgeConverter;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataRecord;
 
 /**
  * For accessing HSARDataRecords and information about them.
@@ -80,11 +80,11 @@ public class Census_HSARDataHandler extends Generic_AbstractDataHandler {
             File thisFile = new File(
                     _Directory,
                     this.getClass().getCanonicalName() + ".thisFile");
-            Generic_StaticIO.writeObject(
+            Generic_IO.writeObject(
                     this,
                     thisFile);
         } else {
-            Object object = Generic_StaticIO.readObject(aFile);
+            Object object = Generic_IO.readObject(aFile);
             Census_HSARDataHandler aHSARDataHandler = (Census_HSARDataHandler) object;
             load(aFile);
             this._RecordLength = aHSARDataHandler._RecordLength;
@@ -122,7 +122,7 @@ public class Census_HSARDataHandler extends Generic_AbstractDataHandler {
                 new FileInputStream(sourceFile)));
         StreamTokenizer aStreamTokenizer =
                 new StreamTokenizer(aBufferedReader);
-        Generic_StaticIO.setStreamTokenizerSyntax2(aStreamTokenizer);
+        Generic_IO.setStreamTokenizerSyntax2(aStreamTokenizer);
         String line;
         long RecordID = 0L;
         Census_HSARDataRecord aHSARDataRecord = new Census_HSARDataRecord();

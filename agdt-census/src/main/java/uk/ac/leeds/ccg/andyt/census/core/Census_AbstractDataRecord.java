@@ -18,7 +18,7 @@
  */
 package uk.ac.leeds.ccg.andyt.census.core;
 
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataRecord;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.Serializable;
@@ -90,7 +90,7 @@ public abstract class Census_AbstractDataRecord
     }
 
     /**
-     * @return A Comma Seperated Version (CSV) <code>String</code> of the values
+     * @return A Comma Separated Version (CSV) <code>String</code> of the values
      *         of the <code>Fields</code> of <code>this</code>.
      */
     @Override

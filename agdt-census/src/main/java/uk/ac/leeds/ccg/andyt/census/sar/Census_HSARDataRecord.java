@@ -24,7 +24,7 @@ import java.io.RandomAccessFile;
 import java.util.Random;
 import java.util.StringTokenizer;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**

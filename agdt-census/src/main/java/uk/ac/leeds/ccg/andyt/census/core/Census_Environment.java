@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.util.TreeSet;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 
 /**
  *
@@ -49,11 +49,11 @@ public class Census_Environment {
             try {
                 BufferedReader br;
                 StreamTokenizer st;
-                br = Generic_StaticIO.getBufferedReader(file);
+                br = Generic_IO.getBufferedReader(file);
                 if (br != null) {
                     result = new TreeSet<String>();
                     st = new StreamTokenizer(br);
-                    Generic_StaticIO.setStreamTokenizerSyntax1(st);
+                    Generic_IO.setStreamTokenizerSyntax1(st);
                     int token = st.nextToken();
 //                    long RecordID = 0;
                     String line = "";

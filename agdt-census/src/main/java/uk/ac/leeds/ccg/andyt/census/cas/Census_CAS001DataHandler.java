@@ -31,7 +31,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.TreeMap;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 
 /**
  * Class for handling an individual CAS001DataRecords.
@@ -142,13 +142,13 @@ public class Census_CAS001DataHandler extends Census_AbstractDataHandler {
             long RecordID) {
         try {
             BufferedReader br;
-            br = Generic_StaticIO.getBufferedReader(_File);
+            br = Generic_IO.getBufferedReader(_File);
 //                   aBufferedReader = new BufferedReader(
 //                    new InputStreamReader(
 //                    new FileInputStream(sourceFile)));
             StreamTokenizer aStreamTokenizer = 
                     new StreamTokenizer(br);
-            Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+            Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
             String line;
             Census_CAS001DataRecord aCAS001DataRecord = new Census_CAS001DataRecord();
             // Skip the first line

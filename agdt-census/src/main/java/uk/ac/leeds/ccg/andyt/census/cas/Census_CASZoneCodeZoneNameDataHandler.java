@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
 import java.util.HashSet;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 
 /**
  * A <code>class</code> for loading a list of Zone Code and Zone Names for
@@ -49,7 +49,7 @@ public class Census_CASZoneCodeZoneNameDataHandler {
      * @throws java.io.IOException
      */
     public Census_CASZoneCodeZoneNameDataHandler(File formattedFile) throws IOException {
-        _ZoneCode_HashSet = (HashSet) Generic_StaticIO.readObject(formattedFile);
+        _ZoneCode_HashSet = (HashSet) Generic_IO.readObject(formattedFile);
     }
 
     /**
@@ -71,7 +71,7 @@ public class Census_CASZoneCodeZoneNameDataHandler {
         File formattedFile = new File(
                 workspace,
                 "UKLAD_ZoneCode_HashSet.thisFile");
-        Generic_StaticIO.writeObject(
+        Generic_IO.writeObject(
                 _ZoneCode_HashSet,
                 formattedFile);
         Census_CASZoneCodeZoneNameDataHandler testCASZoneCodeZoneNameDataHandler = new Census_CASZoneCodeZoneNameDataHandler(
@@ -118,7 +118,7 @@ public class Census_CASZoneCodeZoneNameDataHandler {
         BufferedReader aBufferedReader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(sourceFile)));
         StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-        Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+        Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
         String line = null;
         // Skip the first line
         int tokenType = aStreamTokenizer.nextToken();

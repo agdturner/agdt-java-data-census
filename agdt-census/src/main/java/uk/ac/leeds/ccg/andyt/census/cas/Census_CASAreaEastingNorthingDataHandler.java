@@ -30,7 +30,7 @@ import java.io.RandomAccessFile;
 import java.io.StreamTokenizer;
 import java.util.HashMap;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 
 /**
  * A <code>class</code> for handling an individual
@@ -66,7 +66,7 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
         this.init(file.getParentFile());
         if (file.getName().endsWith("thisFile")) {
             Census_CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler;
-            a_CASAreaEastingNorthingDataHandler = (Census_CASAreaEastingNorthingDataHandler) Generic_StaticIO.readObject(file);
+            a_CASAreaEastingNorthingDataHandler = (Census_CASAreaEastingNorthingDataHandler) Generic_IO.readObject(file);
             this._File = a_CASAreaEastingNorthingDataHandler._File;
             load(_File);
         } else {
@@ -150,7 +150,7 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
                     new InputStreamReader(
                     new FileInputStream(sourceFile)));
             StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-            Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+            Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
             String string0 = new String();
             String string1;
             String string2;

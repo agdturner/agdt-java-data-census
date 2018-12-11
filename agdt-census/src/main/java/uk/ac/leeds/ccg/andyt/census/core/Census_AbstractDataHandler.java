@@ -34,7 +34,7 @@ import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS010DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS015DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS09bDataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS008DataRecord;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataHandler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -54,9 +54,9 @@ import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS003DataHandler;
 import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS003DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS044DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.uv.Census_CASUV003DataRecord;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.utilities.Generic_Collections;
+import uk.ac.leeds.ccg.andyt.generic.util.Generic_Collections;
 
 /**
  * For handling
@@ -125,7 +125,7 @@ public abstract class Census_AbstractDataHandler
                     get_Directory(),
                     "RecordIDZoneCodeHashMap.thisFile");
             if (_RecordIDZoneCodeHashMapObjectFile.exists()) {
-                this._RecordIDZoneCodeHashMap = (HashMap) Generic_StaticIO.readObject(_RecordIDZoneCodeHashMapObjectFile);
+                this._RecordIDZoneCodeHashMap = (HashMap) Generic_IO.readObject(_RecordIDZoneCodeHashMapObjectFile);
             } else {
                 // If not on disc create
                 this._RecordIDZoneCodeHashMap = new HashMap();
@@ -142,7 +142,7 @@ public abstract class Census_AbstractDataHandler
                     log(aIOException.getLocalizedMessage());
                     System.exit(Generic_ErrorAndExceptionHandler.IOException);
                 }
-                Generic_StaticIO.writeObject(
+                Generic_IO.writeObject(
                         this._RecordIDZoneCodeHashMap,
                         _RecordIDZoneCodeHashMapObjectFile);
             }
@@ -277,7 +277,7 @@ public abstract class Census_AbstractDataHandler
             File _LookUpMSOAfromOAHashMapObjectFile = new File(get_Directory(),
                     "LookUpMSOAfromOAHashMap.thisFile");
             if (_LookUpMSOAfromOAHashMapObjectFile.exists()) {
-                this._LookUpMSOAfromOAHashMap = (HashMap) Generic_StaticIO.readObject(_LookUpMSOAfromOAHashMapObjectFile);
+                this._LookUpMSOAfromOAHashMap = (HashMap) Generic_IO.readObject(_LookUpMSOAfromOAHashMapObjectFile);
             } else {
                 // If not on disc create
                 this._LookUpMSOAfromOAHashMap = new HashMap();
@@ -292,7 +292,7 @@ public abstract class Census_AbstractDataHandler
                             lookUpTableFile)));
                     StreamTokenizer aStreamTokenizer = new StreamTokenizer(
                             aBufferedReader);
-                    Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+                    Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
                     aStreamTokenizer.wordChars('&', '&');
                     aStreamTokenizer.wordChars('\'', '\'');
                     String line;
@@ -330,7 +330,7 @@ public abstract class Census_AbstractDataHandler
                 // Store on disc for future reference
                 try {
                     _LookUpMSOAfromOAHashMapObjectFile.createNewFile();
-                    Generic_StaticIO.writeObject(
+                    Generic_IO.writeObject(
                             this._LookUpMSOAfromOAHashMap,
                             _LookUpMSOAfromOAHashMapObjectFile);
                 } catch (IOException aIOException) {
@@ -387,7 +387,7 @@ public abstract class Census_AbstractDataHandler
                 _Directory,
                 "LADCodes_TreeSet.thisFile");
         if (tLADCodeTreeSet_File.exists()) {
-            tLADCodes = (TreeSet) Generic_StaticIO.readObject(tLADCodeTreeSet_File);
+            tLADCodes = (TreeSet) Generic_IO.readObject(tLADCodeTreeSet_File);
         } else {
             tLADCodes = new TreeSet();
             Census_AbstractDataRecord aCASDataRecord;
@@ -399,7 +399,7 @@ public abstract class Census_AbstractDataHandler
                     tLADCodes.add(aLADCode);
                 }
             }
-            Generic_StaticIO.writeObject(tLADCodes, tLADCodeTreeSet_File);
+            Generic_IO.writeObject(tLADCodes, tLADCodeTreeSet_File);
         }
         return tLADCodes;
     }
@@ -414,7 +414,7 @@ public abstract class Census_AbstractDataHandler
                 _Directory,
                 "OACodes_TreeSet.thisFile");
         if (tOACodeTreeSet_File.exists()) {
-            tOACodes = (TreeSet<String>) Generic_StaticIO.readObject(tOACodeTreeSet_File);
+            tOACodes = (TreeSet<String>) Generic_IO.readObject(tOACodeTreeSet_File);
         } else {
             tOACodes = new TreeSet();
             Census_AbstractDataRecord aCASDataRecord;
@@ -426,7 +426,7 @@ public abstract class Census_AbstractDataHandler
                     tOACodes.add(aOACode);
                 }
             }
-            Generic_StaticIO.writeObject(tOACodes, tOACodeTreeSet_File);
+            Generic_IO.writeObject(tOACodes, tOACodeTreeSet_File);
         }
         return tOACodes;
     }
@@ -440,7 +440,7 @@ public abstract class Census_AbstractDataHandler
                 _Directory,
                 "OACodes_HashSet.thisFile");
         if (tOACodeHashSet_File.exists()) {
-            tOACodes = (HashSet<String>) Generic_StaticIO.readObject(tOACodeHashSet_File);
+            tOACodes = (HashSet<String>) Generic_IO.readObject(tOACodeHashSet_File);
         } else {
             tOACodes = new HashSet();
             Census_AbstractDataRecord aCASDataRecord;
@@ -452,7 +452,7 @@ public abstract class Census_AbstractDataHandler
                     tOACodes.add(aOACode);
                 }
             }
-            Generic_StaticIO.writeObject(tOACodes, tOACodeHashSet_File);
+            Generic_IO.writeObject(tOACodes, tOACodeHashSet_File);
         }
         return tOACodes;
     }
@@ -466,7 +466,7 @@ public abstract class Census_AbstractDataHandler
                 _Directory,
                 "MSOACodes_HashSet.thisFile");
         if (tMSOACodeHashSet_File.exists()) {
-            tMSOACodes = (HashSet<String>) Generic_StaticIO.readObject(tMSOACodeHashSet_File);
+            tMSOACodes = (HashSet<String>) Generic_IO.readObject(tMSOACodeHashSet_File);
         } else {
             HashMap<String, String> lookUpMSOAfromOAHashMap = get_LookUpMSOAfromOAHashMap();
             tMSOACodes = new HashSet();
@@ -481,7 +481,7 @@ public abstract class Census_AbstractDataHandler
                     tMSOACodes.add(aMSOACode);
                 }
             }
-            Generic_StaticIO.writeObject(tMSOACodes, tMSOACodeHashSet_File);
+            Generic_IO.writeObject(tMSOACodes, tMSOACodeHashSet_File);
         }
         return tMSOACodes;
     }

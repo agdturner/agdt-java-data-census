@@ -32,7 +32,7 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.TreeMap;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 
 /**
  * Class for handling an individual CAS001DataRecords.
@@ -183,7 +183,7 @@ public class Census_CAS002DataHandler extends Census_AbstractDataHandler {
                 new InputStreamReader(
                 new FileInputStream(sourceFile)));
         StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-        Generic_StaticIO.setStreamTokenizerSyntax1(aStreamTokenizer);
+        Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
         String string0 = new String();
         String string1;
         String string2;

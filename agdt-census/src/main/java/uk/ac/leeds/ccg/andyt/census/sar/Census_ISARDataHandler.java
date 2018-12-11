@@ -30,9 +30,9 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_StaticIO;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataRecord;
 
 /**
  * For accessing ISARDataRecords and information about them.
@@ -67,11 +67,11 @@ public class Census_ISARDataHandler extends Generic_AbstractDataHandler {
                     _Directory,
                     this.getClass().getCanonicalName() + ".thisFile");
             init_AgeSexType_ISARDataRecordVector_HashMap_0();
-            Generic_StaticIO.writeObject(
+            Generic_IO.writeObject(
                     this,
                     thisFile);
         } else {
-            Object object = Generic_StaticIO.readObject(aFile);
+            Object object = Generic_IO.readObject(aFile);
             Census_ISARDataHandler aISARDataHandler = (Census_ISARDataHandler) object;
             load(aFile);
             this._RecordLength = aISARDataHandler._RecordLength;
@@ -137,7 +137,7 @@ public class Census_ISARDataHandler extends Generic_AbstractDataHandler {
                 new FileInputStream(sourceFile)));
         StreamTokenizer aStreamTokenizer =
                 new StreamTokenizer(aBufferedReader);
-        Generic_StaticIO.setStreamTokenizerSyntax2(aStreamTokenizer);
+        Generic_IO.setStreamTokenizerSyntax2(aStreamTokenizer);
         String line;
         long RecordID = 0L;
         Census_ISARDataRecord aISARDataRecord = new Census_ISARDataRecord();
