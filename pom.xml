@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>uk.ac.leeds.ccg.andyt</groupId>
     <artifactId>agdt-java-generic-data-Census</artifactId>
-    <version>0.1-SNAPSHOT</version>
+    <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>agdt-java-generic-data-Census</name>
