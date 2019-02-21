@@ -33,7 +33,6 @@ import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS010DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS015DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS09bDataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.ks.Census_CASKS008DataRecord;
-import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataHandler;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,6 +52,7 @@ import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS003DataHandler;
 import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS003DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS044DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.uv.Census_CASUV003DataRecord;
+import uk.ac.leeds.ccg.andyt.data.Data_AbstractHandler;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.generic.util.Generic_Collections;
@@ -64,8 +64,7 @@ import uk.ac.leeds.ccg.andyt.generic.util.Generic_Collections;
  * @version 1.0.0, 2006-08-10
  * @see Census_AbstractDataRecord
  */
-public abstract class Census_AbstractDataHandler
-        extends Generic_AbstractDataHandler {
+public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
 
     /**
      * Census_CAS001DataHandler

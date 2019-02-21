@@ -2,33 +2,32 @@
  * A component of a library for
  * <a href="http://www.geog.leeds.ac.uk/people/a.turner/projects/MoSeS">MoSeS</a>.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  */
 package uk.ac.leeds.ccg.andyt.census.sar;
 
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.Random;
-import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.data.Data_AbstractRecord;
 
 /**
  * For representing an Individual SAR Data Record and providing safe access to
  * the data.
  */
-public class Census_ISARDataRecord
-        extends Generic_AbstractDataRecord {
+public class Census_ISARDataRecord extends Data_AbstractRecord {
 
     /*
      * Individual
@@ -404,13 +403,18 @@ public class Census_ISARDataRecord
      */
     protected short _ONCPERIM;
 
-    /** Creates a new ISARRecord */
+    /**
+     * Creates a new ISARRecord
+     */
     public Census_ISARDataRecord() {
         init();
     }
 
-    /** Creates a new ISARRecord
-     * @param _RandomAccessFile */
+    /**
+     * Creates a new ISARRecord
+     *
+     * @param _RandomAccessFile
+     */
     public Census_ISARDataRecord(RandomAccessFile _RandomAccessFile) {
         try {
             this.RecordID = _RandomAccessFile.readLong();
@@ -605,108 +609,109 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a string description of this;
-     * @return 
+     *
+     * @return
      */
     @Override
     public String toString() {
-        return super.toString() +
-                ",_ID " + _ID +
-                ",_PNUM " + _PNUM +
-                ",_SEX " + _SEX +
-                ",_STUDENT " + _STUDENT +
-                ",_ACCTYPE " + _ACCTYPE +
-                ",_AGE0 " + _AGE0 +
-                ",_BATHWC " + _BATHWC +
-                ",_CARS0 " + _CARS0 +
-                ",_CENHEAT0 " + _CENHEAT0 +
-                ",_CESTATUS " + _CESTATUS +
-                ",_CETYPE " + _CETYPE +
-                ",_COBIRT0 " + _COBIRT0 +
-                ",_COMBGN " + _COMBGN +
-                ",_COUNTRY " + _COUNTRY +
-                ",_DENSITY " + _DENSITY +
-                ",_DISTMOV0 " + _DISTMOV0 +
-                ",_DISTWRK0 " + _DISTWRK0 +
-                ",_ECONACT " + _ECONACT +
-                ",_EDISDONO " + _EDISDONO +
-                ",_ETHEW " + _ETHEW +
-                ",_ETHN " + _ETHN +
-                ",_ETHS " + _ETHS +
-                ",_EVERWORK " + _EVERWORK +
-                ",_FAMTYP " + _FAMTYP +
-                ",_FNDEPCH " + _FNDEPCH +
-                ",_FRECONAC " + _FRECONAC +
-                ",_FRNSSEC " + _FRNSSEC +
-                ",_FRSEX " + _FRSEX +
-                ",_FURN " + _FURN +
-                ",_GAELREAD " + _GAELREAD +
-                ",_GAELSPK " + _GAELSPK +
-                ",_GAELSTND " + _GAELSTND +
-                ",_GAELWRIT " + _GAELWRIT +
-                ",_GENIND " + _GENIND +
-                ",_HEALTH " + _HEALTH +
-                ",_HEDIND " + _HEDIND +
-                ",_HEMPIND " + _HEMPIND +
-                ",_HHLTHIND " + _HHLTHIND +
-                ",_HHSGIND " + _HHSGIND +
-                ",_HNCARERS " + _HNCARERS +
-                ",_HNEARNRS " + _HNEARNRS +
-                ",_HNELDERS " + _HNELDERS +
-                ",_HNFAMS " + _HNFAMS +
-                ",_HNLLTI " + _HNLLTI +
-                ",_HNPRHLTH " + _HNPRHLTH +
-                ",_HNRESDNT " + _HNRESDNT +
-                ",_HOURSPW " + _HOURSPW +
-                ",_HOURSPWG " + _HOURSPWG +
-                ",_HRSOCGRD " + _HRSOCGRD +
-                ",_INDSTRY0 " + _INDSTRY0 +
-                ",_IRISLANG " + _IRISLANG +
-                ",_ISCO " + _ISCO +
-                ",_LASTWORK " + _LASTWORK +
-                ",_LLTI " + _LLTI +
-                ",_LOWFLOR0 " + _LOWFLOR0 +
-                ",_MARSTAT " + _MARSTAT +
-                ",_MIGIND " + _MIGIND +
-                ",_MIGORGN " + _MIGORGN +
-                ",_MULTETH " + _MULTETH +
-                ",_NSSEC " + _NSSEC +
-                ",_OCCUPNCY " + _OCCUPNCY +
-                ",_ONCPERIM " + _ONCPERIM +
-                ",_PROFQUAL " + _PROFQUAL +
-                ",_PROVCARE " + _PROVCARE +
-                ",_QUALVEWN " + _QUALVEWN +
-                ",_QUALVS " + _QUALVS +
-                ",_REGION " + _REGION +
-                ",_RELGEW " + _RELGEW +
-                ",_RELGS1 " + _RELGS1 +
-                ",_RELIGN " + _RELIGN +
-                ",_RELTOHR " + _RELTOHR +
-                ",_ROOMSFLR " + _ROOMSFLR +
-                ",_ROOMSNUM " + _ROOMSNUM +
-                ",_SELFCONT " + _SELFCONT +
-                ",_SOCMIN " + _SOCMIN +
-                ",_SOCSUBMJ " + _SOCSUBMJ +
-                ",_STAHUK " + _STAHUK +
-                ",_SUPERVSR " + _SUPERVSR +
-                ",_TENUREW " + _TENUREW +
-                ",_TENURSN " + _TENURSN +
-                ",_TERMTIME " + _TERMTIME +
-                ",_TRANWRK0 " + _TRANWRK0 +
-                ",_WLSHREAD " + _WLSHREAD +
-                ",_WLSHSPK " + _WLSHSPK +
-                ",_WLSHSTND " + _WLSHSTND +
-                ",_WLSHWRIT " + _WLSHWRIT +
-                ",_WORKFORC " + _WORKFORC +
-                ",_WRKPLCE0 " + _WRKPLCE0;
+        return super.toString()
+                + ",_ID " + _ID
+                + ",_PNUM " + _PNUM
+                + ",_SEX " + _SEX
+                + ",_STUDENT " + _STUDENT
+                + ",_ACCTYPE " + _ACCTYPE
+                + ",_AGE0 " + _AGE0
+                + ",_BATHWC " + _BATHWC
+                + ",_CARS0 " + _CARS0
+                + ",_CENHEAT0 " + _CENHEAT0
+                + ",_CESTATUS " + _CESTATUS
+                + ",_CETYPE " + _CETYPE
+                + ",_COBIRT0 " + _COBIRT0
+                + ",_COMBGN " + _COMBGN
+                + ",_COUNTRY " + _COUNTRY
+                + ",_DENSITY " + _DENSITY
+                + ",_DISTMOV0 " + _DISTMOV0
+                + ",_DISTWRK0 " + _DISTWRK0
+                + ",_ECONACT " + _ECONACT
+                + ",_EDISDONO " + _EDISDONO
+                + ",_ETHEW " + _ETHEW
+                + ",_ETHN " + _ETHN
+                + ",_ETHS " + _ETHS
+                + ",_EVERWORK " + _EVERWORK
+                + ",_FAMTYP " + _FAMTYP
+                + ",_FNDEPCH " + _FNDEPCH
+                + ",_FRECONAC " + _FRECONAC
+                + ",_FRNSSEC " + _FRNSSEC
+                + ",_FRSEX " + _FRSEX
+                + ",_FURN " + _FURN
+                + ",_GAELREAD " + _GAELREAD
+                + ",_GAELSPK " + _GAELSPK
+                + ",_GAELSTND " + _GAELSTND
+                + ",_GAELWRIT " + _GAELWRIT
+                + ",_GENIND " + _GENIND
+                + ",_HEALTH " + _HEALTH
+                + ",_HEDIND " + _HEDIND
+                + ",_HEMPIND " + _HEMPIND
+                + ",_HHLTHIND " + _HHLTHIND
+                + ",_HHSGIND " + _HHSGIND
+                + ",_HNCARERS " + _HNCARERS
+                + ",_HNEARNRS " + _HNEARNRS
+                + ",_HNELDERS " + _HNELDERS
+                + ",_HNFAMS " + _HNFAMS
+                + ",_HNLLTI " + _HNLLTI
+                + ",_HNPRHLTH " + _HNPRHLTH
+                + ",_HNRESDNT " + _HNRESDNT
+                + ",_HOURSPW " + _HOURSPW
+                + ",_HOURSPWG " + _HOURSPWG
+                + ",_HRSOCGRD " + _HRSOCGRD
+                + ",_INDSTRY0 " + _INDSTRY0
+                + ",_IRISLANG " + _IRISLANG
+                + ",_ISCO " + _ISCO
+                + ",_LASTWORK " + _LASTWORK
+                + ",_LLTI " + _LLTI
+                + ",_LOWFLOR0 " + _LOWFLOR0
+                + ",_MARSTAT " + _MARSTAT
+                + ",_MIGIND " + _MIGIND
+                + ",_MIGORGN " + _MIGORGN
+                + ",_MULTETH " + _MULTETH
+                + ",_NSSEC " + _NSSEC
+                + ",_OCCUPNCY " + _OCCUPNCY
+                + ",_ONCPERIM " + _ONCPERIM
+                + ",_PROFQUAL " + _PROFQUAL
+                + ",_PROVCARE " + _PROVCARE
+                + ",_QUALVEWN " + _QUALVEWN
+                + ",_QUALVS " + _QUALVS
+                + ",_REGION " + _REGION
+                + ",_RELGEW " + _RELGEW
+                + ",_RELGS1 " + _RELGS1
+                + ",_RELIGN " + _RELIGN
+                + ",_RELTOHR " + _RELTOHR
+                + ",_ROOMSFLR " + _ROOMSFLR
+                + ",_ROOMSNUM " + _ROOMSNUM
+                + ",_SELFCONT " + _SELFCONT
+                + ",_SOCMIN " + _SOCMIN
+                + ",_SOCSUBMJ " + _SOCSUBMJ
+                + ",_STAHUK " + _STAHUK
+                + ",_SUPERVSR " + _SUPERVSR
+                + ",_TENUREW " + _TENUREW
+                + ",_TENURSN " + _TENURSN
+                + ",_TERMTIME " + _TERMTIME
+                + ",_TRANWRK0 " + _TRANWRK0
+                + ",_WLSHREAD " + _WLSHREAD
+                + ",_WLSHSPK " + _WLSHSPK
+                + ",_WLSHSTND " + _WLSHSTND
+                + ",_WLSHWRIT " + _WLSHWRIT
+                + ",_WORKFORC " + _WORKFORC
+                + ",_WRKPLCE0 " + _WRKPLCE0;
     }
 
     /**
      * Parses line to modify this setting this.RecordID=RecordID.
+     *
      * @param _RecordID
-     * @param line
-     *            The Comma Seperated Value <code>String</code>
-     * @return 
-     * @throws java.io.IOException 
+     * @param line The Comma Seperated Value <code>String</code>
+     * @return
+     * @throws java.io.IOException
      */
     public boolean parse(
             long _RecordID,
@@ -814,7 +819,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._ID
-     * @return 
+     *
+     * @return
      */
     public long get_ID() {
         return this._ID;
@@ -822,7 +828,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._PNUM
-     * @return 
+     *
+     * @return
      */
     public long get_PNUM() {
         return this._PNUM;
@@ -830,7 +837,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._SEX
-     * @return 
+     *
+     * @return
      */
     public boolean get_SEX() {
         return this._SEX;
@@ -838,7 +846,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._STUDENT
-     * @return 
+     *
+     * @return
      */
     public boolean get_STUDENT() {
         return this._STUDENT;
@@ -846,7 +855,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._ACCTYPE
-     * @return 
+     *
+     * @return
      */
     public short get_ACCTYPE() {
         return this._ACCTYPE;
@@ -854,7 +864,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._AGE0
-     * @return 
+     *
+     * @return
      */
     public short get_AGE0() {
         return this._AGE0;
@@ -862,7 +873,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._BATHWC
-     * @return 
+     *
+     * @return
      */
     public short get_BATHWC() {
         return this._BATHWC;
@@ -870,7 +882,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._CARS0
-     * @return 
+     *
+     * @return
      */
     public short get_CARS0() {
         return this._CARS0;
@@ -878,7 +891,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._CENHEAT0
-     * @return 
+     *
+     * @return
      */
     public short get_CENHEAT0() {
         return this._CENHEAT0;
@@ -886,7 +900,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._CESTATUS
-     * @return 
+     *
+     * @return
      */
     public short get_CESTATUS() {
         return this._CESTATUS;
@@ -894,7 +909,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._CETYPE
-     * @return 
+     *
+     * @return
      */
     public short get_CETYPE() {
         return this._CETYPE;
@@ -902,7 +918,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._COBIRT0
-     * @return 
+     *
+     * @return
      */
     public short get_COBIRT0() {
         return this._COBIRT0;
@@ -910,7 +927,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._COMBGN
-     * @return 
+     *
+     * @return
      */
     public short get_COMBGN() {
         return this._COMBGN;
@@ -918,7 +936,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._COUNTRY
-     * @return 
+     *
+     * @return
      */
     public short get_COUNTRY() {
         return this._COUNTRY;
@@ -926,7 +945,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._DENSITY
-     * @return 
+     *
+     * @return
      */
     public short get_DENSITY() {
         return this._DENSITY;
@@ -934,7 +954,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._DISTMOV0
-     * @return 
+     *
+     * @return
      */
     public short get_DISTMOV0() {
         return this._DISTMOV0;
@@ -942,7 +963,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._DISTWRK0
-     * @return 
+     *
+     * @return
      */
     public short get_DISTWRK0() {
         return this._DISTWRK0;
@@ -950,7 +972,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._ECONACT
-     * @return 
+     *
+     * @return
      */
     public short get_ECONACT() {
         return this._ECONACT;
@@ -958,7 +981,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._EDISDONO
-     * @return 
+     *
+     * @return
      */
     public short get_EDISDONO() {
         return this._EDISDONO;
@@ -966,7 +990,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._ETHEW
-     * @return 
+     *
+     * @return
      */
     public short get_ETHEW() {
         return this._ETHEW;
@@ -974,7 +999,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._ETHN
-     * @return 
+     *
+     * @return
      */
     public short get_ETHN() {
         return this._ETHN;
@@ -982,7 +1008,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._ETHS
-     * @return 
+     *
+     * @return
      */
     public short get_ETHS() {
         return this._ETHS;
@@ -990,7 +1017,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._EVERWORK
-     * @return 
+     *
+     * @return
      */
     public short get_EVERWORK() {
         return this._EVERWORK;
@@ -998,7 +1026,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._FAMTYP
-     * @return 
+     *
+     * @return
      */
     public short get_FAMTYP() {
         return this._FAMTYP;
@@ -1006,7 +1035,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._FNDEPCH
-     * @return 
+     *
+     * @return
      */
     public short get_FNDEPCH() {
         return this._FNDEPCH;
@@ -1014,7 +1044,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._FRECONAC
-     * @return 
+     *
+     * @return
      */
     public short get_FRECONAC() {
         return this._FRECONAC;
@@ -1022,7 +1053,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._FRNSSEC
-     * @return 
+     *
+     * @return
      */
     public short get_FRNSSEC() {
         return this._FRNSSEC;
@@ -1030,7 +1062,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._FRSEX
-     * @return 
+     *
+     * @return
      */
     public short get_FRSEX() {
         return this._FRSEX;
@@ -1038,7 +1071,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._FURN
-     * @return 
+     *
+     * @return
      */
     public short get_FURN() {
         return this._FURN;
@@ -1046,7 +1080,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._GAELREAD
-     * @return 
+     *
+     * @return
      */
     public short get_GAELREAD() {
         return this._GAELREAD;
@@ -1054,7 +1089,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._GAELSPK
-     * @return 
+     *
+     * @return
      */
     public short get_GAELSPK() {
         return this._GAELSPK;
@@ -1062,7 +1098,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._GAELSTND
-     * @return 
+     *
+     * @return
      */
     public short get_GAELSTND() {
         return this._GAELSTND;
@@ -1070,7 +1107,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._GAELWRIT
-     * @return 
+     *
+     * @return
      */
     public short get_GAELWRIT() {
         return this._GAELWRIT;
@@ -1078,7 +1116,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._GENIND
-     * @return 
+     *
+     * @return
      */
     public short get_GENIND() {
         return this._GENIND;
@@ -1086,7 +1125,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HEALTH
-     * @return 
+     *
+     * @return
      */
     public short get_HEALTH() {
         return this._HEALTH;
@@ -1094,7 +1134,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HEDIND
-     * @return 
+     *
+     * @return
      */
     public short get_HEDIND() {
         return this._HEDIND;
@@ -1102,7 +1143,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HEMPIND
-     * @return 
+     *
+     * @return
      */
     public short get_HEMPIND() {
         return this._HEMPIND;
@@ -1110,7 +1152,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HHLTHIND
-     * @return 
+     *
+     * @return
      */
     public short get_HHLTHIND() {
         return this._HHLTHIND;
@@ -1118,7 +1161,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HHSGIND
-     * @return 
+     *
+     * @return
      */
     public short get_HHSGIND() {
         return this._HHSGIND;
@@ -1126,7 +1170,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HNCARERS
-     * @return 
+     *
+     * @return
      */
     public short get_HNCARERS() {
         return this._HNCARERS;
@@ -1134,7 +1179,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HNEARNRS
-     * @return 
+     *
+     * @return
      */
     public short get_HNEARNRS() {
         return this._HNEARNRS;
@@ -1142,7 +1188,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HNELDERS
-     * @return 
+     *
+     * @return
      */
     public short get_HNELDERS() {
         return this._HNELDERS;
@@ -1150,7 +1197,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HNFAMS
-     * @return 
+     *
+     * @return
      */
     public short get_HNFAMS() {
         return this._HNFAMS;
@@ -1158,7 +1206,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HNLLTI
-     * @return 
+     *
+     * @return
      */
     public short get_HNLLTI() {
         return this._HNLLTI;
@@ -1166,7 +1215,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HNPRHLTH
-     * @return 
+     *
+     * @return
      */
     public short get_HNPRHLTH() {
         return this._HNPRHLTH;
@@ -1174,7 +1224,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HNRESDNT
-     * @return 
+     *
+     * @return
      */
     public short get_HNRESDNT() {
         return this._HNRESDNT;
@@ -1182,7 +1233,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HOURSPW
-     * @return 
+     *
+     * @return
      */
     public short get_HOURSPW() {
         return this._HOURSPW;
@@ -1190,7 +1242,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HOURSPWG
-     * @return 
+     *
+     * @return
      */
     public short get_HOURSPWG() {
         return this._HOURSPWG;
@@ -1198,7 +1251,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._HRSOCGRD
-     * @return 
+     *
+     * @return
      */
     public short get_HRSOCGRD() {
         return this._HRSOCGRD;
@@ -1206,7 +1260,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._INDSTRY0
-     * @return 
+     *
+     * @return
      */
     public short get_INDSTRY0() {
         return this._INDSTRY0;
@@ -1214,7 +1269,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._IRISLANG
-     * @return 
+     *
+     * @return
      */
     public short get_IRISLANG() {
         return this._IRISLANG;
@@ -1222,7 +1278,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._ISCO
-     * @return 
+     *
+     * @return
      */
     public short get_ISCO() {
         return this._ISCO;
@@ -1230,7 +1287,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._LASTWORK
-     * @return 
+     *
+     * @return
      */
     public short get_LASTWORK() {
         return this._LASTWORK;
@@ -1238,7 +1296,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._LLTI
-     * @return 
+     *
+     * @return
      */
     public short get_LLTI() {
         return this._LLTI;
@@ -1246,7 +1305,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._LOWFLOR0
-     * @return 
+     *
+     * @return
      */
     public short get_LOWFLOR0() {
         return this._LOWFLOR0;
@@ -1254,7 +1314,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._MARSTAT
-     * @return 
+     *
+     * @return
      */
     public short get_MARSTAT() {
         return this._MARSTAT;
@@ -1262,7 +1323,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._MIGIND
-     * @return 
+     *
+     * @return
      */
     public short get_MIGIND() {
         return this._MIGIND;
@@ -1270,7 +1332,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._MIGORGN
-     * @return 
+     *
+     * @return
      */
     public short get_MIGORGN() {
         return this._MIGORGN;
@@ -1278,7 +1341,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._MULTETH
-     * @return 
+     *
+     * @return
      */
     public short get_MULTETH() {
         return this._MULTETH;
@@ -1286,7 +1350,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._NSSEC
-     * @return 
+     *
+     * @return
      */
     public short get_NSSEC() {
         return this._NSSEC;
@@ -1294,7 +1359,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._OCCUPNCY
-     * @return 
+     *
+     * @return
      */
     public short get_OCCUPNCY() {
         return this._OCCUPNCY;
@@ -1302,7 +1368,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._ONCPERIM
-     * @return 
+     *
+     * @return
      */
     public short get_ONCPERIM() {
         return this._ONCPERIM;
@@ -1310,7 +1377,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._PROFQUAL
-     * @return 
+     *
+     * @return
      */
     public short get_PROFQUAL() {
         return this._PROFQUAL;
@@ -1318,7 +1386,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._PROVCARE
-     * @return 
+     *
+     * @return
      */
     public short get_PROVCARE() {
         return this._PROVCARE;
@@ -1326,7 +1395,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._QUALVEWN
-     * @return 
+     *
+     * @return
      */
     public short get_QUALVEWN() {
         return this._QUALVEWN;
@@ -1334,7 +1404,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._QUALVS
-     * @return 
+     *
+     * @return
      */
     public short get_QUALVS() {
         return this._QUALVS;
@@ -1342,7 +1413,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._REGION
-     * @return 
+     *
+     * @return
      */
     public short get_REGION() {
         return this._REGION;
@@ -1350,7 +1422,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._RELGEW
-     * @return 
+     *
+     * @return
      */
     public short get_RELGEW() {
         return this._RELGEW;
@@ -1358,7 +1431,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._RELGS1
-     * @return 
+     *
+     * @return
      */
     public short get_RELGS1() {
         return this._RELGS1;
@@ -1366,7 +1440,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._RELIGN
-     * @return 
+     *
+     * @return
      */
     public short get_RELIGN() {
         return this._RELIGN;
@@ -1374,7 +1449,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._RELTOHR
-     * @return 
+     *
+     * @return
      */
     public short get_RELTOHR() {
         return this._RELTOHR;
@@ -1382,7 +1458,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._ROOMSFLR
-     * @return 
+     *
+     * @return
      */
     public short get_ROOMSFLR() {
         return this._ROOMSFLR;
@@ -1390,7 +1467,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._ROOMSNUM
-     * @return 
+     *
+     * @return
      */
     public short get_ROOMSNUM() {
         return this._ROOMSNUM;
@@ -1398,7 +1476,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._SELFCONT
-     * @return 
+     *
+     * @return
      */
     public short get_SELFCONT() {
         return this._SELFCONT;
@@ -1406,7 +1485,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._SOCMIN
-     * @return 
+     *
+     * @return
      */
     public short get_SOCMIN() {
         return this._SOCMIN;
@@ -1414,7 +1494,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._SOCSUBMJ
-     * @return 
+     *
+     * @return
      */
     public short get_SOCSUBMJ() {
         return this._SOCSUBMJ;
@@ -1422,7 +1503,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._STAHUK
-     * @return 
+     *
+     * @return
      */
     public short get_STAHUK() {
         return this._STAHUK;
@@ -1430,7 +1512,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._SUPERVSR
-     * @return 
+     *
+     * @return
      */
     public short get_SUPERVSR() {
         return this._SUPERVSR;
@@ -1438,7 +1521,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._TENUREW
-     * @return 
+     *
+     * @return
      */
     public short get_TENUREW() {
         return this._TENUREW;
@@ -1446,7 +1530,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._TENURSN
-     * @return 
+     *
+     * @return
      */
     public short get_TENURSN() {
         return this._TENURSN;
@@ -1454,7 +1539,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._TERMTIME
-     * @return 
+     *
+     * @return
      */
     public short get_TERMTIME() {
         return this._TERMTIME;
@@ -1462,7 +1548,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._TRANWRK0
-     * @return 
+     *
+     * @return
      */
     public short get_TRANWRK0() {
         return this._TRANWRK0;
@@ -1470,7 +1557,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this.__WLSHREAD
-     * @return 
+     *
+     * @return
      */
     public short get_WLSHREAD() {
         return this._WLSHREAD;
@@ -1478,7 +1566,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._WLSHSPK
-     * @return 
+     *
+     * @return
      */
     public short get_WLSHSPK() {
         return this._WLSHSPK;
@@ -1486,7 +1575,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._WLSHSTND
-     * @return 
+     *
+     * @return
      */
     public short get_WLSHSTND() {
         return this._WLSHSTND;
@@ -1494,7 +1584,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._WLSHWRIT
-     * @return 
+     *
+     * @return
      */
     public short get_WLSHWRIT() {
         return this._WLSHWRIT;
@@ -1502,7 +1593,8 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._WORKFORC
-     * @return 
+     *
+     * @return
      */
     public short get_WORKFORC() {
         return this._WORKFORC;
@@ -1510,25 +1602,25 @@ public class Census_ISARDataRecord
 
     /**
      * Returns a copy of this._WRKPLCE0
-     * @return 
+     *
+     * @return
      */
     public short get_WRKPLCE0() {
         return this._WRKPLCE0;
     }
 
     /**
-     * _AGE0 is banded as follows: For ( 0 <= _AGE0 <= 15 ) or ( 75 <= _AGE0 <= 94
-     * ) _AGE0 represent individual years of age. For _AGE0 = 16, ( 16 <= age <=
-     * 20 ). Age range = 4. For _AGE0 = 20, ( 20 <= age <= 24 ). Age range = 4.
-     * For _AGE0 = 25, ( 25 <= age <= 29 ). Age range = 4. For _AGE0 = 30, ( 30 <=
-     * age <= 44 ). Age range = 14. For _AGE0 = 45, ( 45 <= age <= 59 ). Age
-     * range = 14. For _AGE0 = 60, ( 60 <= age <= 64 ). Age range = 4. For _AGE0 =
-     * 65, ( 65 <= age <= 69 ). Age range = 4. For _AGE0 = 70, ( 70 <= age <= 74
-     * ). Age range = 4. For _AGE0 = 95, ( 95 <= age ). For any banded age a
-     * random number between 0 and Age range is obtained and added to _AGE0. It
-     * is assumed that the for the open ended age the Age range is 4, i.e.
-     * people are less than 100 years old!
-     * @return 
+     * _AGE0 is banded as follows: For ( 0 <= _AGE0 <= 15 ) or ( 75 <= _AGE0 <=
+     * 94 ) _AGE0 represent individual years of age. For _AGE0 = 16, ( 16 <= age
+     * <= 20 ). Age range = 4. For _AGE0 = 20, ( 20 <= age <= 24 ). Age range =
+     * 4. For _AGE0 = 25, ( 25 <= age <= 29 ). Age range = 4. For _AGE0 = 30, (
+     * 30 <= age <= 44 ). Age range = 14. For _AGE0 = 45, ( 45 <= age <= 59 ).
+     * Age range = 14. For _AGE0 = 60, ( 60 <= age <= 64 ). Age range = 4. For
+     * _AGE0 = 65, ( 65 <= age <= 69 ). Age range = 4. For _AGE0 = 70, ( 70 <=
+     * age <= 74 ). Age range = 4. For _AGE0 = 95, ( 95 <= age ). For any banded
+     * age a random number between 0 and Age range is obtained and added to
+     * _AGE0. It is assumed that the for the open ended age the Age range is 4,
+     * i.e. people are less than 100 years old! @return
      */
     public int getAgeInt() {
         short AGE0 = this._AGE0;
@@ -1548,8 +1640,8 @@ public class Census_ISARDataRecord
      * Writes <code>this</code> to <code>aRandomAccessFile</code> at the current
      * position.
      *
-     * @param aRandomAccessFile
-     *            The <code>RandomAccessFile</code> this is written to.
+     * @param aRandomAccessFile The <code>RandomAccessFile</code> this is
+     * written to.
      * @throws java.io.IOException
      */
     @Override
@@ -1655,7 +1747,8 @@ public class Census_ISARDataRecord
 
     /**
      * Overrides equals in Object
-     * @return 
+     *
+     * @return
      */
     @Override
     public boolean equals(Object object) {
@@ -1672,14 +1765,14 @@ public class Census_ISARDataRecord
 
     /**
      * Returns the size of record in bytes as a long 198
-     * @return 
+     *
+     * @return
      */
     @Override
     public long getSizeInBytes() {
         long result = super.getSizeInBytes();
-        result += (
-                ((2L * (long) Long.SIZE) +
-                (84L * (long) Short.SIZE)) / getNumberOfBitsInByte()) + 2L;
+        result += (((2L * (long) Long.SIZE)
+                + (84L * (long) Short.SIZE)) / getNumberOfBitsInByte()) + 2L;
         return result;
     }
 }

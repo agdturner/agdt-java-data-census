@@ -24,14 +24,14 @@ import java.io.RandomAccessFile;
 import java.util.Random;
 import java.util.StringTokenizer;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.data.Data_AbstractRecord;
 import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
 
 /**
  * For representing a Household SAR DAta Record and providing safe access to the
  * data.
  */
-public class Census_HSARDataRecord extends Generic_AbstractDataRecord {
+public class Census_HSARDataRecord extends Data_AbstractRecord {
 
     /**
      * A household identifier (int should be sufficient!)

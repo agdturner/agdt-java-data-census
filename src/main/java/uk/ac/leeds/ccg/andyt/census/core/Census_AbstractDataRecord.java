@@ -2,26 +2,26 @@
  * A component of a library for
  * <a href="http://www.geog.leeds.ac.uk/people/a.turner/projects/MoSeS">MoSeS</a>.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  */
 package uk.ac.leeds.ccg.andyt.census.core;
 
-import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataRecord;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.io.Serializable;
+import uk.ac.leeds.ccg.andyt.data.Data_AbstractRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 
 /**
@@ -32,15 +32,13 @@ import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
  * href="http://www.geog.leeds.ac.uk/people/a.turner/">Andy Turner</a>, <a
  * href="http://www.leeds.ac.uk//">University of Leeds</a>.</li>
  * </ul>
- * 
+ *
  * @author <a href="http://www.geog.leeds.ac.uk/people/a.turner/">Andy
- *         Turner</a>
+ * Turner</a>
  * @version 1.0.0, 2006-08-10
  * @see AbstractDataHandler
  */
-public abstract class Census_AbstractDataRecord
-        extends Generic_AbstractDataRecord
-        implements Serializable, Comparable {
+public abstract class Census_AbstractDataRecord extends Data_AbstractRecord implements Serializable, Comparable {
 
     /**
      * Serializable class version number for swapping
@@ -55,8 +53,8 @@ public abstract class Census_AbstractDataRecord
     /**
      * Initialise from aCASDataRecord
      *
-     * @param aCASDataRecord
-     *            The <code>Census_AbstractDataRecord</code> used to initialise.
+     * @param aCASDataRecord The <code>Census_AbstractDataRecord</code> used to
+     * initialise.
      */
     protected void init(Census_AbstractDataRecord aCASDataRecord) {
         super.init(aCASDataRecord);
@@ -91,7 +89,7 @@ public abstract class Census_AbstractDataRecord
 
     /**
      * @return A Comma Separated Version (CSV) <code>String</code> of the values
-     *         of the <code>Fields</code> of <code>this</code>.
+     * of the <code>Fields</code> of <code>this</code>.
      */
     @Override
     public String toCSVString() {
@@ -102,7 +100,7 @@ public abstract class Census_AbstractDataRecord
 
     /**
      * @return A Comma Seperated Version (CSV) <code>String</code> of the names
-     *         of the <code>Fields</code> of <code>this</code>
+     * of the <code>Fields</code> of <code>this</code>
      */
     @Override
     public String toCSVStringFields() {
@@ -119,8 +117,7 @@ public abstract class Census_AbstractDataRecord
      * to aRandomAccessFile.
      *
      * @see Generic_AbstractDataRecord#write(RandomAccessFile)
-     * @param aRandomAccessFile
-     *            The <code>RandomAccessFile</code> written to.
+     * @param aRandomAccessFile The <code>RandomAccessFile</code> written to.
      */
     @Override
     public void write(
@@ -141,14 +138,11 @@ public abstract class Census_AbstractDataRecord
      * position using RecordID as the RecordID, hashCode as hashCode and
      * zoneCode as zoneCode.
      *
-     * @param aRandomAccessFile
-     *            The <code>RandomAccessFile</code> this is written to.
-     * @param RecordID
-     *            The RecordID to be written.
-     * @param hashCode
-     *            The hashCode to be written.
-     * @param zoneCode
-     *            The zoneCode to be written.
+     * @param aRandomAccessFile The <code>RandomAccessFile</code> this is
+     * written to.
+     * @param RecordID The RecordID to be written.
+     * @param hashCode The hashCode to be written.
+     * @param zoneCode The zoneCode to be written.
      */
     public void write(
             RandomAccessFile aRandomAccessFile,
@@ -201,8 +195,8 @@ public abstract class Census_AbstractDataRecord
 
     /**
      * @return The size (in <code>bytes</code>) of this as a <code>long</code>.
-     *         This does not account for the private Fields
-     *         <code>serialVersionUID</code>.
+     * This does not account for the private Fields
+     * <code>serialVersionUID</code>.
      */
     @Override
     public long getSizeInBytes() {
@@ -213,7 +207,8 @@ public abstract class Census_AbstractDataRecord
 
     /**
      * Returns a copy of this.Zone_Code
-     * @return 
+     *
+     * @return
      */
     public char[] getZone_Code() {
         int Zone_CodeLength = this.Zone_Code.length;
@@ -223,7 +218,7 @@ public abstract class Census_AbstractDataRecord
         }
         return tZone_Code;
     }
-    
+
     public void setZone_Code(char[] v) {
         this.Zone_Code = v;
     }

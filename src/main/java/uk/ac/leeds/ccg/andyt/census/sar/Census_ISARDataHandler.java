@@ -29,15 +29,15 @@ import java.io.StreamTokenizer;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
+import uk.ac.leeds.ccg.andyt.data.Data_AbstractHandler;
+import uk.ac.leeds.ccg.andyt.data.Data_AbstractRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
-import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataHandler;
-import uk.ac.leeds.ccg.andyt.data.Generic_AbstractDataRecord;
 
 /**
  * For accessing ISARDataRecords and information about them.
  */
-public class Census_ISARDataHandler extends Generic_AbstractDataHandler {
+public class Census_ISARDataHandler extends Data_AbstractHandler {
 
     /**
      * For storing ISARDataRecords.
@@ -185,7 +185,7 @@ public class Census_ISARDataHandler extends Generic_AbstractDataHandler {
      *            to be returned.
      * @return 
      */
-    public Generic_AbstractDataRecord getDataRecord(long RecordID) {
+    public Data_AbstractRecord getDataRecord(long RecordID) {
         return getISARDataRecord(RecordID);
     }
 
