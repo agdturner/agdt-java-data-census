@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * A <code>class</code> for representing a CASKS002 Data Record and providing
@@ -162,23 +162,23 @@ public class Census_CASKS002DataRecord extends Census_AbstractDataRecord {
         this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS002
-        this.agesAll = StaticConverter.to_int(fields[1]);
-        this.ages0to4 = StaticConverter.to_int(fields[2]);
-        this.ages5to7 = StaticConverter.to_int(fields[3]);
-        this.ages8to9 = StaticConverter.to_int(fields[4]);
-        this.ages10to14 = StaticConverter.to_int(fields[5]);
-        this.age15 = StaticConverter.to_int(fields[6]);
-        this.ages16to17 = StaticConverter.to_int(fields[7]);
-        this.ages18to19 = StaticConverter.to_int(fields[8]);
-        this.ages20to24 = StaticConverter.to_int(fields[9]);
-        this.ages25to29 = StaticConverter.to_int(fields[10]);
-        this.ages30to44 = StaticConverter.to_int(fields[11]);
-        this.ages45to59 = StaticConverter.to_int(fields[12]);
-        this.ages60to64 = StaticConverter.to_int(fields[13]);
-        this.ages65to74 = StaticConverter.to_int(fields[14]);
-        this.ages75to84 = StaticConverter.to_int(fields[15]);
-        this.ages85to89 = StaticConverter.to_int(fields[16]);
-        this.ages90AndOver = StaticConverter.to_int(fields[17]);
+        this.agesAll = Math_Integer.parseInt(fields[1]);
+        this.ages0to4 = Math_Integer.parseInt(fields[2]);
+        this.ages5to7 = Math_Integer.parseInt(fields[3]);
+        this.ages8to9 = Math_Integer.parseInt(fields[4]);
+        this.ages10to14 = Math_Integer.parseInt(fields[5]);
+        this.age15 = Math_Integer.parseInt(fields[6]);
+        this.ages16to17 = Math_Integer.parseInt(fields[7]);
+        this.ages18to19 = Math_Integer.parseInt(fields[8]);
+        this.ages20to24 = Math_Integer.parseInt(fields[9]);
+        this.ages25to29 = Math_Integer.parseInt(fields[10]);
+        this.ages30to44 = Math_Integer.parseInt(fields[11]);
+        this.ages45to59 = Math_Integer.parseInt(fields[12]);
+        this.ages60to64 = Math_Integer.parseInt(fields[13]);
+        this.ages65to74 = Math_Integer.parseInt(fields[14]);
+        this.ages75to84 = Math_Integer.parseInt(fields[15]);
+        this.ages85to89 = Math_Integer.parseInt(fields[16]);
+        this.ages90AndOver = Math_Integer.parseInt(fields[17]);
     }
 
     /**

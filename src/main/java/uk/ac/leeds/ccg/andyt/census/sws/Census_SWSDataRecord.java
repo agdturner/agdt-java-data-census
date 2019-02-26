@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * A <code>class</code> for representing a SWS
@@ -97,7 +97,7 @@ public class Census_SWSDataRecord extends Census_AbstractDataRecord {
         this.RecordID = RecordID;
         this.Zone_Code = fields[0].toCharArray();
         this._Destination_Zone_Code = fields[1].toCharArray();
-        this._Total = StaticConverter.to_int(fields[2]);
+        this._Total = Math_Integer.parseInt(fields[2]);
     }
 
     /**

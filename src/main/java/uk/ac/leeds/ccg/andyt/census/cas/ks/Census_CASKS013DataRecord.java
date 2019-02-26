@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * For representing CAS KS013 Records and providing safe access to the data.
@@ -118,19 +118,19 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
             this.RecordID = RecordID;
             this.Zone_Code = fields[0].substring(1, 11).toCharArray();
             // From Table KS013
-            this._AllPeopleAged16to74 = StaticConverter.to_int(fields[1]);
-            this._PeopleAged16to74WithNoQualifications = StaticConverter.to_int(fields[2]);
-            this._PeopleAged16to74WithHighestQualificationAttainedLevel1 = StaticConverter.to_int(fields[3]);
-            this._PeopleAged16to74WithHighestQualificationAttainedLevel2 = StaticConverter.to_int(fields[4]);
-            this._PeopleAged16to74WithHighestQualificationAttainedLevel3 = StaticConverter.to_int(fields[5]);
-            this._PeopleAged16to74WithHighestQualificationAttainedLevel4and5 = StaticConverter.to_int(fields[6]);
+            this._AllPeopleAged16to74 = Math_Integer.parseInt(fields[1]);
+            this._PeopleAged16to74WithNoQualifications = Math_Integer.parseInt(fields[2]);
+            this._PeopleAged16to74WithHighestQualificationAttainedLevel1 = Math_Integer.parseInt(fields[3]);
+            this._PeopleAged16to74WithHighestQualificationAttainedLevel2 = Math_Integer.parseInt(fields[4]);
+            this._PeopleAged16to74WithHighestQualificationAttainedLevel3 = Math_Integer.parseInt(fields[5]);
+            this._PeopleAged16to74WithHighestQualificationAttainedLevel4and5 = Math_Integer.parseInt(fields[6]);
             // this._PeopleAged16to74WithOtherQualificationsLevelUnknown =
-            // StaticConverter.to_int( fields[ 7 ] );
-            this._FullTimeStudentsAndSchoolchildrenAged16to17 = StaticConverter.to_int(fields[7]);
-            this._FullTimeStudentsAndSchoolchildrenAged18to74 = StaticConverter.to_int(fields[8]);
-            this._FullTimeStudentsAged18to74EconomicallyActiveInEmployment = StaticConverter.to_int(fields[9]);
-            this._FullTimeStudentsAged18to74EconomicallyActiveUnemployed = StaticConverter.to_int(fields[10]);
-            this._FullTimeStudentsAged18to74EconomicallyInactive = StaticConverter.to_int(fields[11]);
+            // Math_Integer.parseInt( fields[ 7 ] );
+            this._FullTimeStudentsAndSchoolchildrenAged16to17 = Math_Integer.parseInt(fields[7]);
+            this._FullTimeStudentsAndSchoolchildrenAged18to74 = Math_Integer.parseInt(fields[8]);
+            this._FullTimeStudentsAged18to74EconomicallyActiveInEmployment = Math_Integer.parseInt(fields[9]);
+            this._FullTimeStudentsAged18to74EconomicallyActiveUnemployed = Math_Integer.parseInt(fields[10]);
+            this._FullTimeStudentsAged18to74EconomicallyInactive = Math_Integer.parseInt(fields[11]);
         } else {
             if (country.equalsIgnoreCase("Northern Ireland")) {
                 String[] fieldsDummy = line.split(",");
@@ -143,17 +143,17 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
                 this.RecordID = RecordID;
                 this.Zone_Code = fields[0].substring(1, 11).toCharArray();
                 // From Table KS013
-                this._AllPeopleAged16to74 = StaticConverter.to_int(fields[1]);
-                this._PeopleAged16to74WithNoQualifications = StaticConverter.to_int(fields[2]);
-                this._PeopleAged16to74WithHighestQualificationAttainedLevel1 = StaticConverter.to_int(fields[3]);
-                this._PeopleAged16to74WithHighestQualificationAttainedLevel2 = StaticConverter.to_int(fields[4]);
-                this._PeopleAged16to74WithHighestQualificationAttainedLevel3 = StaticConverter.to_int(fields[5]);
-                this._PeopleAged16to74WithHighestQualificationAttainedLevel4and5 = StaticConverter.to_int(fields[6]) + StaticConverter.to_int(fields[7]);
-                this._FullTimeStudentsAndSchoolchildrenAged16to17 = StaticConverter.to_int(fields[8]);
-                this._FullTimeStudentsAndSchoolchildrenAged18to74 = StaticConverter.to_int(fields[9]);
-                this._FullTimeStudentsAged18to74EconomicallyActiveInEmployment = StaticConverter.to_int(fields[10]);
-                this._FullTimeStudentsAged18to74EconomicallyActiveUnemployed = StaticConverter.to_int(fields[11]);
-                this._FullTimeStudentsAged18to74EconomicallyInactive = StaticConverter.to_int(fields[12]);
+                this._AllPeopleAged16to74 = Math_Integer.parseInt(fields[1]);
+                this._PeopleAged16to74WithNoQualifications = Math_Integer.parseInt(fields[2]);
+                this._PeopleAged16to74WithHighestQualificationAttainedLevel1 = Math_Integer.parseInt(fields[3]);
+                this._PeopleAged16to74WithHighestQualificationAttainedLevel2 = Math_Integer.parseInt(fields[4]);
+                this._PeopleAged16to74WithHighestQualificationAttainedLevel3 = Math_Integer.parseInt(fields[5]);
+                this._PeopleAged16to74WithHighestQualificationAttainedLevel4and5 = Math_Integer.parseInt(fields[6]) + Math_Integer.parseInt(fields[7]);
+                this._FullTimeStudentsAndSchoolchildrenAged16to17 = Math_Integer.parseInt(fields[8]);
+                this._FullTimeStudentsAndSchoolchildrenAged18to74 = Math_Integer.parseInt(fields[9]);
+                this._FullTimeStudentsAged18to74EconomicallyActiveInEmployment = Math_Integer.parseInt(fields[10]);
+                this._FullTimeStudentsAged18to74EconomicallyActiveUnemployed = Math_Integer.parseInt(fields[11]);
+                this._FullTimeStudentsAged18to74EconomicallyInactive = Math_Integer.parseInt(fields[12]);
             } else {
                 String[] fieldsDummy = line.split(",");
                 String[] fields = new String[12];
@@ -166,19 +166,19 @@ public class Census_CASKS013DataRecord extends Census_AbstractDataRecord {
                 this.RecordID = RecordID;
                 this.Zone_Code = fields[0].substring(1, 11).toCharArray();
                 // From Table KS013
-                this._AllPeopleAged16to74 = StaticConverter.to_int(fields[1]);
-                this._PeopleAged16to74WithNoQualifications = StaticConverter.to_int(fields[2]);
-                this._PeopleAged16to74WithHighestQualificationAttainedLevel1 = StaticConverter.to_int(fields[3]);
-                this._PeopleAged16to74WithHighestQualificationAttainedLevel2 = StaticConverter.to_int(fields[4]);
-                this._PeopleAged16to74WithHighestQualificationAttainedLevel3 = StaticConverter.to_int(fields[5]);
-                this._PeopleAged16to74WithHighestQualificationAttainedLevel4and5 = StaticConverter.to_int(fields[6]);
+                this._AllPeopleAged16to74 = Math_Integer.parseInt(fields[1]);
+                this._PeopleAged16to74WithNoQualifications = Math_Integer.parseInt(fields[2]);
+                this._PeopleAged16to74WithHighestQualificationAttainedLevel1 = Math_Integer.parseInt(fields[3]);
+                this._PeopleAged16to74WithHighestQualificationAttainedLevel2 = Math_Integer.parseInt(fields[4]);
+                this._PeopleAged16to74WithHighestQualificationAttainedLevel3 = Math_Integer.parseInt(fields[5]);
+                this._PeopleAged16to74WithHighestQualificationAttainedLevel4and5 = Math_Integer.parseInt(fields[6]);
                 // this._PeopleAged16to74WithOtherQualificationsLevelUnknown =
-                // StaticConverter.to_int( fields[ 7 ] );
-                this._FullTimeStudentsAndSchoolchildrenAged16to17 = StaticConverter.to_int(fields[7]);
-                this._FullTimeStudentsAndSchoolchildrenAged18to74 = StaticConverter.to_int(fields[8]);
-                this._FullTimeStudentsAged18to74EconomicallyActiveInEmployment = StaticConverter.to_int(fields[9]);
-                this._FullTimeStudentsAged18to74EconomicallyActiveUnemployed = StaticConverter.to_int(fields[10]);
-                this._FullTimeStudentsAged18to74EconomicallyInactive = StaticConverter.to_int(fields[11]);
+                // Math_Integer.parseInt( fields[ 7 ] );
+                this._FullTimeStudentsAndSchoolchildrenAged16to17 = Math_Integer.parseInt(fields[7]);
+                this._FullTimeStudentsAndSchoolchildrenAged18to74 = Math_Integer.parseInt(fields[8]);
+                this._FullTimeStudentsAged18to74EconomicallyActiveInEmployment = Math_Integer.parseInt(fields[9]);
+                this._FullTimeStudentsAged18to74EconomicallyActiveUnemployed = Math_Integer.parseInt(fields[10]);
+                this._FullTimeStudentsAged18to74EconomicallyInactive = Math_Integer.parseInt(fields[11]);
             }
         }
     }

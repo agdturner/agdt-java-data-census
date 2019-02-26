@@ -22,7 +22,7 @@ import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * A <code>class</code> for representing a CAS044 Data Record and providing safe
@@ -146,16 +146,16 @@ public class Census_CAS044DataRecord extends Census_AbstractDataRecord {
         this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table CAS044
-        _AllHRPs = StaticConverter.to_int(fields[1]);
-        _HRP_HigherManagerialAndProfessionalOccupations = StaticConverter.to_int(fields[12]);
-        _HRP_LowerManagerialAndProfessionalOccupations = StaticConverter.to_int(fields[23]);
-        _HRP_IntermediateOccupations = StaticConverter.to_int(fields[34]);
-        _HRP_SmallEmployersAndOwnAccountWorkers = StaticConverter.to_int(fields[45]);
-        _HRP_LowerSupervisoryAndTechnicalOccupations = StaticConverter.to_int(fields[56]);
-        _HRP_SemiRoutineOccupations = StaticConverter.to_int(fields[67]);
-        _HRP_RoutineOccupations = StaticConverter.to_int(fields[78]);
-        _HRP_NeverWorkedOrLongTermUnemployed = StaticConverter.to_int(fields[89]);
-        _HRP_NotClassified = StaticConverter.to_int(fields[100]);
+        _AllHRPs = Math_Integer.parseInt(fields[1]);
+        _HRP_HigherManagerialAndProfessionalOccupations = Math_Integer.parseInt(fields[12]);
+        _HRP_LowerManagerialAndProfessionalOccupations = Math_Integer.parseInt(fields[23]);
+        _HRP_IntermediateOccupations = Math_Integer.parseInt(fields[34]);
+        _HRP_SmallEmployersAndOwnAccountWorkers = Math_Integer.parseInt(fields[45]);
+        _HRP_LowerSupervisoryAndTechnicalOccupations = Math_Integer.parseInt(fields[56]);
+        _HRP_SemiRoutineOccupations = Math_Integer.parseInt(fields[67]);
+        _HRP_RoutineOccupations = Math_Integer.parseInt(fields[78]);
+        _HRP_NeverWorkedOrLongTermUnemployed = Math_Integer.parseInt(fields[89]);
+        _HRP_NotClassified = Math_Integer.parseInt(fields[100]);
     }
 
     /**

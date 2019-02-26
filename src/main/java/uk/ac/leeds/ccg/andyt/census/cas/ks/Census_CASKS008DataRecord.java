@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * For representing CAS KS008 Records and providing safe access to the data.
@@ -118,15 +118,15 @@ public class Census_CASKS008DataRecord extends Census_AbstractDataRecord {
         this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS008
-        this.allPeople = StaticConverter.to_int(fields[1]);
-        this.peopleWithLimitingLongTermIllness = StaticConverter.to_int(fields[2]);
-        this.peopleOfWorkingAgeWithLimitingLongTermIllness = StaticConverter.to_int(fields[3]);
-        this.peopleWhoseGeneralHealthWasGood = StaticConverter.to_int(fields[4]);
-        this.peopleWhoseGeneralHealthWasFairlyGood = StaticConverter.to_int(fields[5]);
-        this.peopleWhoseGeneralHealthWasNotGood = StaticConverter.to_int(fields[6]);
-        this.peopleWhoProvideUnpaidCare1to19HoursAWeek = StaticConverter.to_int(fields[7]);
-        this.peopleWhoProvideUnpaidCare20to49HoursAWeek = StaticConverter.to_int(fields[8]);
-        this.peopleWhoProvideUnpaidCare50rMoreHoursAWeek = StaticConverter.to_int(fields[9]);
+        this.allPeople = Math_Integer.parseInt(fields[1]);
+        this.peopleWithLimitingLongTermIllness = Math_Integer.parseInt(fields[2]);
+        this.peopleOfWorkingAgeWithLimitingLongTermIllness = Math_Integer.parseInt(fields[3]);
+        this.peopleWhoseGeneralHealthWasGood = Math_Integer.parseInt(fields[4]);
+        this.peopleWhoseGeneralHealthWasFairlyGood = Math_Integer.parseInt(fields[5]);
+        this.peopleWhoseGeneralHealthWasNotGood = Math_Integer.parseInt(fields[6]);
+        this.peopleWhoProvideUnpaidCare1to19HoursAWeek = Math_Integer.parseInt(fields[7]);
+        this.peopleWhoProvideUnpaidCare20to49HoursAWeek = Math_Integer.parseInt(fields[8]);
+        this.peopleWhoProvideUnpaidCare50rMoreHoursAWeek = Math_Integer.parseInt(fields[9]);
     }
 
     /**

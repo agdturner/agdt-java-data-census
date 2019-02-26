@@ -22,7 +22,7 @@ import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * For representing CAS UV003 Records and providing safe access to the data.
@@ -74,9 +74,9 @@ public class Census_CASUV003DataRecord extends Census_AbstractDataRecord {
         this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table UV003
-        this.allPeople = StaticConverter.to_int(fields[1]);
-        this.males = StaticConverter.to_int(fields[2]);
-        this.females = StaticConverter.to_int(fields[3]);
+        this.allPeople = Math_Integer.parseInt(fields[1]);
+        this.males = Math_Integer.parseInt(fields[2]);
+        this.females = Math_Integer.parseInt(fields[3]);
     }
 
     /**

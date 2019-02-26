@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * For representing CAS KS020 Records and providing safe access to the data.
@@ -140,22 +140,22 @@ public class Census_CASKS020DataRecord extends Census_AbstractDataRecord {
         this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS020
-        this.allHouseholds = StaticConverter.to_int(fields[1]);
-        this.householdsComprisingOnePensioner = StaticConverter.to_int(fields[2]);
-        this.householdsComprisingOnePersonOtherThanPensioner = StaticConverter.to_int(fields[3]);
-        this.householdsComprisingOneFamilyAndNoOthersAllPensioners = StaticConverter.to_int(fields[4]);
-        this.householdsComprisingOneFamilyAndNoOthersMarriedCoupleHouseholdsNoChildren = StaticConverter.to_int(fields[5]);
-        this.householdsComprisingOneFamilyAndNoOthersMarriedCoupleHouseholdsWithDependentChildren = StaticConverter.to_int(fields[6]);
-        this.householdsComprisingOneFamilyAndNoOthersMarriedCoupleHouseholdsAllChildrenNonDependent = StaticConverter.to_int(fields[7]);
-        this.householdsComprisingOneFamilyAndNoOthersCohabitingCoupleHouseholdsNoChildren = StaticConverter.to_int(fields[8]);
-        this.householdsComprisingOneFamilyAndNoOthersCohabitingCoupleHouseholdsWithDependentChildren = StaticConverter.to_int(fields[9]);
-        this.householdsComprisingOneFamilyAndNoOthersCohabitingCoupleHouseholdsAllChildrenNonDependent = StaticConverter.to_int(fields[10]);
-        this.householdsComprisingOneFamilyAndNoOthersLoneParentHouseholdsWithDependentChildren = StaticConverter.to_int(fields[11]);
-        this.householdsComprisingOneFamilyAndNoOthersLoneParentHouseholdsAllChildrenNonDependent = StaticConverter.to_int(fields[12]);
-        this.householdsComprisingOtherThanOneFamilyWithDependentChildren = StaticConverter.to_int(fields[13]);
-        this.householdsComprisingOtherThanOneFamilyAllStudent = StaticConverter.to_int(fields[14]);
-        this.householdsComprisingOtherThanOneFamilyAllPensioner = StaticConverter.to_int(fields[15]);
-        this.householdsComprisingOtherThanOneFamilyOther = StaticConverter.to_int(fields[16]);
+        this.allHouseholds = Math_Integer.parseInt(fields[1]);
+        this.householdsComprisingOnePensioner = Math_Integer.parseInt(fields[2]);
+        this.householdsComprisingOnePersonOtherThanPensioner = Math_Integer.parseInt(fields[3]);
+        this.householdsComprisingOneFamilyAndNoOthersAllPensioners = Math_Integer.parseInt(fields[4]);
+        this.householdsComprisingOneFamilyAndNoOthersMarriedCoupleHouseholdsNoChildren = Math_Integer.parseInt(fields[5]);
+        this.householdsComprisingOneFamilyAndNoOthersMarriedCoupleHouseholdsWithDependentChildren = Math_Integer.parseInt(fields[6]);
+        this.householdsComprisingOneFamilyAndNoOthersMarriedCoupleHouseholdsAllChildrenNonDependent = Math_Integer.parseInt(fields[7]);
+        this.householdsComprisingOneFamilyAndNoOthersCohabitingCoupleHouseholdsNoChildren = Math_Integer.parseInt(fields[8]);
+        this.householdsComprisingOneFamilyAndNoOthersCohabitingCoupleHouseholdsWithDependentChildren = Math_Integer.parseInt(fields[9]);
+        this.householdsComprisingOneFamilyAndNoOthersCohabitingCoupleHouseholdsAllChildrenNonDependent = Math_Integer.parseInt(fields[10]);
+        this.householdsComprisingOneFamilyAndNoOthersLoneParentHouseholdsWithDependentChildren = Math_Integer.parseInt(fields[11]);
+        this.householdsComprisingOneFamilyAndNoOthersLoneParentHouseholdsAllChildrenNonDependent = Math_Integer.parseInt(fields[12]);
+        this.householdsComprisingOtherThanOneFamilyWithDependentChildren = Math_Integer.parseInt(fields[13]);
+        this.householdsComprisingOtherThanOneFamilyAllStudent = Math_Integer.parseInt(fields[14]);
+        this.householdsComprisingOtherThanOneFamilyAllPensioner = Math_Integer.parseInt(fields[15]);
+        this.householdsComprisingOtherThanOneFamilyOther = Math_Integer.parseInt(fields[16]);
     }
 
     /**

@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * For representing CAS KS14b Records and providing safe access to the data.
@@ -131,18 +131,18 @@ public class Census_CASKS14bDataRecord extends Census_AbstractDataRecord {
         this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS14b
-        this.malesAged16to74 = StaticConverter.to_int(fields[1]);
-        this.malesAged16to74LargeEmployersAndHigherManagerialOccupations = StaticConverter.to_int(fields[2]);
-        this.malesAged16to74HigherProfessionalOccupations = StaticConverter.to_int(fields[3]);
-        this.malesAged16to74LowerManagerialAndProfessionalOccupationsIntermediate = StaticConverter.to_int(fields[4]);
-        this.malesAged16to74IntermediateOccupations = StaticConverter.to_int(fields[5]);
-        this.malesAged16to74SmallEmployersAndOwnAccountWorkers = StaticConverter.to_int(fields[6]);
-        this.malesAged16to74LowerSupervisoryAndTechnicalOccupations = StaticConverter.to_int(fields[7]);
-        this.malesAged16to74SemiRoutineOccupations = StaticConverter.to_int(fields[8]);
-        this.malesAged16to74RoutineOccupations = StaticConverter.to_int(fields[9]);
-        this.malesAged16to74NeverWorked = StaticConverter.to_int(fields[10]);
-        this.malesAged16to74LongTermUnemployed = StaticConverter.to_int(fields[11]);
-        this.malesAged16to74FullTimeStudents = StaticConverter.to_int(fields[12]);
+        this.malesAged16to74 = Math_Integer.parseInt(fields[1]);
+        this.malesAged16to74LargeEmployersAndHigherManagerialOccupations = Math_Integer.parseInt(fields[2]);
+        this.malesAged16to74HigherProfessionalOccupations = Math_Integer.parseInt(fields[3]);
+        this.malesAged16to74LowerManagerialAndProfessionalOccupationsIntermediate = Math_Integer.parseInt(fields[4]);
+        this.malesAged16to74IntermediateOccupations = Math_Integer.parseInt(fields[5]);
+        this.malesAged16to74SmallEmployersAndOwnAccountWorkers = Math_Integer.parseInt(fields[6]);
+        this.malesAged16to74LowerSupervisoryAndTechnicalOccupations = Math_Integer.parseInt(fields[7]);
+        this.malesAged16to74SemiRoutineOccupations = Math_Integer.parseInt(fields[8]);
+        this.malesAged16to74RoutineOccupations = Math_Integer.parseInt(fields[9]);
+        this.malesAged16to74NeverWorked = Math_Integer.parseInt(fields[10]);
+        this.malesAged16to74LongTermUnemployed = Math_Integer.parseInt(fields[11]);
+        this.malesAged16to74FullTimeStudents = Math_Integer.parseInt(fields[12]);
     }
 
     /**

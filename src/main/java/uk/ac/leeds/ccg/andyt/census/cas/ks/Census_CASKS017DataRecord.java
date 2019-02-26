@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * For representing CAS KS017 Records and providing safe access to the data.
@@ -104,13 +104,13 @@ public class Census_CASKS017DataRecord extends Census_AbstractDataRecord {
         this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS017
-        this.allHouseholds = StaticConverter.to_int(fields[1]);
-        this.householdsWith0CarsOrVans = StaticConverter.to_int(fields[2]);
-        this.householdsWith1CarOrVan = StaticConverter.to_int(fields[3]);
-        this.householdsWith2CarsOrVans = StaticConverter.to_int(fields[4]);
-        this.householdsWith3CarsOrVans = StaticConverter.to_int(fields[5]);
-        this.householdsWith4OrMoreCarsOrVans = StaticConverter.to_int(fields[6]);
-        this.allCarsOrVansInTheArea = StaticConverter.to_int(fields[7]);
+        this.allHouseholds = Math_Integer.parseInt(fields[1]);
+        this.householdsWith0CarsOrVans = Math_Integer.parseInt(fields[2]);
+        this.householdsWith1CarOrVan = Math_Integer.parseInt(fields[3]);
+        this.householdsWith2CarsOrVans = Math_Integer.parseInt(fields[4]);
+        this.householdsWith3CarsOrVans = Math_Integer.parseInt(fields[5]);
+        this.householdsWith4OrMoreCarsOrVans = Math_Integer.parseInt(fields[6]);
+        this.allCarsOrVansInTheArea = Math_Integer.parseInt(fields[7]);
     }
 
     /**

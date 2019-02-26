@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * For representing CAS KS023 Records and providing safe access to the data.
@@ -158,8 +158,8 @@ public class Census_CASKS023DataRecord extends Census_AbstractDataRecord {
         this.RecordID = RecordID;
         this.Zone_Code = fields[0].substring(1, 11).toCharArray();
         // From Table KS023
-        this.allCommunalEstablishments = StaticConverter.to_int(fields[1]);
-        this.numberOfResidents = StaticConverter.to_int(fields[2]);
+        this.allCommunalEstablishments = Math_Integer.parseInt(fields[1]);
+        this.numberOfResidents = Math_Integer.parseInt(fields[2]);
     // aCASKS023DataRecord.residentsLivingInMedicalAndCareEstablishmentsNHSPsychiatric
     // = toInt( fields[ 3 ] );
     // aCASKS023DataRecord.residentsLivingInMedicalAndCareEstablishmentsNHSOther

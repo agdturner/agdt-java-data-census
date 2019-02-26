@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.census.core.StaticConverter;
+import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * For representing CAS KS015 Records and providing safe access to the data. NB.
@@ -172,21 +172,21 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
             this.RecordID = RecordID;
             this.Zone_Code = fields[0].substring(1, 11).toCharArray();
             // From Table KS015
-            this.peopleAged16to74InEmployment = StaticConverter.to_int(fields[1]);
-            this.peopleAged16to74InEmploymentWhoWorkMainlyAtOrFromHome = StaticConverter.to_int(fields[2]);
-            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByUndergroundMetroLightRailTram = StaticConverter.to_int(fields[3]);
-            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTrain = StaticConverter.to_int(fields[4]);
-            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBusMinibusOrCoach = StaticConverter.to_int(fields[5]);
-            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByMotorcycleScooterOrMoped = StaticConverter.to_int(fields[6]);
-            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByDrivingACarOrVan = StaticConverter.to_int(fields[7]);
-            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByPassengerInACarOrVan = StaticConverter.to_int(fields[8]);
-            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTaxiOrMinicab = StaticConverter.to_int(fields[9]);
-            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBicycle = StaticConverter.to_int(fields[10]);
-            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOnFoot = StaticConverter.to_int(fields[11]);
-            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOther = StaticConverter.to_int(fields[12]);
-            this.averageDistanceInKMTravelledToFixedPlaceOfWork = StaticConverter.to_int(fields[13]);
-            this.publicTransportUsersInHouseholdsWithACarOrVan = StaticConverter.to_int(fields[14]);
-            this.publicTransportUsersInHouseholdsWithoutACarOrVan = StaticConverter.to_int(fields[15]);
+            this.peopleAged16to74InEmployment = Math_Integer.parseInt(fields[1]);
+            this.peopleAged16to74InEmploymentWhoWorkMainlyAtOrFromHome = Math_Integer.parseInt(fields[2]);
+            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByUndergroundMetroLightRailTram = Math_Integer.parseInt(fields[3]);
+            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTrain = Math_Integer.parseInt(fields[4]);
+            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBusMinibusOrCoach = Math_Integer.parseInt(fields[5]);
+            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByMotorcycleScooterOrMoped = Math_Integer.parseInt(fields[6]);
+            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByDrivingACarOrVan = Math_Integer.parseInt(fields[7]);
+            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByPassengerInACarOrVan = Math_Integer.parseInt(fields[8]);
+            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTaxiOrMinicab = Math_Integer.parseInt(fields[9]);
+            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBicycle = Math_Integer.parseInt(fields[10]);
+            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOnFoot = Math_Integer.parseInt(fields[11]);
+            this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOther = Math_Integer.parseInt(fields[12]);
+            this.averageDistanceInKMTravelledToFixedPlaceOfWork = Math_Integer.parseInt(fields[13]);
+            this.publicTransportUsersInHouseholdsWithACarOrVan = Math_Integer.parseInt(fields[14]);
+            this.publicTransportUsersInHouseholdsWithoutACarOrVan = Math_Integer.parseInt(fields[15]);
         } else {
             if (country.equalsIgnoreCase("Northern Ireland")) {
                 init();
@@ -195,23 +195,23 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
                 this.RecordID = RecordID;
                 this.Zone_Code = fields[0].substring(1, 11).toCharArray();
                 // From Table KS015
-                this.peopleAged16to74InEmployment = StaticConverter.to_int(fields[1]);
-                this.peopleAged16to74InEmploymentWhoWorkMainlyAtOrFromHome = StaticConverter.to_int(fields[2]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTrain = StaticConverter.to_int(fields[3]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBusMinibusOrCoach = StaticConverter.to_int(fields[4]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByMotorcycleScooterOrMoped = StaticConverter.to_int(fields[5]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByDrivingACarOrVan = StaticConverter.to_int(fields[6]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByPassengerInACarOrVan = StaticConverter.to_int(fields[7]);
+                this.peopleAged16to74InEmployment = Math_Integer.parseInt(fields[1]);
+                this.peopleAged16to74InEmploymentWhoWorkMainlyAtOrFromHome = Math_Integer.parseInt(fields[2]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTrain = Math_Integer.parseInt(fields[3]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBusMinibusOrCoach = Math_Integer.parseInt(fields[4]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByMotorcycleScooterOrMoped = Math_Integer.parseInt(fields[5]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByDrivingACarOrVan = Math_Integer.parseInt(fields[6]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByPassengerInACarOrVan = Math_Integer.parseInt(fields[7]);
                 // this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByCarOrVanPool
-                // = StaticConverter.to_int( fields[ 8 ] );
+                // = Math_Integer.parseInt( fields[ 8 ] );
                 // this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTaxi
-                // = StaticConverter.to_int( fields[ 9 ] );
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTaxiOrMinicab = StaticConverter.to_int(fields[9]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBicycle = StaticConverter.to_int(fields[10]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOnFoot = StaticConverter.to_int(fields[11]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOther = StaticConverter.to_int(fields[12]) + StaticConverter.to_int(fields[8]);
-                this.publicTransportUsersInHouseholdsWithACarOrVan = StaticConverter.to_int(fields[13]);
-                this.publicTransportUsersInHouseholdsWithoutACarOrVan = StaticConverter.to_int(fields[14]);
+                // = Math_Integer.parseInt( fields[ 9 ] );
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTaxiOrMinicab = Math_Integer.parseInt(fields[9]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBicycle = Math_Integer.parseInt(fields[10]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOnFoot = Math_Integer.parseInt(fields[11]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOther = Math_Integer.parseInt(fields[12]) + Math_Integer.parseInt(fields[8]);
+                this.publicTransportUsersInHouseholdsWithACarOrVan = Math_Integer.parseInt(fields[13]);
+                this.publicTransportUsersInHouseholdsWithoutACarOrVan = Math_Integer.parseInt(fields[14]);
             } else {
                 // if ( country.equalsIgnoreCase( "England" ) ||
                 // country.equalsIgnoreCase( "Wales" ) ) {
@@ -219,21 +219,21 @@ public class Census_CASKS015DataRecord extends Census_AbstractDataRecord {
                 this.RecordID = RecordID;
                 this.Zone_Code = fields[0].substring(1, 11).toCharArray();
                 // From Table KS015
-                this.peopleAged16to74InEmployment = StaticConverter.to_int(fields[1]);
-                this.peopleAged16to74InEmploymentWhoWorkMainlyAtOrFromHome = StaticConverter.to_int(fields[2]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByUndergroundMetroLightRailTram = StaticConverter.to_int(fields[3]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTrain = StaticConverter.to_int(fields[4]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBusMinibusOrCoach = StaticConverter.to_int(fields[5]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByMotorcycleScooterOrMoped = StaticConverter.to_int(fields[6]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByDrivingACarOrVan = StaticConverter.to_int(fields[7]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByPassengerInACarOrVan = StaticConverter.to_int(fields[8]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTaxiOrMinicab = StaticConverter.to_int(fields[9]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBicycle = StaticConverter.to_int(fields[10]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOnFoot = StaticConverter.to_int(fields[11]);
-                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOther = StaticConverter.to_int(fields[12]);
-                this.averageDistanceInKMTravelledToFixedPlaceOfWork = StaticConverter.to_int(fields[13]);
-                this.publicTransportUsersInHouseholdsWithACarOrVan = StaticConverter.to_int(fields[14]);
-                this.publicTransportUsersInHouseholdsWithoutACarOrVan = StaticConverter.to_int(fields[15]);
+                this.peopleAged16to74InEmployment = Math_Integer.parseInt(fields[1]);
+                this.peopleAged16to74InEmploymentWhoWorkMainlyAtOrFromHome = Math_Integer.parseInt(fields[2]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByUndergroundMetroLightRailTram = Math_Integer.parseInt(fields[3]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTrain = Math_Integer.parseInt(fields[4]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBusMinibusOrCoach = Math_Integer.parseInt(fields[5]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByMotorcycleScooterOrMoped = Math_Integer.parseInt(fields[6]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByDrivingACarOrVan = Math_Integer.parseInt(fields[7]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByPassengerInACarOrVan = Math_Integer.parseInt(fields[8]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByTaxiOrMinicab = Math_Integer.parseInt(fields[9]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByBicycle = Math_Integer.parseInt(fields[10]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOnFoot = Math_Integer.parseInt(fields[11]);
+                this.peopleAged16to74InEmploymentWhoUsuallyTravelToWorkByOther = Math_Integer.parseInt(fields[12]);
+                this.averageDistanceInKMTravelledToFixedPlaceOfWork = Math_Integer.parseInt(fields[13]);
+                this.publicTransportUsersInHouseholdsWithACarOrVan = Math_Integer.parseInt(fields[14]);
+                this.publicTransportUsersInHouseholdsWithoutACarOrVan = Math_Integer.parseInt(fields[15]);
             }
         }
     }
