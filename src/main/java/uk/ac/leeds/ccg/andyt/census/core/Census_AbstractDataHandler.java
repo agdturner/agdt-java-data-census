@@ -53,18 +53,18 @@ import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS003DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS044DataRecord;
 import uk.ac.leeds.ccg.andyt.census.cas.uv.Census_CASUV003DataRecord;
 import uk.ac.leeds.ccg.andyt.data.Data_AbstractHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 import uk.ac.leeds.ccg.andyt.generic.util.Generic_Collections;
 
 /**
- * For handling
- * <code>AbstractCASDataRecords</code>.
+ * For handling <code>AbstractCASDataRecords</code>.
  *
  * @version 1.0.0, 2006-08-10
  * @see Census_AbstractDataRecord
  */
 public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
+
+    public Census_Environment env;
 
     /**
      * Census_CAS001DataHandler
@@ -73,7 +73,8 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
 
     /**
      * Returns this._CAS001DataHandler
-     * @return 
+     *
+     * @return
      */
     public Census_CAS001DataHandler getCAS001DataHandler() {
         return this._CAS001DataHandler;
@@ -85,7 +86,8 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
 
     /**
      * Returns this._CAS003DataHandler
-     * @return 
+     *
+     * @return
      */
     public Census_CAS003DataHandler getCAS003DataHandler() {
         return this._CAS003DataHandler;
@@ -103,15 +105,15 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
 
     /**
      * @return An <code>Census_AbstractDataRecord</code> for the given RecordID
-     * @param RecordID The RecordID of the <code>Census_AbstractDataRecord</code> to
-     * be returned.
+     * @param RecordID The RecordID of the
+     * <code>Census_AbstractDataRecord</code> to be returned.
      */
     @Override
     public abstract Census_AbstractDataRecord getDataRecord(long RecordID);
 
     /**
-     * @return An <code>Census_AbstractDataRecord</code> for the given zoneCode if
-     * it exists or null otherwise.
+     * @return An <code>Census_AbstractDataRecord</code> for the given zoneCode
+     * if it exists or null otherwise.
      * @param aZoneCode A <code>String</code> representation of an
      * <code>Census_AbstractDataRecord.Zone_Code</code> for the
      * <code>Census_AbstractDataRecord</code> to be returned.
@@ -123,7 +125,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     get_Directory(),
                     "RecordIDZoneCodeHashMap.thisFile");
             if (_RecordIDZoneCodeHashMapObjectFile.exists()) {
-                this._RecordIDZoneCodeHashMap = (HashMap) Generic_IO.readObject(_RecordIDZoneCodeHashMapObjectFile);
+                this._RecordIDZoneCodeHashMap = (HashMap) env.io.readObject(_RecordIDZoneCodeHashMapObjectFile);
             } else {
                 // If not on disc create
                 this._RecordIDZoneCodeHashMap = new HashMap();
@@ -140,8 +142,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     log(aIOException.getLocalizedMessage());
                     System.exit(Generic_ErrorAndExceptionHandler.IOException);
                 }
-                Generic_IO.writeObject(
-                        this._RecordIDZoneCodeHashMap,
+                env.io.writeObject(this._RecordIDZoneCodeHashMap,
                         _RecordIDZoneCodeHashMapObjectFile);
             }
         }
@@ -166,10 +167,10 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
     }
 
     /**
-     * @return An <code>Census_AbstractDataRecord</code> for the given Zone_Code if
-     * it exists or null otherwise.
-     * @param Zone_Code A <code>Census_AbstractDataRecord.Zone_Code</code> for the
-     * <code>Census_AbstractDataRecord</code> to be returned.
+     * @return An <code>Census_AbstractDataRecord</code> for the given Zone_Code
+     * if it exists or null otherwise.
+     * @param Zone_Code A <code>Census_AbstractDataRecord.Zone_Code</code> for
+     * the <code>Census_AbstractDataRecord</code> to be returned.
      * @throws java.io.IOException
      */
     protected Census_AbstractDataRecord getDataRecord(char[] Zone_Code)
@@ -265,7 +266,8 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
     // throws IOException;
     /**
      * TODO docs
-     * @return 
+     *
+     * @return
      */
     public HashMap<String, String> get_LookUpMSOAfromOAHashMap() {
         if (this._LookUpMSOAfromOAHashMap == null) {
@@ -273,7 +275,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
             File _LookUpMSOAfromOAHashMapObjectFile = new File(get_Directory(),
                     "LookUpMSOAfromOAHashMap.thisFile");
             if (_LookUpMSOAfromOAHashMapObjectFile.exists()) {
-                this._LookUpMSOAfromOAHashMap = (HashMap) Generic_IO.readObject(_LookUpMSOAfromOAHashMapObjectFile);
+                this._LookUpMSOAfromOAHashMap = (HashMap) env.io.readObject(_LookUpMSOAfromOAHashMapObjectFile);
             } else {
                 // If not on disc create
                 this._LookUpMSOAfromOAHashMap = new HashMap();
@@ -285,10 +287,10 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                 try {
                     BufferedReader aBufferedReader = new BufferedReader(
                             new InputStreamReader(new FileInputStream(
-                            lookUpTableFile)));
+                                    lookUpTableFile)));
                     StreamTokenizer aStreamTokenizer = new StreamTokenizer(
                             aBufferedReader);
-                    Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
+                    env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
                     aStreamTokenizer.wordChars('&', '&');
                     aStreamTokenizer.wordChars('\'', '\'');
                     String line;
@@ -326,7 +328,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                 // Store on disc for future reference
                 try {
                     _LookUpMSOAfromOAHashMapObjectFile.createNewFile();
-                    Generic_IO.writeObject(
+                    env.io.writeObject(
                             this._LookUpMSOAfromOAHashMap,
                             _LookUpMSOAfromOAHashMapObjectFile);
                 } catch (IOException aIOException) {
@@ -339,8 +341,9 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
 
     /**
      * TODO docs
+     *
      * @param line
-     * @return 
+     * @return
      */
     protected static Object[] parseLine(String line) {
         Object[] result = new Object[2];
@@ -380,10 +383,10 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
             throws IOException {
         TreeSet<String> tLADCodes;
         File tLADCodeTreeSet_File = new File(
-                _Directory,
+                dir,
                 "LADCodes_TreeSet.thisFile");
         if (tLADCodeTreeSet_File.exists()) {
-            tLADCodes = (TreeSet) Generic_IO.readObject(tLADCodeTreeSet_File);
+            tLADCodes = (TreeSet) env.io.readObject(tLADCodeTreeSet_File);
         } else {
             tLADCodes = new TreeSet();
             Census_AbstractDataRecord aCASDataRecord;
@@ -395,7 +398,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     tLADCodes.add(aLADCode);
                 }
             }
-            Generic_IO.writeObject(tLADCodes, tLADCodeTreeSet_File);
+            env.io.writeObject(tLADCodes, tLADCodeTreeSet_File);
         }
         return tLADCodes;
     }
@@ -407,10 +410,10 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
     public TreeSet<String> getOACodes_TreeSet() {
         TreeSet<String> tOACodes;
         File tOACodeTreeSet_File = new File(
-                _Directory,
+                dir,
                 "OACodes_TreeSet.thisFile");
         if (tOACodeTreeSet_File.exists()) {
-            tOACodes = (TreeSet<String>) Generic_IO.readObject(tOACodeTreeSet_File);
+            tOACodes = (TreeSet<String>) env.io.readObject(tOACodeTreeSet_File);
         } else {
             tOACodes = new TreeSet();
             Census_AbstractDataRecord aCASDataRecord;
@@ -422,7 +425,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     tOACodes.add(aOACode);
                 }
             }
-            Generic_IO.writeObject(tOACodes, tOACodeTreeSet_File);
+            env.io.writeObject(tOACodes, tOACodeTreeSet_File);
         }
         return tOACodes;
     }
@@ -433,10 +436,10 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
     public HashSet<String> getOACodes_HashSet() {
         HashSet<String> tOACodes;
         File tOACodeHashSet_File = new File(
-                _Directory,
+                dir,
                 "OACodes_HashSet.thisFile");
         if (tOACodeHashSet_File.exists()) {
-            tOACodes = (HashSet<String>) Generic_IO.readObject(tOACodeHashSet_File);
+            tOACodes = (HashSet<String>) env.io.readObject(tOACodeHashSet_File);
         } else {
             tOACodes = new HashSet();
             Census_AbstractDataRecord aCASDataRecord;
@@ -448,7 +451,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     tOACodes.add(aOACode);
                 }
             }
-            Generic_IO.writeObject(tOACodes, tOACodeHashSet_File);
+            env.io.writeObject(tOACodes, tOACodeHashSet_File);
         }
         return tOACodes;
     }
@@ -456,13 +459,13 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
     /**
      * @return A HashSet<String> of all MSOA Codes in the UK.
      */
-    public HashSet<String> getMSOACodes_HashSet() {
+    public HashSet<String> getMSOACodes() {
         HashSet<String> tMSOACodes;
         File tMSOACodeHashSet_File = new File(
-                _Directory,
+                dir,
                 "MSOACodes_HashSet.thisFile");
         if (tMSOACodeHashSet_File.exists()) {
-            tMSOACodes = (HashSet<String>) Generic_IO.readObject(tMSOACodeHashSet_File);
+            tMSOACodes = (HashSet<String>) env.io.readObject(tMSOACodeHashSet_File);
         } else {
             HashMap<String, String> lookUpMSOAfromOAHashMap = get_LookUpMSOAfromOAHashMap();
             tMSOACodes = new HashSet();
@@ -477,49 +480,43 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     tMSOACodes.add(aMSOACode);
                 }
             }
-            Generic_IO.writeObject(tMSOACodes, tMSOACodeHashSet_File);
+            env.io.writeObject(tMSOACodes, tMSOACodeHashSet_File);
         }
         return tMSOACodes;
     }
 
     /**
-     * @param startOfOACodes_String
-     * @return A HashSet<String> of Output Area Codes that start with
-     * startOfOACodes_String
+     * @param s
+     * @return Output Area Codes that start with s
      */
-    public HashSet getOACodes_HashSet(
-            String startOfOACodes_String) {
-        HashSet<String> result = new HashSet<String>();
-        HashSet<String> tOACodes_HashSet = getOACodes_HashSet();
-        Iterator<String> a_Iterator = tOACodes_HashSet.iterator();
-        String areaCode_String;
-        while (a_Iterator.hasNext()) {
-            areaCode_String = a_Iterator.next();
-            if (areaCode_String.startsWith(startOfOACodes_String)) {
-                result.add(areaCode_String);
+    public HashSet getOACodes(String s) {
+        HashSet<String> r = new HashSet<>();
+        HashSet<String> tOACodes = getOACodes_HashSet();
+        Iterator<String> ite = tOACodes.iterator();
+        while (ite.hasNext()) {
+            String areaCode = ite.next();
+            if (areaCode.startsWith(s)) {
+                r.add(areaCode);
             }
         }
-        return result;
+        return r;
     }
 
     /**
-     * @param startOfMSOACodes_String
-     * @return A HashSet<String> of Output Area Codes that start with
-     * startOfOACodes_String
+     * @param s
+     * @return Output Area Codes that start with s
      */
-    public HashSet getMSOACodes_HashSet(
-            String startOfMSOACodes_String) {
-        HashSet<String> result = new HashSet<String>();
-        HashSet<String> tMSOACodes_HashSet = getMSOACodes_HashSet();
-        Iterator<String> a_Iterator = tMSOACodes_HashSet.iterator();
-        String areaCode_String;
-        while (a_Iterator.hasNext()) {
-            areaCode_String = a_Iterator.next();
-            if (areaCode_String.startsWith(startOfMSOACodes_String)) {
-                result.add(areaCode_String);
+    public HashSet getMSOACodes_HashSet(String s) {
+        HashSet<String> r = new HashSet<>();
+        HashSet<String> tMSOACodes = getMSOACodes();
+        Iterator<String> ite = tMSOACodes.iterator();
+        while (ite.hasNext()) {
+            String areaCode = ite.next();
+            if (areaCode.startsWith(s)) {
+                r.add(areaCode);
             }
         }
-        return result;
+        return r;
     }
 
     /**

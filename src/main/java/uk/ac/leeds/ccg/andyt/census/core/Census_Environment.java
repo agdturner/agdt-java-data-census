@@ -23,13 +23,13 @@ import java.io.File;
 import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.util.TreeSet;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.generic.core.Generic_Environment;
 
 /**
  *
  * @author geoagdt
  */
-public class Census_Environment {
+public class Census_Environment extends Generic_Environment {
 
     /**
      * @param area
@@ -38,7 +38,7 @@ public class Census_Environment {
      * Local Authority District loaded from a specific file within
      * digitalWelfareDir.
      */
-    public static TreeSet<String> getCensusCodes(
+    public TreeSet<String> getCensusCodes(
             String area,
             String level,
             File censusDataDirectory) {
@@ -49,11 +49,11 @@ public class Census_Environment {
             try {
                 BufferedReader br;
                 StreamTokenizer st;
-                br = Generic_IO.getBufferedReader(file);
+                br = io.getBufferedReader(file);
                 if (br != null) {
                     result = new TreeSet<String>();
                     st = new StreamTokenizer(br);
-                    Generic_IO.setStreamTokenizerSyntax1(st);
+                    io.setStreamTokenizerSyntax1(st);
                     int token = st.nextToken();
 //                    long RecordID = 0;
                     String line = "";

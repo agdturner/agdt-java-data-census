@@ -31,7 +31,6 @@ import java.util.TreeMap;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataHandler;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 
 /**
  * A <code>class</code> for handling an individual
@@ -197,7 +196,7 @@ public class Census_CASKS14bDataHandler extends Census_AbstractDataHandler {
         BufferedReader aBufferedReader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(sourceFile)));
         StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-        Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
+        env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
         String string0 = new String();
         String string1;
         String string2;

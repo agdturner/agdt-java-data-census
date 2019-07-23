@@ -26,14 +26,20 @@ import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Environment;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Object;
 
 /**
  *
  * @author geoagdt
  */
-public class Census_DeprivationDataHandler {
+public class Census_DeprivationDataHandler extends Census_Object {
 
+    public Census_DeprivationDataHandler(Census_Environment e) {
+        super(e);
+    }
+    
+    
     // most deprived areas are those with highest IMDSCore and lowest IMDRank
     public static Integer getDeprivationClass(
             TreeMap<Integer, Integer> deprivationClasses,
@@ -78,8 +84,7 @@ public class Census_DeprivationDataHandler {
         return result;
     }
 
-    public Census_DeprivationDataHandler() {
-    }
+    
 
     /**
      * Loads LeedsCAB data from a file in directory, filename reporting progress
@@ -98,11 +103,9 @@ public class Census_DeprivationDataHandler {
                 directory,
                 filename);
         try {
-            BufferedReader br;
-            br = Generic_IO.getBufferedReader(inputFile);
-            StreamTokenizer st;
-            st = new StreamTokenizer(br);
-            Generic_IO.setStreamTokenizerSyntax5(st);
+            BufferedReader br  = env.io.getBufferedReader(inputFile);
+            StreamTokenizer st  = new StreamTokenizer(br);
+            env.io.setStreamTokenizerSyntax5(st);
             st.wordChars('`', '`');
             st.wordChars('\'', '\'');
             st.wordChars('*', '*');
@@ -114,7 +117,7 @@ public class Census_DeprivationDataHandler {
             // Skip the header
             int headerLines = 1;
             for (int i = 0; i < headerLines; i++) {
-                Generic_IO.skipline(st);
+                env.io.skipline(st);
             }
             // Read data
             int tokenType;

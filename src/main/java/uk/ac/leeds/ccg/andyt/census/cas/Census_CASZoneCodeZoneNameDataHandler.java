@@ -1,20 +1,20 @@
 /**
- * A component of a library for 
+ * A component of a library for
  * <a href="http://www.geog.leeds.ac.uk/people/a.turner/projects/MoSeS">Moses</a>.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  */
 package uk.ac.leeds.ccg.andyt.census.cas;
 
@@ -25,41 +25,45 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.StreamTokenizer;
 import java.util.HashSet;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Environment;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Object;
 
 /**
  * A <code>class</code> for loading a list of Zone Code and Zone Names for
  * England and Wales Local Authority Districts, Scotland Council Areas and
  * Northern Ireland District Council regions.
  */
-public class Census_CASZoneCodeZoneNameDataHandler {
+public class Census_CASZoneCodeZoneNameDataHandler extends Census_Object {
 
-    public HashSet _ZoneCode_HashSet;
+    public HashSet zoneCodes;
 
     /**
      * Creates a new instance of CASZoneCodeZoneNameDataHandler.
+     *
+     * @param e Census_Environment
      */
-    public Census_CASZoneCodeZoneNameDataHandler() {
+    public Census_CASZoneCodeZoneNameDataHandler(Census_Environment e) {
+        super(e);
     }
 
     /**
-     * Creates a new instance of CASZoneCodeZoneNameDataHandler with
-     * _ZoneCode_HashSet loaded from formattedFile.
+     * Creates a new instance of CASZoneCodeZoneNameDataHandler with zoneCodes
+     * loaded from formattedFile.
+     *
+     * @param e Census_Environment
      * @param formattedFile
-     * @throws java.io.IOException
      */
-    public Census_CASZoneCodeZoneNameDataHandler(File formattedFile) throws IOException {
-        _ZoneCode_HashSet = (HashSet) Generic_IO.readObject(formattedFile);
+    public Census_CASZoneCodeZoneNameDataHandler(Census_Environment e, File formattedFile) {
+        super(e);
+        zoneCodes = (HashSet) env.io.readObject(formattedFile);
     }
 
     /**
-     * @param args
-     *            the command line arguments No arguments are used.
+     * @param args the command line arguments No arguments are used.
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
-        Census_CASZoneCodeZoneNameDataHandler _CASZoneCodeZoneNameDataHandler = new Census_CASZoneCodeZoneNameDataHandler();
-        _CASZoneCodeZoneNameDataHandler.run();
+        new Census_CASZoneCodeZoneNameDataHandler(new Census_Environment()).run();
     }
 
     public void run() throws IOException {
@@ -68,26 +72,22 @@ public class Census_CASZoneCodeZoneNameDataHandler {
         //File sourceDataDirectory = new File("C:/Work/data/Census/2001/CAS");
         File sourceDataDirectory = new File("/scratch01/Work/data/Census/2001/CAS/");
         loadSourceData(sourceDataDirectory);
-        File formattedFile = new File(
-                workspace,
-                "UKLAD_ZoneCode_HashSet.thisFile");
-        Generic_IO.writeObject(
-                _ZoneCode_HashSet,
-                formattedFile);
-        Census_CASZoneCodeZoneNameDataHandler testCASZoneCodeZoneNameDataHandler = new Census_CASZoneCodeZoneNameDataHandler(
-                formattedFile);
-        System.out.println("" + _ZoneCode_HashSet.size()); // 371
+        File formattedFile = new File(workspace, "UKLAD_ZoneCode_HashSet.thisFile");
+        env.io.writeObject(zoneCodes, formattedFile);
+        Census_CASZoneCodeZoneNameDataHandler h = new Census_CASZoneCodeZoneNameDataHandler(env, formattedFile);
+        System.out.println("" + zoneCodes.size()); // 371
     }
 
     /**
      * Loads source data from directory
+     *
      * @param directory
      * @throws java.io.IOException
      */
     protected void loadSourceData(
             File directory)
             throws IOException {
-        _ZoneCode_HashSet = new HashSet();
+        zoneCodes = new HashSet();
         // Load from source
         File sourceFile;
         // Load England
@@ -118,7 +118,7 @@ public class Census_CASZoneCodeZoneNameDataHandler {
         BufferedReader aBufferedReader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(sourceFile)));
         StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-        Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
+        env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
         String line = null;
         // Skip the first line
         int tokenType = aStreamTokenizer.nextToken();
@@ -135,7 +135,7 @@ public class Census_CASZoneCodeZoneNameDataHandler {
                     line = aStreamTokenizer.sval;
                     String[] fields = line.split(",");
                     String aZone_Code = fields[0];
-                    _ZoneCode_HashSet.add(aZone_Code);
+                    zoneCodes.add(aZone_Code);
                     tokenType = aStreamTokenizer.nextToken();
             }
             tokenType = aStreamTokenizer.nextToken();

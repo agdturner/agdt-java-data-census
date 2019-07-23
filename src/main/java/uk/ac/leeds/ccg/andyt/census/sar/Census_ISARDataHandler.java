@@ -2,19 +2,19 @@
  * A component of a library for
  * <a href="http://www.geog.leeds.ac.uk/people/a.turner/projects/MoSeS">MoSeS</a>.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  */
 package uk.ac.leeds.ccg.andyt.census.sar;
 
@@ -29,15 +29,17 @@ import java.io.StreamTokenizer;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Vector;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Environment;
 import uk.ac.leeds.ccg.andyt.data.Data_AbstractHandler;
 import uk.ac.leeds.ccg.andyt.data.Data_AbstractRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 
 /**
  * For accessing ISARDataRecords and information about them.
  */
 public class Census_ISARDataHandler extends Data_AbstractHandler {
+
+    public final Census_Environment env;
 
     /**
      * For storing ISARDataRecords.
@@ -46,34 +48,35 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
     protected HashMap _AgeSexType_ISARDataRecordVector_HashMap_0;
     protected HashMap _AgeSexType_ISARDataRecordVector_HashMap_1;
 
-    /** Creates a new instance of ISARDataHandler */
-    public Census_ISARDataHandler() {
+    /**
+     * Creates a new instance of ISARDataHandler
+     */
+    public Census_ISARDataHandler(Census_Environment e) {
+        env = e;
     }
 
     /**
      * Creates a new instance of ISARDataHandler from aFile.
-     * @param aFile
+     *
+     * @param f
      */
-    public Census_ISARDataHandler(
-            File aFile) {
-        _Directory = aFile.getParentFile();
-        init(_Directory);
-        if (aFile.getName().endsWith(".dat")) {
-            init(aFile.getParentFile());
-            load(aFile);
+    public Census_ISARDataHandler(Census_Environment e, File f) {
+        env = e;
+        dir = f.getParentFile();
+        init(dir);
+        if (f.getName().endsWith(".dat")) {
+            init(f.getParentFile());
+            load(f);
             this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
             loadIntoCache();
-            File thisFile = new File(
-                    _Directory,
+            File thisFile = new File(dir,
                     this.getClass().getCanonicalName() + ".thisFile");
             init_AgeSexType_ISARDataRecordVector_HashMap_0();
-            Generic_IO.writeObject(
-                    this,
-                    thisFile);
+            env.io.writeObject(this, thisFile);
         } else {
-            Object object = Generic_IO.readObject(aFile);
+            Object object = env.io.readObject(f);
             Census_ISARDataHandler aISARDataHandler = (Census_ISARDataHandler) object;
-            load(aFile);
+            load(f);
             this._RecordLength = aISARDataHandler._RecordLength;
             //this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
             this._ISARDataRecordArray = aISARDataHandler._ISARDataRecordArray;
@@ -85,7 +88,7 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
      * Loads ISARDataRecords into the cache.
      */
     public void loadIntoCache() {
-        _Logger.entering(this.getClass().getCanonicalName(), "loadIntoCache()");
+        logger.entering(this.getClass().getCanonicalName(), "loadIntoCache()");
         long nDataRecords = super.getNDataRecords();
         if (nDataRecords > Integer.MAX_VALUE) {
             log("nDataRecords>Integer.MAX_VALUE");
@@ -105,11 +108,12 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
             }
         }
         init_AgeSexType_ISARDataRecordVector_HashMap_0();
-        _Logger.exiting(this.getClass().getCanonicalName(), "loadIntoCache()");
+        logger.exiting(this.getClass().getCanonicalName(), "loadIntoCache()");
     }
 
     /**
      * Loads from source file
+     *
      * @param sourceFile
      * @param formattedFile
      * @throws java.io.IOException
@@ -118,12 +122,12 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
             File sourceFile,
             File formattedFile)
             throws IOException {
-        _Logger.entering(
+        logger.entering(
                 this.getClass().getCanonicalName(),
                 "formatSource(File,File)");
         _File = formattedFile;
 //        _File = new File (
-//                _Directory,
+//                dir,
 //                ISARDataRecords.dat);
         if (!_File.exists()) {
             this._File.createNewFile();
@@ -131,13 +135,13 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
         this._RandomAccessFile = new RandomAccessFile(this._File, "rw");
         //File sourceFile = new File(
         //        "C:/work/data/census/2001/SAR/01uklicind-20050401.dat");
-        BufferedReader aBufferedReader =
-                new BufferedReader(
-                new InputStreamReader(
-                new FileInputStream(sourceFile)));
-        StreamTokenizer aStreamTokenizer =
-                new StreamTokenizer(aBufferedReader);
-        Generic_IO.setStreamTokenizerSyntax2(aStreamTokenizer);
+        BufferedReader aBufferedReader
+                = new BufferedReader(
+                        new InputStreamReader(
+                                new FileInputStream(sourceFile)));
+        StreamTokenizer aStreamTokenizer
+                = new StreamTokenizer(aBufferedReader);
+        env.io.setStreamTokenizerSyntax2(aStreamTokenizer);
         String line;
         long RecordID = 0L;
         Census_ISARDataRecord aISARDataRecord = new Census_ISARDataRecord();
@@ -174,26 +178,24 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
         log("Number of ISARDataRecords loaded " + (RecordID + 1L));
         this._RandomAccessFile.close();
         this._RandomAccessFile = new RandomAccessFile(this._File, "r");
-        _Logger.exiting(
+        logger.exiting(
                 this.getClass().getCanonicalName(),
                 "formatSource(File,File)");
     }
 
     /**
-     * @param RecordID
-     *            The <code>RecordID</code> of the <code>Census_ISARDataRecord</code>
-     *            to be returned.
-     * @return 
+     * @param RecordID The <code>RecordID</code> of the
+     * <code>Census_ISARDataRecord</code> to be returned.
+     * @return
      */
     public Data_AbstractRecord getDataRecord(long RecordID) {
         return getISARDataRecord(RecordID);
     }
 
     /**
-     * @param RecordID
-     *            The <code>RecordID</code> of the <code>Census_ISARDataRecord</code>
-     *            to be returned.
-     * @return 
+     * @param RecordID The <code>RecordID</code> of the
+     * <code>Census_ISARDataRecord</code> to be returned.
+     * @return
      */
     public Census_ISARDataRecord getISARDataRecord(long RecordID) {
         return this._ISARDataRecordArray[(int) RecordID];
@@ -215,16 +217,18 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
      * _ISARDataRecordArray.
      */
     protected void init_AgeSexType_ISARDataRecordVector_HashMap_0() {
-        _AgeSexType_ISARDataRecordVector_HashMap_0 =
-                get_AgeSexType_ISARDataRecordVector_HashMap_0(_ISARDataRecordArray);
+        _AgeSexType_ISARDataRecordVector_HashMap_0
+                = get_AgeSexType_ISARDataRecordVector_HashMap_0(_ISARDataRecordArray);
     }
 
     /**
-     * Method to be used to look up Census_ISARDataRecord from Census_ISARDataRecord._ID.
-     * @return a HashMap for looking up RecordID from ID 
+     * Method to be used to look up Census_ISARDataRecord from
+     * Census_ISARDataRecord._ID.
+     *
+     * @return a HashMap for looking up RecordID from ID
      */
     public HashMap get_ID_RecordID_HashMap() {
-    //public HashMap<Long,Long> get_ID_RecordID_HashMap() {
+        //public HashMap<Long,Long> get_ID_RecordID_HashMap() {
         HashMap tID_RecordID_HashMap = new HashMap();
         Census_ISARDataRecord aISARDataRecord;
         for (long RecordID = 0; RecordID < getNDataRecords(); RecordID++) {
@@ -246,9 +250,9 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
      * @param a_ISARDataRecord_Array@return HashMap<AgeSexType,Vector>
      *
      */
-    public HashMap<AgeSexType,Vector> get_AgeSexType_ISARDataRecordVector_HashMap_0(
+    public HashMap<AgeSexType, Vector> get_AgeSexType_ISARDataRecordVector_HashMap_0(
             Census_ISARDataRecord[] a_ISARDataRecord_Array) {
-        HashMap<AgeSexType,Vector> aAgeSexType_ISARDataRecordVector_HashMap_0 = new HashMap();
+        HashMap<AgeSexType, Vector> aAgeSexType_ISARDataRecordVector_HashMap_0 = new HashMap();
         Census_ISARDataRecord a_ISARDataRecord;
         AgeSexType a_AgeSexType;
         Object object;
@@ -272,17 +276,17 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
 
     /**
      * a return integer count of the number of other ISARDataRecords in
-     * _ISARDataRecordArray with the same
-     * <code>
+     * _ISARDataRecordArray with the same      <code>
      * AgeSexType(aISARDataRecord)
      * </code>
+     *
      * @param aISARDataRecord
-     * @return 
+     * @return
      */
     public int getAgeSexTypeCount_0(Census_ISARDataRecord aISARDataRecord) {
         AgeSexType aAgeSexType = new AgeSexType(aISARDataRecord);
-        HashMap aAgeSexType_ISARDataRecordVector_HashMap =
-                get_AgeSexType_ISARDataRecordVector_HashMap_0();
+        HashMap aAgeSexType_ISARDataRecordVector_HashMap
+                = get_AgeSexType_ISARDataRecordVector_HashMap_0();
         Object object = aAgeSexType_ISARDataRecordVector_HashMap.get(aAgeSexType);
         if (object == null) {
             return 0;
@@ -294,16 +298,16 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
 
     /**
      * a return integer count of the number of other ISARDataRecords in
-     * _ISARDataRecordArray with the same
-     * <code>
+     * _ISARDataRecordArray with the same      <code>
      * AgeSexType(aISARDataRecord)
      * </code>
+     *
      * @param aAgeSexType
-     * @return 
+     * @return
      */
     public int getAgeSexTypeCount_0(AgeSexType aAgeSexType) {
-        HashMap aAgeSexType_ISARDataRecordVector_HashMap =
-                get_AgeSexType_ISARDataRecordVector_HashMap_0();
+        HashMap aAgeSexType_ISARDataRecordVector_HashMap
+                = get_AgeSexType_ISARDataRecordVector_HashMap_0();
         Object object = aAgeSexType_ISARDataRecordVector_HashMap.get(aAgeSexType);
         if (object == null) {
             return 0;
@@ -317,15 +321,15 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
      *
      * @param aISARDataRecord
      * @param aRandom
-     * @return Census_ISARDataRecord with the same AgeSexType as aISARDataRecord or
- null if there is no such Census_ISARDataRecord
+     * @return Census_ISARDataRecord with the same AgeSexType as aISARDataRecord
+     * or null if there is no such Census_ISARDataRecord
      */
     public Census_ISARDataRecord getISARDataRecord(
             Random aRandom,
             Census_ISARDataRecord aISARDataRecord) {
         Census_ISARDataRecord result;
-        HashMap aAgeSexType_ISARDataRecordVector_HashMap =
-                get_AgeSexType_ISARDataRecordVector_HashMap_0();
+        HashMap aAgeSexType_ISARDataRecordVector_HashMap
+                = get_AgeSexType_ISARDataRecordVector_HashMap_0();
         AgeSexType aAgeSexType = new AgeSexType(aISARDataRecord);
         int aAgeSexTypeCount = getAgeSexTypeCount_0(aAgeSexType);
         int index;
@@ -342,15 +346,15 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
     /**
      * @param aRandom
      * @param aAgeSexType
-     * @return Census_ISARDataRecord with the same AgeSexType as aISARDataRecord or
- null if there is no such Census_ISARDataRecord
+     * @return Census_ISARDataRecord with the same AgeSexType as aISARDataRecord
+     * or null if there is no such Census_ISARDataRecord
      */
     public Census_ISARDataRecord getISARDataRecord(
             Random aRandom,
             AgeSexType aAgeSexType) {
         Census_ISARDataRecord result;
-        HashMap aAgeSexType_ISARDataRecordVector_HashMap =
-                get_AgeSexType_ISARDataRecordVector_HashMap_0();
+        HashMap aAgeSexType_ISARDataRecordVector_HashMap
+                = get_AgeSexType_ISARDataRecordVector_HashMap_0();
         int aAgeSexTypeCount = getAgeSexTypeCount_0(aAgeSexType);
         int index;
         if (aAgeSexTypeCount == 0) {
@@ -386,10 +390,9 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
 //    }
 
     /**
-     * A simple class for distinguishing ISARDataRecords into those with the 
+     * A simple class for distinguishing ISARDataRecords into those with the
      * same of Age, Sex and Type characteristics where Type can be either:
-     * RELTOHR = 1 for HRP
-     * RELTOHR = -9 for Communal Establishment Populations
+     * RELTOHR = 1 for HRP RELTOHR = -9 for Communal Establishment Populations
      * RELTOHR = other for general household person
      */
     public class AgeSexType

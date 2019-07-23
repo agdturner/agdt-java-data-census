@@ -29,7 +29,6 @@ import java.util.Random;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataHandler;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
 
 /**
  * Class for handling Special Workplace Statistics (SWS) DataRecords.
@@ -56,7 +55,7 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
     public Census_SWSDataHandler(File a_File) {
         this.init(a_File.getParentFile());
         if (a_File.getName().endsWith("thisFile")){
-            Census_SWSDataHandler a_SWSDataHandler = (Census_SWSDataHandler) Generic_IO.readObject(a_File);
+            Census_SWSDataHandler a_SWSDataHandler = (Census_SWSDataHandler) env.io.readObject(a_File);
             this._File = a_SWSDataHandler._File;
             load(_File);
         } else {
@@ -69,7 +68,7 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
     public Census_SWSDataHandler(File a_File, boolean flag) {
         this.init(a_File);
         File tSWSfile = new File(a_File,Census_SWSDataHandler.class.getName() + ".thisFile");
-        Census_SWSDataHandler a_SWSDataHandler = (Census_SWSDataHandler) Generic_IO.readObject(tSWSfile);
+        Census_SWSDataHandler a_SWSDataHandler = (Census_SWSDataHandler) env.io.readObject(tSWSfile);
         this._File = a_SWSDataHandler._File;
         load(_File);
         this._RecordLength = new Census_SWSDataRecord().getSizeInBytes();
@@ -130,7 +129,7 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
                     new FileInputStream(sourceFile)));
             StreamTokenizer aStreamTokenizer =
                     new StreamTokenizer(aBufferedReader);
-            Generic_IO.setStreamTokenizerSyntax1(aStreamTokenizer);
+            env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
             String line;
             Census_SWSDataRecord a_SWSDataRecord = new Census_SWSDataRecord();
             // Skip the first line

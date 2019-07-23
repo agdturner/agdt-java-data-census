@@ -31,7 +31,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Vector;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_IO;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Environment;
 import uk.ac.leeds.ccg.andyt.data.Data_AbstractHandler;
 import uk.ac.leeds.ccg.andyt.data.Data_AbstractRecord;
 import uk.ac.leeds.ccg.andyt.data.converter.Data_AgeConverter;
@@ -41,6 +41,8 @@ import uk.ac.leeds.ccg.andyt.data.converter.Data_AgeConverter;
  */
 public class Census_HSARDataHandler extends Data_AbstractHandler {
 
+    public Census_Environment env;
+    
     /**
      * For storing all HSARDataRecords
      */
@@ -70,21 +72,21 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
      */
     public Census_HSARDataHandler(
             File aFile) {
-        _Directory = aFile.getParentFile();
-        init(_Directory);
+        dir = aFile.getParentFile();
+        init(dir);
         if (aFile.getName().endsWith(".dat")) {
             init(aFile.getParentFile());
             load(aFile);
             this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
             loadIntoCache();
             File thisFile = new File(
-                    _Directory,
+                    dir,
                     this.getClass().getCanonicalName() + ".thisFile");
-            Generic_IO.writeObject(
+            env.io.writeObject(
                     this,
                     thisFile);
         } else {
-            Object object = Generic_IO.readObject(aFile);
+            Object object = env.io.readObject(aFile);
             Census_HSARDataHandler aHSARDataHandler = (Census_HSARDataHandler) object;
             load(aFile);
             this._RecordLength = aHSARDataHandler._RecordLength;
@@ -105,10 +107,10 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
             File sourceFile,
             File formattedFile)
             throws IOException {
-        _Logger.entering(this.getClass().getCanonicalName(), "formatSource(File,File)");
+        logger.entering(this.getClass().getCanonicalName(), "formatSource(File,File)");
         _File = formattedFile;
 //        _File = new File (
-//                _Directory,
+//                dir,
 //                HSARDataRecords.dat);
         if (!_File.exists()) {
             this._File.createNewFile();
@@ -122,7 +124,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
                 new FileInputStream(sourceFile)));
         StreamTokenizer aStreamTokenizer =
                 new StreamTokenizer(aBufferedReader);
-        Generic_IO.setStreamTokenizerSyntax2(aStreamTokenizer);
+        env.io.setStreamTokenizerSyntax2(aStreamTokenizer);
         String line;
         long RecordID = 0L;
         Census_HSARDataRecord aHSARDataRecord = new Census_HSARDataRecord();
@@ -159,7 +161,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
         log("Number of HSARDataRecords loaded " + (RecordID + 1L));
         this._RandomAccessFile.close();
         this._RandomAccessFile = new RandomAccessFile(this._File, "r");
-        _Logger.exiting(this.getClass().getCanonicalName(), "formatSource(File,File)");
+        logger.exiting(this.getClass().getCanonicalName(), "formatSource(File,File)");
     }
 
     /**
@@ -244,7 +246,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
      * Loads HSARDataRecords into the cache.
      */
     public void loadIntoCache() {
-        _Logger.entering(this.getClass().getCanonicalName(), "loadIntoCache()");
+        logger.entering(this.getClass().getCanonicalName(), "loadIntoCache()");
         long nDataRecords = super.getNDataRecords();
         if (nDataRecords > Integer.MAX_VALUE) {
             log("nDataRecords>Integer.MAX_VALUE");
@@ -264,7 +266,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
             }
         }
         initVectors();
-        _Logger.exiting(this.getClass().getCanonicalName(), "loadIntoCache()");
+        logger.exiting(this.getClass().getCanonicalName(), "loadIntoCache()");
     }
 
     /**
