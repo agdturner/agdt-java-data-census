@@ -34,25 +34,20 @@ public class Census_Environment extends Generic_Environment {
     /**
      * @param area
      * @param level "OA" or "LSOA" or "MSOA" currently...
+     * @param dir Census Data Directory
      * @return <code>TreeSet&ltString&gt</code> of LSOA codes for the Leeds
      * Local Authority District loaded from a specific file within
      * digitalWelfareDir.
      */
-    public TreeSet<String> getCensusCodes(
-            String area,
-            String level,
-            File censusDataDirectory) {
-        TreeSet<String> result = null;
-        File file = new File(censusDataDirectory,
-                "censusCodes.csv");
+    public TreeSet<String> getCensusCodes(String area, String level, File dir) {
+        TreeSet<String> r = null;
+        File file = new File(dir, "censusCodes.csv");
         if (file.exists()) {
             try {
-                BufferedReader br;
-                StreamTokenizer st;
-                br = io.getBufferedReader(file);
+                BufferedReader br = io.getBufferedReader(file);
                 if (br != null) {
-                    result = new TreeSet<String>();
-                    st = new StreamTokenizer(br);
+                    r = new TreeSet<String>();
+                    StreamTokenizer st = new StreamTokenizer(br);
                     io.setStreamTokenizerSyntax1(st);
                     int token = st.nextToken();
 //                    long RecordID = 0;
@@ -67,7 +62,7 @@ public class Census_Environment extends Generic_Environment {
                                 break;
                             case StreamTokenizer.TT_WORD:
                                 line = st.sval;
-                                result.add(line);
+                                r.add(line);
                                 break;
                         }
                         token = st.nextToken();
@@ -78,7 +73,7 @@ public class Census_Environment extends Generic_Environment {
                 System.err.println(e.getMessage());
             }
         }
-        return result;
+        return r;
     }
 
 }
