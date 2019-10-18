@@ -29,8 +29,14 @@ import uk.ac.leeds.ccg.andyt.generic.core.Generic_Environment;
  *
  * @author geoagdt
  */
-public class Census_Environment extends Generic_Environment {
+public class Census_Environment  {
 
+    public final transient Generic_Environment env;
+    
+    public Census_Environment() throws IOException {
+        env = new Generic_Environment();
+    }
+    
     /**
      * @param area
      * @param level "OA" or "LSOA" or "MSOA" currently...
@@ -44,11 +50,11 @@ public class Census_Environment extends Generic_Environment {
         File file = new File(dir, "censusCodes.csv");
         if (file.exists()) {
             try {
-                BufferedReader br = io.getBufferedReader(file);
+                BufferedReader br = env.io.getBufferedReader(file);
                 if (br != null) {
                     r = new TreeSet<String>();
                     StreamTokenizer st = new StreamTokenizer(br);
-                    io.setStreamTokenizerSyntax1(st);
+                    env.io.setStreamTokenizerSyntax1(st);
                     int token = st.nextToken();
 //                    long RecordID = 0;
                     String line = "";

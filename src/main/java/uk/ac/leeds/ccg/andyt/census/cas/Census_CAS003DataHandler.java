@@ -2,19 +2,19 @@
  * A component of a library for
  * <a href="http://www.geog.leeds.ac.uk/people/a.turner/projects/MoSeS">MoSeS</a>.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  */
 package uk.ac.leeds.ccg.andyt.census.cas;
 
@@ -46,13 +46,13 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
         File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
         this.init(directory);
         try {
-            this._File = new File(directory, "CAS003DataRecords.dat");
-            if (!this._File.exists()) {
-                this._File.createNewFile();
+            this.file = new File(directory, "CAS003DataRecords.dat");
+            if (!this.file.exists()) {
+                this.file.createNewFile();
             }
-            this._RecordLength = new Census_CAS003DataRecord().getSizeInBytes();
+            this.recordLength = new Census_CAS003DataRecord().getSizeInBytes();
             // log("this.recordLength " + this.recordLength);
-            this._RandomAccessFile = new RandomAccessFile(this._File, "r");
+            this.rAF = new RandomAccessFile(this.file, "r");
         } catch (IOException aIOException) {
             log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
@@ -62,13 +62,13 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
     /**
      * Creates a new instance of CAS003DataHandler with Records loaded from
      * aFile.
-     * @param aFile
-     * Formatted file of CAS003DataRecords.
+     *
+     * @param aFile Formatted file of CAS003DataRecords.
      */
     public Census_CAS003DataHandler(File aFile) {
         // initMemoryReserve();
         this.init(aFile.getParentFile());
-        this._RecordLength = new Census_CAS003DataRecord().getSizeInBytes();
+        this.recordLength = new Census_CAS003DataRecord().getSizeInBytes();
         load(aFile);
         log("CAS003DataRecords loaded successfully");
     }
@@ -77,7 +77,7 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
             File directory,
             int n)
             throws IOException {
-        _RandomAccessFile = new RandomAccessFile(this._File, "rw");
+        rAF = new RandomAccessFile(this.file, "rw");
         File infile;
         long long0 = 0L;
         long RecordID = 0L;
@@ -109,73 +109,62 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                 "CAS003NorthernIrelandOA.csv");
         RecordID = format(infile, RecordID, true);
         log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 5022
-        _RandomAccessFile.close();
-        load(_File);
+        rAF.close();
+        load(file);
         print(20, new Random());
     }
 
     protected long format(
             File sourceFile,
             long RecordID) throws IOException {
-        BufferedReader aBufferedReader =
-                new BufferedReader(
-                new InputStreamReader(
-                new FileInputStream(sourceFile)));
-        StreamTokenizer aStreamTokenizer =
-                new StreamTokenizer(aBufferedReader);
-        env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
+        BufferedReader br = env.env.io.getBufferedReader(sourceFile);
+        StreamTokenizer st = new StreamTokenizer(br);
+        env.env.io.setStreamTokenizerSyntax1(st);
         String string0 = new String();
         String string1;
         String string2;
         long long0;
         long longZero = 0L;
-        Census_CAS003DataRecord aCAS003DataRecord = new Census_CAS003DataRecord();
+        Census_CAS003DataRecord rec = new Census_CAS003DataRecord();
         boolean print = false;
         int int10000 = 10000;
         // Skip the first line
-        int tokenType = aStreamTokenizer.nextToken();
+        int tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOL) {
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
-        tokenType = aStreamTokenizer.nextToken();
+        tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOF) {
             switch (tokenType) {
                 case StreamTokenizer.TT_EOL:
                     long0 = RecordID % int10000;
                     print = (long0 == longZero);
                     if (print) {
-                        string2 = aCAS003DataRecord.toString();
+                        string2 = rec.toString();
                         log(string2);
                         string2 = string0;
                     }
                     // Write out
-                    aCAS003DataRecord.write(_RandomAccessFile);
+                    rec.write(rAF);
                     RecordID++;
                     break;
                 case StreamTokenizer.TT_WORD:
-                    string1 = aStreamTokenizer.sval;
-                    aCAS003DataRecord = new Census_CAS003DataRecord(RecordID, string1);
+                    string1 = st.sval;
+                    rec = new Census_CAS003DataRecord(RecordID, string1);
                     break;
             }
             string1 = string0;
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
         log("Number of Records loaded = " + RecordID);
         return RecordID;
     }
 
-    protected long format(
-            File sourceFile,
-            long RecordID,
-            boolean Northern_Ireland) {
+    protected long format(File sourceFile, long RecordID, boolean Northern_Ireland) {
         try {
-            BufferedReader aBufferedReader =
-                    new BufferedReader(
-                    new InputStreamReader(
-                    new FileInputStream(sourceFile)));
-            StreamTokenizer aStreamTokenizer =
-                    new StreamTokenizer(aBufferedReader);
-            env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
+            BufferedReader br = env.env.io.getBufferedReader(sourceFile);
+            StreamTokenizer st = new StreamTokenizer(br);
+            env.env.io.setStreamTokenizerSyntax1(st);
             String string0 = new String();
             String string1;
             String string2;
@@ -185,11 +174,11 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
             boolean print = false;
             int int10000 = 10000;
             // Skip the first line
-            int tokenType = aStreamTokenizer.nextToken();
+            int tokenType = st.nextToken();
             while (tokenType != StreamTokenizer.TT_EOL) {
-                tokenType = aStreamTokenizer.nextToken();
+                tokenType = st.nextToken();
             }
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
             while (tokenType != StreamTokenizer.TT_EOF) {
                 switch (tokenType) {
                     case StreamTokenizer.TT_EOL:
@@ -201,17 +190,17 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                             string2 = string0;
                         }
                         // Write out
-                        aCAS003DataRecord.write(_RandomAccessFile);
+                        aCAS003DataRecord.write(rAF);
                         RecordID++;
                         break;
                     case StreamTokenizer.TT_WORD:
-                        string1 = aStreamTokenizer.sval;
+                        string1 = st.sval;
                         aCAS003DataRecord = new Census_CAS003DataRecord(RecordID, string1,
                                 Northern_Ireland);
                         break;
                 }
                 string1 = string0;
-                tokenType = aStreamTokenizer.nextToken();
+                tokenType = st.nextToken();
             }
             log("Number of Records loaded = " + RecordID);
         } catch (IOException aIOException) {
@@ -223,9 +212,9 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
 
     /**
      * @return a <code>Census_CAS003DataRecord</code> with
-     *         <code>Census_AbstractDataRecord.RecordID = RecordID</code>
-     * @param RecordID
-     *            The RecordID of the Census_CAS003DataRecord to be returned.
+     * <code>Census_AbstractDataRecord.RecordID = RecordID</code>
+     * @param RecordID The RecordID of the Census_CAS003DataRecord to be
+     * returned.
      */
     public Census_AbstractDataRecord getDataRecord(long RecordID) {
         return getCAS003DataRecord(RecordID);
@@ -233,15 +222,15 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
 
     /**
      * @return a <code>Census_CAS003DataRecord</code> with
-     *         <code>Census_CAS003DataRecord.RecordID = RecordID</code>
-     * @param RecordID
-     *            The RecordID of the Census_CAS003DataRecord to be returned.
+     * <code>Census_CAS003DataRecord.RecordID = RecordID</code>
+     * @param RecordID The RecordID of the Census_CAS003DataRecord to be
+     * returned.
      */
     public Census_CAS003DataRecord getCAS003DataRecord(long RecordID) {
         Census_CAS003DataRecord result = null;
         try {
-            this._RandomAccessFile.seek(_RecordLength * RecordID);
-            result = new Census_CAS003DataRecord(this._RandomAccessFile);
+            this.rAF.seek(recordLength * RecordID);
+            result = new Census_CAS003DataRecord(this.rAF);
         } catch (IOException aIOException) {
             log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
@@ -254,12 +243,11 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
      * records in the range [startRecordID,endRecordID] and writes the results
      * to aRandomAccessFile
      *
-     * @param aRandomAccessFile
-     *            <code>RandomAccessFile</code> to which results are written
-     * @param startRecordID
-     *            The first OA RecordID in the sequence to be aggregated.
-     * @param endRecordID
-     *            The last OA RecordID in the sequence to be aggregated.
+     * @param aRandomAccessFile <code>RandomAccessFile</code> to which results
+     * are written
+     * @param startRecordID The first OA RecordID in the sequence to be
+     * aggregated.
+     * @param endRecordID The last OA RecordID in the sequence to be aggregated.
      */
     public void aggregateOAToWard(
             RandomAccessFile aRandomAccessFile,
@@ -297,12 +285,11 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
      * records in the range [startRecordID,endRecordID] and writes the results
      * to aRandomAccessFile
      *
-     * @param aRandomAccessFile
-     *            <code>RandomAccessFile</code> to which results are written
-     * @param startRecordID
-     *            The first OA RecordID in the sequence to be aggregated.
-     * @param endRecordID
-     *            The last OA RecordID in the sequence to be aggregated.
+     * @param aRandomAccessFile <code>RandomAccessFile</code> to which results
+     * are written
+     * @param startRecordID The first OA RecordID in the sequence to be
+     * aggregated.
+     * @param endRecordID The last OA RecordID in the sequence to be aggregated.
      * @throws java.io.IOException
      */
     public void aggregateOAToMSOA(
@@ -335,10 +322,9 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
     /**
      * @param tCAS003DataRecord
      * @param tISARDataHandler
-     * @return HashMap with keys as AgeSexType and values as Integer.
-     * These are counts for male and female household reference persons of
-     * the following ages:
-     * 0,20,30,60 
+     * @return HashMap with keys as AgeSexType and values as Integer. These are
+     * counts for male and female household reference persons of the following
+     * ages: 0,20,30,60
      */
     public HashMap getCAS003AgeSex1_AgeSexType_Count_HashMap(
             Census_CAS003DataRecord tCAS003DataRecord,
@@ -363,25 +349,25 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                     sex,
                     type);
             if (ages[i] == 0) {
-                ageCount =
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge19AndUnder();
+                ageCount
+                        = tCAS003DataRecord.getMaleHRPHouseholdsTotalAge19AndUnder();
             }
             if (ages[i] == 20) {
-                ageCount =
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge20to24() +
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge25to29();
+                ageCount
+                        = tCAS003DataRecord.getMaleHRPHouseholdsTotalAge20to24()
+                        + tCAS003DataRecord.getMaleHRPHouseholdsTotalAge25to29();
             }
             if (ages[i] == 30) {
-                ageCount =
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge30to44() +
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge45to59();
+                ageCount
+                        = tCAS003DataRecord.getMaleHRPHouseholdsTotalAge30to44()
+                        + tCAS003DataRecord.getMaleHRPHouseholdsTotalAge45to59();
             }
             if (ages[i] == 60) {
-                ageCount =
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge60to64() +
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge65to74() +
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge75to84() +
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge85AndOver();
+                ageCount
+                        = tCAS003DataRecord.getMaleHRPHouseholdsTotalAge60to64()
+                        + tCAS003DataRecord.getMaleHRPHouseholdsTotalAge65to74()
+                        + tCAS003DataRecord.getMaleHRPHouseholdsTotalAge75to84()
+                        + tCAS003DataRecord.getMaleHRPHouseholdsTotalAge85AndOver();
             }
             tCAS003_AgeSexType_Count_HashMap.put(aAgeSexType, ageCount);
         }
@@ -393,25 +379,25 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                     sex,
                     type);
             if (ages[i] == 0) {
-                ageCount =
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge19AndUnder();
+                ageCount
+                        = tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge19AndUnder();
             }
             if (ages[i] == 20) {
-                ageCount =
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge20to24() +
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge25to29();
+                ageCount
+                        = tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge20to24()
+                        + tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge25to29();
             }
             if (ages[i] == 30) {
-                ageCount =
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge30to44() +
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge45to59();
+                ageCount
+                        = tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge30to44()
+                        + tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge45to59();
             }
             if (ages[i] == 60) {
-                ageCount =
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge60to64() +
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge65to74() +
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge75to84() +
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge85AndOver();
+                ageCount
+                        = tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge60to64()
+                        + tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge65to74()
+                        + tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge75to84()
+                        + tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge85AndOver();
             }
             tCAS003_AgeSexType_Count_HashMap.put(aAgeSexType, ageCount);
         }
@@ -422,8 +408,7 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
      * @param tCAS003DataRecord
      * @return HashMap with keys as Integer for age and values as Integer for
      * counts of these ages of female household reference persons for the
-     * following ages:
-     * 0,20,30,60
+     * following ages: 0,20,30,60
      */
     public HashMap getCAS003HPHRPAgeFemaleCount_HashMap(
             Census_CAS003DataRecord tCAS003DataRecord) {
@@ -438,25 +423,25 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
 
         for (int i = 0; i < ages.length; i++) {
             if (ages[i] == 0) {
-                ageCount =
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge19AndUnder();
+                ageCount
+                        = tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge19AndUnder();
             }
             if (ages[i] == 20) {
-                ageCount =
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge20to24() +
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge25to29();
+                ageCount
+                        = tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge20to24()
+                        + tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge25to29();
             }
             if (ages[i] == 30) {
-                ageCount =
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge30to44() +
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge45to59();
+                ageCount
+                        = tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge30to44()
+                        + tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge45to59();
             }
             if (ages[i] == 60) {
-                ageCount =
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge60to64() +
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge65to74() +
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge75to84() +
-                        tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge85AndOver();
+                ageCount
+                        = tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge60to64()
+                        + tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge65to74()
+                        + tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge75to84()
+                        + tCAS003DataRecord.getFemaleHRPHouseholdsTotalAge85AndOver();
             }
             tCAS003_AgeSexType_Count_HashMap.put(ages[i], ageCount);
         }
@@ -467,8 +452,7 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
      * @param tCAS003DataRecord
      * @return HashMap with keys as Integer for age and values as Integer for
      * counts of these ages of male household reference persons for the
-     * following ages:
-     * 0,20,30,60
+     * following ages: 0,20,30,60
      */
     public HashMap getCAS003HPHRPAgeMaleCount_HashMap(
             Census_CAS003DataRecord tCAS003DataRecord) {
@@ -483,25 +467,25 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
 
         for (int i = 0; i < ages.length; i++) {
             if (ages[i] == 0) {
-                ageCount =
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge19AndUnder();
+                ageCount
+                        = tCAS003DataRecord.getMaleHRPHouseholdsTotalAge19AndUnder();
             }
             if (ages[i] == 20) {
-                ageCount =
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge20to24() +
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge25to29();
+                ageCount
+                        = tCAS003DataRecord.getMaleHRPHouseholdsTotalAge20to24()
+                        + tCAS003DataRecord.getMaleHRPHouseholdsTotalAge25to29();
             }
             if (ages[i] == 30) {
-                ageCount =
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge30to44() +
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge45to59();
+                ageCount
+                        = tCAS003DataRecord.getMaleHRPHouseholdsTotalAge30to44()
+                        + tCAS003DataRecord.getMaleHRPHouseholdsTotalAge45to59();
             }
             if (ages[i] == 60) {
-                ageCount =
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge60to64() +
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge65to74() +
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge75to84() +
-                        tCAS003DataRecord.getMaleHRPHouseholdsTotalAge85AndOver();
+                ageCount
+                        = tCAS003DataRecord.getMaleHRPHouseholdsTotalAge60to64()
+                        + tCAS003DataRecord.getMaleHRPHouseholdsTotalAge65to74()
+                        + tCAS003DataRecord.getMaleHRPHouseholdsTotalAge75to84()
+                        + tCAS003DataRecord.getMaleHRPHouseholdsTotalAge85AndOver();
             }
             tCAS003_AgeSexType_Count_HashMap.put(ages[i], ageCount);
         }

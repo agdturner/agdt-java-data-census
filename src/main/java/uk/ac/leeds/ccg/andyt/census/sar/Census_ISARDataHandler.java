@@ -67,17 +67,17 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
         if (f.getName().endsWith(".dat")) {
             init(f.getParentFile());
             load(f);
-            this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
+            this.recordLength = new Census_ISARDataRecord().getSizeInBytes();
             loadIntoCache();
             File thisFile = new File(dir,
                     this.getClass().getCanonicalName() + ".thisFile");
             init_AgeSexType_ISARDataRecordVector_HashMap_0();
-            env.io.writeObject(this, thisFile);
+            env.env.io.writeObject(this, thisFile);
         } else {
-            Object object = env.io.readObject(f);
+            Object object = env.env.io.readObject(f);
             Census_ISARDataHandler aISARDataHandler = (Census_ISARDataHandler) object;
             load(f);
-            this._RecordLength = aISARDataHandler._RecordLength;
+            this.recordLength = aISARDataHandler.recordLength;
             //this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
             this._ISARDataRecordArray = aISARDataHandler._ISARDataRecordArray;
             this._AgeSexType_ISARDataRecordVector_HashMap_0 = aISARDataHandler._AgeSexType_ISARDataRecordVector_HashMap_0;
@@ -96,13 +96,13 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
         }
         this._ISARDataRecordArray = new Census_ISARDataRecord[(int) nDataRecords];
         try {
-            this._RandomAccessFile.seek(0);
+            this.rAF.seek(0);
         } catch (IOException ioe0) {
             ioe0.printStackTrace();
         }
         for (int _ISARRecordID = 0; _ISARRecordID < nDataRecords; _ISARRecordID++) {
             this._ISARDataRecordArray[_ISARRecordID] = new Census_ISARDataRecord(
-                    this._RandomAccessFile);
+                    this.rAF);
             if (_ISARRecordID % 10000 == 0) {
                 log("loadIntoCache " + _ISARRecordID);
             }
@@ -125,14 +125,14 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
         logger.entering(
                 this.getClass().getCanonicalName(),
                 "formatSource(File,File)");
-        _File = formattedFile;
-//        _File = new File (
+        file = formattedFile;
+//        file = new File (
 //                dir,
 //                ISARDataRecords.dat);
-        if (!_File.exists()) {
-            this._File.createNewFile();
+        if (!file.exists()) {
+            this.file.createNewFile();
         }
-        this._RandomAccessFile = new RandomAccessFile(this._File, "rw");
+        this.rAF = new RandomAccessFile(this.file, "rw");
         //File sourceFile = new File(
         //        "C:/work/data/census/2001/SAR/01uklicind-20050401.dat");
         BufferedReader aBufferedReader
@@ -141,7 +141,7 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
                                 new FileInputStream(sourceFile)));
         StreamTokenizer aStreamTokenizer
                 = new StreamTokenizer(aBufferedReader);
-        env.io.setStreamTokenizerSyntax2(aStreamTokenizer);
+        env.env.io.setStreamTokenizerSyntax2(aStreamTokenizer);
         String line;
         long RecordID = 0L;
         Census_ISARDataRecord aISARDataRecord = new Census_ISARDataRecord();
@@ -160,7 +160,7 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
                     }
                     // Write out householdSARRecord
                     if (parsed) {
-                        aISARDataRecord.write(this._RandomAccessFile);
+                        aISARDataRecord.write(this.rAF);
                         // log( "this.tRandomAccessFile.length() " +
                         // this.tRandomAccessFile.length() );
                         RecordID++;
@@ -176,8 +176,8 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
             tokenType = aStreamTokenizer.nextToken();
         }
         log("Number of ISARDataRecords loaded " + (RecordID + 1L));
-        this._RandomAccessFile.close();
-        this._RandomAccessFile = new RandomAccessFile(this._File, "r");
+        this.rAF.close();
+        this.rAF = new RandomAccessFile(this.file, "r");
         logger.exiting(
                 this.getClass().getCanonicalName(),
                 "formatSource(File,File)");

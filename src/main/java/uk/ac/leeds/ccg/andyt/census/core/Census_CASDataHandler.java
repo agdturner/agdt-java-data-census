@@ -864,7 +864,7 @@ public class Census_CASDataHandler extends Census_AbstractDataHandler {
 
         // CAS001DataRecords
         File dir = new File(
-                get_Directory(),
+                getDir(),
                 "Leeds");
         //File dir = new File("C:/Work/Projects/MoSeS/Workspace/Leeds/");
         aFile = new File(dir,

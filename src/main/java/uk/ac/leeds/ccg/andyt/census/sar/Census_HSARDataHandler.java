@@ -2,19 +2,19 @@
  * A component of a library for
  * <a href="http://www.geog.leeds.ac.uk/people/a.turner/projects/MoSeS">MoSeS</a>.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  */
 package uk.ac.leeds.ccg.andyt.census.sar;
 
@@ -42,7 +42,7 @@ import uk.ac.leeds.ccg.andyt.data.converter.Data_AgeConverter;
 public class Census_HSARDataHandler extends Data_AbstractHandler {
 
     public Census_Environment env;
-    
+
     /**
      * For storing all HSARDataRecords
      */
@@ -62,12 +62,15 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
      */
     protected HashMap _HID_HSARDataRecordVector_HashMap;
 
-    /** Creates a new instance of HSARDataHandler */
+    /**
+     * Creates a new instance of HSARDataHandler
+     */
     public Census_HSARDataHandler() {
     }
 
     /**
      * Creates a new instance of HSARDataHandler from aFile.
+     *
      * @param aFile
      */
     public Census_HSARDataHandler(
@@ -77,19 +80,16 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
         if (aFile.getName().endsWith(".dat")) {
             init(aFile.getParentFile());
             load(aFile);
-            this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
+            this.recordLength = new Census_ISARDataRecord().getSizeInBytes();
             loadIntoCache();
-            File thisFile = new File(
-                    dir,
+            File thisFile = new File(dir,
                     this.getClass().getCanonicalName() + ".thisFile");
-            env.io.writeObject(
-                    this,
-                    thisFile);
+            env.env.io.writeObject(this, thisFile);
         } else {
-            Object object = env.io.readObject(aFile);
+            Object object = env.env.io.readObject(aFile);
             Census_HSARDataHandler aHSARDataHandler = (Census_HSARDataHandler) object;
             load(aFile);
-            this._RecordLength = aHSARDataHandler._RecordLength;
+            this.recordLength = aHSARDataHandler.recordLength;
             //this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
             this._HSARDataRecordArray = aHSARDataHandler._HSARDataRecordArray;
             this._AgeSexHRP_HSARDataRecordVector_HashMap = aHSARDataHandler._AgeSexHRP_HSARDataRecordVector_HashMap;
@@ -99,41 +99,34 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
 
     /**
      * Loads from source file
+     *
      * @param sourceFile
      * @param formattedFile
      * @throws java.io.IOException
      */
-    public void formatSource(
-            File sourceFile,
-            File formattedFile)
+    public void formatSource(File sourceFile, File formattedFile) 
             throws IOException {
         logger.entering(this.getClass().getCanonicalName(), "formatSource(File,File)");
-        _File = formattedFile;
-//        _File = new File (
-//                dir,
-//                HSARDataRecords.dat);
-        if (!_File.exists()) {
-            this._File.createNewFile();
+        file = formattedFile;
+//        file = new File (dir, HSARDataRecords.dat);
+        if (!file.exists()) {
+            this.file.createNewFile();
         }
-        this._RandomAccessFile = new RandomAccessFile(this._File, "rw");
+        this.rAF = new RandomAccessFile(this.file, "rw");
         //File sourceFile = new File(
         //        "C:/Work/data/Census/2001/SAR/household/5278TAB/UKDA-5278-tab/tab/lichhd-051019.tab");
-        BufferedReader aBufferedReader =
-                new BufferedReader(
-                new InputStreamReader(
-                new FileInputStream(sourceFile)));
-        StreamTokenizer aStreamTokenizer =
-                new StreamTokenizer(aBufferedReader);
-        env.io.setStreamTokenizerSyntax2(aStreamTokenizer);
+        BufferedReader br = env.env.io.getBufferedReader(sourceFile);
+        StreamTokenizer st = new StreamTokenizer(br);
+        env.env.io.setStreamTokenizerSyntax2(st);
         String line;
         long RecordID = 0L;
         Census_HSARDataRecord aHSARDataRecord = new Census_HSARDataRecord();
         // Skip the first line
-        int tokenType = aStreamTokenizer.nextToken();
+        int tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOL) {
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
-        tokenType = aStreamTokenizer.nextToken();
+        tokenType = st.nextToken();
         boolean parsed = false;
         while (tokenType != StreamTokenizer.TT_EOF) {
             switch (tokenType) {
@@ -143,24 +136,24 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
                     }
                     // Write out householdSARRecord
                     if (parsed) {
-                        aHSARDataRecord.write(this._RandomAccessFile);
+                        aHSARDataRecord.write(this.rAF);
                         // log( "this.tRandomAccessFile.length() " +
                         // this.tRandomAccessFile.length() );
                         RecordID++;
                     }
                     break;
                 case StreamTokenizer.TT_WORD:
-                    line = aStreamTokenizer.sval;
+                    line = st.sval;
                     parsed = aHSARDataRecord.parse(
                             RecordID,
                             line);
                     break;
             }
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
         log("Number of HSARDataRecords loaded " + (RecordID + 1L));
-        this._RandomAccessFile.close();
-        this._RandomAccessFile = new RandomAccessFile(this._File, "r");
+        this.rAF.close();
+        this.rAF = new RandomAccessFile(this.file, "r");
         logger.exiting(this.getClass().getCanonicalName(), "formatSource(File,File)");
     }
 
@@ -211,7 +204,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
                         aHSARDataRecordsVector);
             }
         }
-    //log("this.tHouseholdVectors.size() " + this._HID_HSARDataRecordsVector_HashMap.size());
+        //log("this.tHouseholdVectors.size() " + this._HID_HSARDataRecordsVector_HashMap.size());
     }
 
     /**
@@ -254,13 +247,13 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
         }
         this._HSARDataRecordArray = new Census_HSARDataRecord[(int) nDataRecords];
         try {
-            this._RandomAccessFile.seek(0);
+            this.rAF.seek(0);
         } catch (IOException ioe0) {
             ioe0.printStackTrace();
         }
         for (int _HSARRecordID = 0; _HSARRecordID < nDataRecords; _HSARRecordID++) {
             this._HSARDataRecordArray[_HSARRecordID] = new Census_HSARDataRecord(
-                    this._RandomAccessFile);
+                    this.rAF);
             if (_HSARRecordID % 10000 == 0) {
                 log("loadIntoCache " + _HSARRecordID);
             }
@@ -270,26 +263,26 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
     }
 
     /**
-     * @param aRecordID
-     * The RecordID of the Census_HSARDataRecord to be returned.
-     * @return 
+     * @param aRecordID The RecordID of the Census_HSARDataRecord to be
+     * returned.
+     * @return
      */
     public Data_AbstractRecord getDataRecord(long aRecordID) {
         return getHSARDataRecord(aRecordID);
     }
 
     /**
-     * @param aRecordID
-     * The RecordID of the Census_HSARDataRecord to be returned.
-     * @return 
+     * @param aRecordID The RecordID of the Census_HSARDataRecord to be
+     * returned.
+     * @return
      */
     public Census_HSARDataRecord getHSARDataRecord(long aRecordID) {
         try {
             return this._HSARDataRecordArray[(int) aRecordID];
         } catch (NullPointerException aNullPointerException) {
             try {
-                this._RandomAccessFile.seek(_RecordLength * aRecordID);
-                return new Census_HSARDataRecord(this._RandomAccessFile);
+                this.rAF.seek(recordLength * aRecordID);
+                return new Census_HSARDataRecord(this.rAF);
             } catch (IOException ioe0) {
                 ioe0.printStackTrace();
                 return null;
@@ -299,8 +292,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
 
     /**
      * @return A pseudo random HRP Census_HSARDataRecord.
-     * @param aRandom
-     * The Random used to select.
+     * @param aRandom The Random used to select.
      */
     public Census_HSARDataRecord getHSARDataRecord(
             Random aRandom) {
@@ -338,10 +330,9 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
 
     /**
      * @return A Vector of Vectors of HSARDataRecords for the Households with
-     *         HRP as in aHRPHSARDataRecordsHashSet
-     * @param aHRPHSARDataRecordsHashSet
-     *            A HashSet of HSARDataRecords for HRP for the HSARDataRecords
-     *            returned in the Vector of Vectors
+     * HRP as in aHRPHSARDataRecordsHashSet
+     * @param aHRPHSARDataRecordsHashSet A HashSet of HSARDataRecords for HRP
+     * for the HSARDataRecords returned in the Vector of Vectors
      */
     public Vector getHSARDataRecordsVectors(
             HashSet aHRPHSARDataRecordsHashSet) {
@@ -358,7 +349,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
     /**
      * @param aHPHRPHSARDataRecordsHashSet
      * @return All <code>HSARDataRecords</code> in a HashSet for those HRP in
-     *         aHPHRPHSARDataRecordsHashSet
+     * aHPHRPHSARDataRecordsHashSet
      */
     public HashSet getHSARDataRecordsHashSet(
             HashSet aHPHRPHSARDataRecordsHashSet) {
@@ -378,7 +369,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
     /**
      * @param tHPHRPs
      * @return All <code>HSARDataRecords</code> for the Households with HRPs as
-         in Census_HSARDataRecord[] tHPHRPs
+     * in Census_HSARDataRecord[] tHPHRPs
      */
     public Vector getHSARDataRecords(Census_HSARDataRecord[] tHPHRPs) {
         // Get all Householders
@@ -400,7 +391,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
     /**
      * @param tHPHRPRecordIDs
      * @return All <code>HSARDataRecords</code> for the Households with HRPs as
-     *         in Vector tHPHRPs
+     * in Vector tHPHRPs
      */
     public Vector getHSARDataRecords(Vector tHPHRPRecordIDs) {
         // Get all Householders
@@ -442,14 +433,16 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
     }
 
     public HashMap get_HID_HSARDataRecordVector_HashMap() {
-        if (_HID_HSARDataRecordVector_HashMap == null){
+        if (_HID_HSARDataRecordVector_HashMap == null) {
             initVectors();
         }
         return _HID_HSARDataRecordVector_HashMap;
     }
 
     /**
-     * Method to be used to look up Census_ISARDataRecord from Census_ISARDataRecord._ID.
+     * Method to be used to look up Census_ISARDataRecord from
+     * Census_ISARDataRecord._ID.
+     *
      * @return a HashMap for looking up RecordID from ID
      */
     public HashMap get_ID_RecordID_HashMap() {
@@ -470,8 +463,8 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
     }
 
     /**
-     * A simple class for distinguishing Census_HSARDataRecord with _HRP = true into
- those with the same of _AGEH, _Sex
+     * A simple class for distinguishing Census_HSARDataRecord with _HRP = true
+     * into those with the same of _AGEH, _Sex
      */
     public class AgeSex
             implements Serializable, Comparable {

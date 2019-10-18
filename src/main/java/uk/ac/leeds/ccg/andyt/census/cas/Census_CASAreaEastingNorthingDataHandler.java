@@ -1,20 +1,17 @@
-/**
- * A component of a library for
- * <a href="http://www.geog.leeds.ac.uk/people/a.turner/projects/MoSeS">MoSeS</a>.
+/*
+ * Copyright 2010 Centre for Computational Geography, University of Leeds.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package uk.ac.leeds.ccg.andyt.census.cas;
 
@@ -42,13 +39,13 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
         File directory = new File("C:/Work/Projects/GENESIS/Workspace/");
         init(directory);
         try {
-            this._File = new File(directory, "CASAreaEastingNorthingDataRecords.dat");
-            if (!this._File.exists()) {
-                this._File.createNewFile();
+            this.file = new File(directory, "CASAreaEastingNorthingDataRecords.dat");
+            if (!this.file.exists()) {
+                this.file.createNewFile();
             }
-            this._RecordLength = new Census_CASAreaEastingNorthingDataRecord().getSizeInBytes();
+            this.recordLength = new Census_CASAreaEastingNorthingDataRecord().getSizeInBytes();
             // log("this.recordLength " + this.recordLength);
-            this._RandomAccessFile = new RandomAccessFile(this._File, "r");
+            this.rAF = new RandomAccessFile(this.file, "r");
         } catch (IOException aIOException) {
             log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
@@ -56,27 +53,28 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
     }
 
     /**
-     * Creates a new instance of CASAreaEastingNorthingDataHandler with Records loaded from
-     * formattedFile.
+     * Creates a new instance of CASAreaEastingNorthingDataHandler with Records
+     * loaded from formattedFile.
      *
      * @param file Formatted file of CASAreaEastingNorthingDataRecords
      */
     public Census_CASAreaEastingNorthingDataHandler(File file) {
         this.init(file.getParentFile());
         if (file.getName().endsWith("thisFile")) {
-            Census_CASAreaEastingNorthingDataHandler a_CASAreaEastingNorthingDataHandler;
-            a_CASAreaEastingNorthingDataHandler = (Census_CASAreaEastingNorthingDataHandler) env.io.readObject(file);
-            this._File = a_CASAreaEastingNorthingDataHandler._File;
-            load(_File);
+            Census_CASAreaEastingNorthingDataHandler h;
+            h = (Census_CASAreaEastingNorthingDataHandler) env.env.io.readObject(file);
+            this.file = h.file;
+            load(this.file);
         } else {
             load(file);
         }
-        this._RecordLength = new Census_CASAreaEastingNorthingDataRecord().getSizeInBytes();
+        this.recordLength = new Census_CASAreaEastingNorthingDataRecord().getSizeInBytes();
         log("CASAreaEastingNorthingDataRecords loaded successfully");
     }
 
     /**
      * Loads <code>CAS001DataRecords</code> and prints out n randomly
+     *
      * @param directory to load source data from
      * @param n the number of loaded data records to print out.
      */
@@ -84,7 +82,7 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
             File directory,
             int n) {
         try {
-            _RandomAccessFile = new RandomAccessFile(this._File, "rw");
+            rAF = new RandomAccessFile(this.file, "rw");
             // Load from source
             File infile;
             long long0 = 0L;
@@ -116,8 +114,8 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
 //                    "NorthernIreland_OA_ZoneCode_Area_Easting_Northing.csv");
 //            RecordID = format(infile, RecordID);
 //            log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 5022
-//            _RandomAccessFile.close();
-//            load(_File);
+//            rAF.close();
+//            load(file);
 //            print(20, new Random());
         } catch (FileNotFoundException aIOException) {
             log(aIOException.getLocalizedMessage());
@@ -131,60 +129,53 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
      * to <code>CASAreaEastingNorthingDataRecords</code> and written to
      * <code>this.tRandomAccessFile</code>.
      *
-     * @param sourceFile
-     *            The source CASAreaEastingNorthingDataRecords file to be formatted and
-     *            written to <code>this.tRandomAccessFile</code>.
-     * @param RecordID
-     *            The <code>RecordID</code> to assign to the first
-     *            <code>Census_CASAreaEastingNorthingDataRecord</code>.
+     * @param sourceFile The source CASAreaEastingNorthingDataRecords file to be
+     * formatted and written to <code>this.tRandomAccessFile</code>.
+     * @param RecordID The <code>RecordID</code> to assign to the first
+     * <code>Census_CASAreaEastingNorthingDataRecord</code>.
      * @return The <code>RecordID</code> assigned to the last
-     *         <code>CASAreaEastingNorthingDataRecords</code>.
+     * <code>CASAreaEastingNorthingDataRecords</code>.
      */
-    protected long format(
-            File sourceFile,
-            long RecordID) {
+    protected long format(File sourceFile, long RecordID) {
         try {
-            BufferedReader aBufferedReader =
-                    new BufferedReader(
-                    new InputStreamReader(
-                    new FileInputStream(sourceFile)));
-            StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-            env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
+            BufferedReader br = env.env.io.getBufferedReader(sourceFile);
+            StreamTokenizer st = new StreamTokenizer(br);
+            env.env.io.setStreamTokenizerSyntax1(st);
             String string0 = new String();
             String string1;
             String string2;
             long long0;
             long longZero = 0L;
-            Census_CASAreaEastingNorthingDataRecord aCASAreaEastingNorthingDataRecord = new Census_CASAreaEastingNorthingDataRecord();
+            Census_CASAreaEastingNorthingDataRecord rec = new Census_CASAreaEastingNorthingDataRecord();
             boolean print = false;
             int int10000 = 10000;
             // Skip the first line
-            int tokenType = aStreamTokenizer.nextToken();
+            int tokenType = st.nextToken();
             while (tokenType != StreamTokenizer.TT_EOL) {
-                tokenType = aStreamTokenizer.nextToken();
+                tokenType = st.nextToken();
             }
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
             while (tokenType != StreamTokenizer.TT_EOF) {
                 switch (tokenType) {
                     case StreamTokenizer.TT_EOL:
                         long0 = RecordID % int10000;
                         print = (long0 == longZero);
                         if (print) {
-                            string2 = aCASAreaEastingNorthingDataRecord.toString();
+                            string2 = rec.toString();
                             log(string2);
                             string2 = string0;
                         }
                         // Write out
-                        aCASAreaEastingNorthingDataRecord.write(_RandomAccessFile);
+                        rec.write(rAF);
                         RecordID++;
                         break;
                     case StreamTokenizer.TT_WORD:
-                        string1 = aStreamTokenizer.sval;
-                        aCASAreaEastingNorthingDataRecord = new Census_CASAreaEastingNorthingDataRecord(RecordID, string1);
+                        string1 = st.sval;
+                        rec = new Census_CASAreaEastingNorthingDataRecord(RecordID, string1);
                         break;
                 }
                 string1 = string0;
-                tokenType = aStreamTokenizer.nextToken();
+                tokenType = st.nextToken();
             }
             log("Number of Records loaded = " + RecordID);
         } catch (IOException aIOException) {
@@ -196,9 +187,9 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
 
     /**
      * @return a <code>Census_CASAreaEastingNorthingDataRecord</code> with
-     *         <code>Census_AbstractDataRecord.RecordID = RecordID</code>
-     * @param RecordID
-     *            The RecordID of the Census_CASAreaEastingNorthingDataRecord to be returned.
+     * <code>Census_AbstractDataRecord.RecordID = RecordID</code>
+     * @param RecordID The RecordID of the
+     * Census_CASAreaEastingNorthingDataRecord to be returned.
      */
     public Census_AbstractDataRecord getDataRecord(long RecordID) {
         return getCASAreaEastingNorthingDataRecord(RecordID);
@@ -206,16 +197,16 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
 
     /**
      * @return a <code>Census_CASAreaEastingNorthingDataRecord</code> with
-     *         <code>Census_CASAreaEastingNorthingDataRecord.RecordID = RecordID</code>
-     * @param RecordID
-     *            The RecordID of the Census_CASAreaEastingNorthingDataRecord to be returned.
+     * <code>Census_CASAreaEastingNorthingDataRecord.RecordID = RecordID</code>
+     * @param RecordID The RecordID of the
+     * Census_CASAreaEastingNorthingDataRecord to be returned.
      */
     public Census_CASAreaEastingNorthingDataRecord getCASAreaEastingNorthingDataRecord(
             long RecordID) {
         Census_CASAreaEastingNorthingDataRecord result = null;
         try {
-            this._RandomAccessFile.seek(_RecordLength * RecordID);
-            result = new Census_CASAreaEastingNorthingDataRecord(this._RandomAccessFile);
+            this.rAF.seek(recordLength * RecordID);
+            result = new Census_CASAreaEastingNorthingDataRecord(this.rAF);
         } catch (IOException aIOException) {
             System.err.println(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);

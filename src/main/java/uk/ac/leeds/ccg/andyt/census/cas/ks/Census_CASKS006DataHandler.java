@@ -55,13 +55,13 @@ public class Census_CASKS006DataHandler extends Census_AbstractDataHandler {
         // Default this.directory, this.file, this.randomAccessFile
         File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
         this.init(directory);
-        this._File = new File(directory, "CASKS006DataRecords.dat");
-        if (!this._File.exists()) {
-            this._File.createNewFile();
+        this.file = new File(directory, "CASKS006DataRecords.dat");
+        if (!this.file.exists()) {
+            this.file.createNewFile();
         }
-        this._RecordLength = new Census_CASKS006DataRecord().getSizeInBytes();
+        this.recordLength = new Census_CASKS006DataRecord().getSizeInBytes();
         // System.out.println("this.recordLength " + this.recordLength);
-        this._RandomAccessFile = new RandomAccessFile(this._File, "r");
+        this.rAF = new RandomAccessFile(this.file, "r");
     }
 
     /**
@@ -75,7 +75,7 @@ public class Census_CASKS006DataHandler extends Census_AbstractDataHandler {
     public Census_CASKS006DataHandler(File formattedFile) throws IOException {
         // initMemoryReserve();
         this.init(formattedFile.getParentFile());
-        this._RecordLength = new Census_CASKS006DataRecord().getSizeInBytes();
+        this.recordLength = new Census_CASKS006DataRecord().getSizeInBytes();
         load(formattedFile);
         System.out.println("CASKS006DataRecords loaded successfully");
     }
@@ -90,7 +90,7 @@ public class Census_CASKS006DataHandler extends Census_AbstractDataHandler {
             File directory,
             int n)
             throws IOException {
-        _RandomAccessFile = new RandomAccessFile(this._File, "rw");
+        rAF = new RandomAccessFile(this.file, "rw");
         // Load from source
         File infile;
         long long0 = 0L;
@@ -128,7 +128,7 @@ public class Census_CASKS006DataHandler extends Census_AbstractDataHandler {
         // " formatted successfully " + ( RecordID - long0 ) + " records");
         // // 5022
         // tRandomAccessFile.close();
-        load(this._File);
+        load(this.file);
         print(20, new Random());
     }
 
@@ -150,10 +150,9 @@ public class Census_CASKS006DataHandler extends Census_AbstractDataHandler {
      */
     protected long format(File sourceFile, long RecordID) throws IOException {
         System.out.println("format( File( " + sourceFile.toString() + " ), RecordID( " + RecordID + " ))");
-        BufferedReader aBufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(sourceFile)));
-        StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-        env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
+        BufferedReader br = env.env.io.getBufferedReader(sourceFile);
+        StreamTokenizer st = new StreamTokenizer(br);
+        env.env.io.setStreamTokenizerSyntax1(st);
         String string0 = new String();
         String string1;
         String string2;
@@ -163,11 +162,11 @@ public class Census_CASKS006DataHandler extends Census_AbstractDataHandler {
         boolean print = false;
         int int10000 = 10000;
         // Skip the first line
-        int tokenType = aStreamTokenizer.nextToken();
+        int tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOL) {
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
-        tokenType = aStreamTokenizer.nextToken();
+        tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOF) {
             switch (tokenType) {
                 case StreamTokenizer.TT_EOL:
@@ -179,16 +178,16 @@ public class Census_CASKS006DataHandler extends Census_AbstractDataHandler {
                         string2 = string0;
                     }
                     // Write out
-                    aCASKS006DataRecord.write(_RandomAccessFile);
+                    aCASKS006DataRecord.write(rAF);
                     RecordID++;
                     break;
                 case StreamTokenizer.TT_WORD:
-                    string1 = aStreamTokenizer.sval;
+                    string1 = st.sval;
                     aCASKS006DataRecord = new Census_CASKS006DataRecord(RecordID, string1);
                     break;
             }
             string1 = string0;
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
         System.out.println("Number of Records loaded = " + RecordID);
         return RecordID;
@@ -200,8 +199,7 @@ public class Census_CASKS006DataHandler extends Census_AbstractDataHandler {
      * @param RecordID
      *            The RecordID of the Census_CASKS006DataRecord to be returned.
      */
-    public Census_AbstractDataRecord getDataRecord(
-            long RecordID) {
+    public Census_AbstractDataRecord getDataRecord(            long RecordID) {
         return getCASKS006DataRecord(RecordID);
     }
 
@@ -215,8 +213,8 @@ public class Census_CASKS006DataHandler extends Census_AbstractDataHandler {
             long RecordID) {
         Census_CASKS006DataRecord result = null;
         try {
-            this._RandomAccessFile.seek(_RecordLength * RecordID);
-            result = new Census_CASKS006DataRecord(this._RandomAccessFile);
+            this.rAF.seek(recordLength * RecordID);
+            result = new Census_CASKS006DataRecord(this.rAF);
         } catch (IOException aIOException) {
             log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);

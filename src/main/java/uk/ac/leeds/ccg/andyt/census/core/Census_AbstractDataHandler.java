@@ -122,10 +122,10 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
         if (getRecordIDZoneCodeHashMap() == null) {
             // Initialise
             File _RecordIDZoneCodeHashMapObjectFile = new File(
-                    get_Directory(),
+                    getDir(),
                     "RecordIDZoneCodeHashMap.thisFile");
             if (_RecordIDZoneCodeHashMapObjectFile.exists()) {
-                this._RecordIDZoneCodeHashMap = (HashMap) env.io.readObject(_RecordIDZoneCodeHashMapObjectFile);
+                this._RecordIDZoneCodeHashMap = (HashMap) env.env.io.readObject(_RecordIDZoneCodeHashMapObjectFile);
             } else {
                 // If not on disc create
                 this._RecordIDZoneCodeHashMap = new HashMap();
@@ -142,7 +142,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     log(aIOException.getLocalizedMessage());
                     System.exit(Generic_ErrorAndExceptionHandler.IOException);
                 }
-                env.io.writeObject(this._RecordIDZoneCodeHashMap,
+                env.env.io.writeObject(this._RecordIDZoneCodeHashMap,
                         _RecordIDZoneCodeHashMapObjectFile);
             }
         }
@@ -272,10 +272,10 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
     public HashMap<String, String> get_LookUpMSOAfromOAHashMap() {
         if (this._LookUpMSOAfromOAHashMap == null) {
             // Initialise
-            File _LookUpMSOAfromOAHashMapObjectFile = new File(get_Directory(),
+            File _LookUpMSOAfromOAHashMapObjectFile = new File(getDir(),
                     "LookUpMSOAfromOAHashMap.thisFile");
             if (_LookUpMSOAfromOAHashMapObjectFile.exists()) {
-                this._LookUpMSOAfromOAHashMap = (HashMap) env.io.readObject(_LookUpMSOAfromOAHashMapObjectFile);
+                this._LookUpMSOAfromOAHashMap = (HashMap) env.env.io.readObject(_LookUpMSOAfromOAHashMapObjectFile);
             } else {
                 // If not on disc create
                 this._LookUpMSOAfromOAHashMap = new HashMap();
@@ -290,7 +290,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                                     lookUpTableFile)));
                     StreamTokenizer aStreamTokenizer = new StreamTokenizer(
                             aBufferedReader);
-                    env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
+                    env.env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
                     aStreamTokenizer.wordChars('&', '&');
                     aStreamTokenizer.wordChars('\'', '\'');
                     String line;
@@ -328,7 +328,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                 // Store on disc for future reference
                 try {
                     _LookUpMSOAfromOAHashMapObjectFile.createNewFile();
-                    env.io.writeObject(
+                    env.env.io.writeObject(
                             this._LookUpMSOAfromOAHashMap,
                             _LookUpMSOAfromOAHashMapObjectFile);
                 } catch (IOException aIOException) {
@@ -386,7 +386,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                 dir,
                 "LADCodes_TreeSet.thisFile");
         if (tLADCodeTreeSet_File.exists()) {
-            tLADCodes = (TreeSet) env.io.readObject(tLADCodeTreeSet_File);
+            tLADCodes = (TreeSet) env.env.io.readObject(tLADCodeTreeSet_File);
         } else {
             tLADCodes = new TreeSet();
             Census_AbstractDataRecord aCASDataRecord;
@@ -398,7 +398,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     tLADCodes.add(aLADCode);
                 }
             }
-            env.io.writeObject(tLADCodes, tLADCodeTreeSet_File);
+            env.env.io.writeObject(tLADCodes, tLADCodeTreeSet_File);
         }
         return tLADCodes;
     }
@@ -413,7 +413,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                 dir,
                 "OACodes_TreeSet.thisFile");
         if (tOACodeTreeSet_File.exists()) {
-            tOACodes = (TreeSet<String>) env.io.readObject(tOACodeTreeSet_File);
+            tOACodes = (TreeSet<String>) env.env.io.readObject(tOACodeTreeSet_File);
         } else {
             tOACodes = new TreeSet();
             Census_AbstractDataRecord aCASDataRecord;
@@ -425,7 +425,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     tOACodes.add(aOACode);
                 }
             }
-            env.io.writeObject(tOACodes, tOACodeTreeSet_File);
+            env.env.io.writeObject(tOACodes, tOACodeTreeSet_File);
         }
         return tOACodes;
     }
@@ -439,7 +439,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                 dir,
                 "OACodes_HashSet.thisFile");
         if (tOACodeHashSet_File.exists()) {
-            tOACodes = (HashSet<String>) env.io.readObject(tOACodeHashSet_File);
+            tOACodes = (HashSet<String>) env.env.io.readObject(tOACodeHashSet_File);
         } else {
             tOACodes = new HashSet();
             Census_AbstractDataRecord aCASDataRecord;
@@ -451,7 +451,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     tOACodes.add(aOACode);
                 }
             }
-            env.io.writeObject(tOACodes, tOACodeHashSet_File);
+            env.env.io.writeObject(tOACodes, tOACodeHashSet_File);
         }
         return tOACodes;
     }
@@ -465,7 +465,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                 dir,
                 "MSOACodes_HashSet.thisFile");
         if (tMSOACodeHashSet_File.exists()) {
-            tMSOACodes = (HashSet<String>) env.io.readObject(tMSOACodeHashSet_File);
+            tMSOACodes = (HashSet<String>) env.env.io.readObject(tMSOACodeHashSet_File);
         } else {
             HashMap<String, String> lookUpMSOAfromOAHashMap = get_LookUpMSOAfromOAHashMap();
             tMSOACodes = new HashSet();
@@ -480,7 +480,7 @@ public abstract class Census_AbstractDataHandler extends Data_AbstractHandler {
                     tMSOACodes.add(aMSOACode);
                 }
             }
-            env.io.writeObject(tMSOACodes, tMSOACodeHashSet_File);
+            env.env.io.writeObject(tMSOACodes, tMSOACodeHashSet_File);
         }
         return tMSOACodes;
     }

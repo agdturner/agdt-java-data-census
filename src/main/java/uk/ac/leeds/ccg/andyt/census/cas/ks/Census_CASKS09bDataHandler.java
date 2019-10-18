@@ -2,19 +2,19 @@
  * A component of a library for
  * <a href="http://www.geog.leeds.ac.uk/people/a.turner/projects/MoSeS">MoSeS</a>.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  */
 package uk.ac.leeds.ccg.andyt.census.cas.ks;
 
@@ -44,9 +44,9 @@ import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
  * href="http://www.geog.leeds.ac.uk/people/a.turner/">Andy Turner</a>, <a
  * href="http://www.leeds.ac.uk//">University of Leeds</a>.</li>
  * </ul>
- * 
+ *
  * @author <a href="http://www.geog.leeds.ac.uk/people/a.turner/">Andy
- *         Turner</a>
+ * Turner</a>
  * @version 1.0.0, 2006-08-10
  * @see Census_AbstractDataRecord
  */
@@ -58,6 +58,7 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
      * <code>File</code> is hard coded. To specify the <code>File</code> use
      * <code>CASKS09bDataHandler(File)</code>. To set a different default
      * <code>File</code> edit the source code and recompile.
+     *
      * @throws java.io.IOException
      */
     public Census_CASKS09bDataHandler() throws IOException {
@@ -68,33 +69,31 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
         // Default this.directory, this.file, this.randomAccessFile
         File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
         this.init(directory);
-        this._File = new File(directory, "CASKS09bDataRecords.dat");
-        if (!this._File.exists()) {
-            this._File.createNewFile();
+        this.file = new File(directory, "CASKS09bDataRecords.dat");
+        if (!this.file.exists()) {
+            this.file.createNewFile();
         }
-        this._RecordLength = new Census_CASKS09bDataRecord().getSizeInBytes();
+        this.recordLength = new Census_CASKS09bDataRecord().getSizeInBytes();
         // log("this.recordLength " + this.recordLength);
-        this._RandomAccessFile = new RandomAccessFile(this._File, "r");
+        this.rAF = new RandomAccessFile(this.file, "r");
     }
 
     /**
      * Creates a new instance of CASKS09bDataHandler with Records loaded from
      * formattedFile.
      *
-     * @param formattedFile
-     *            Formatted file of CASKS09bDataRecords
+     * @param formattedFile Formatted file of CASKS09bDataRecords
      */
     public Census_CASKS09bDataHandler(File formattedFile) {
         // initMemoryReserve();
         this.init(formattedFile.getParentFile());
-        this._RecordLength = new Census_CASKS09bDataRecord().getSizeInBytes();
+        this.recordLength = new Census_CASKS09bDataRecord().getSizeInBytes();
         load(formattedFile);
         log("CASKS09bDataRecords loaded successfully");
     }
 
     /**
-     * @param args
-     *            the command line arguments No arguments are used.
+     * @param args the command line arguments No arguments are used.
      * @throws java.io.IOException
      */
     public static void main(String[] args) throws IOException {
@@ -114,12 +113,10 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
     /**
      * Loads <code>CASKS09bDataRecords</code> and prints out n randomly
      *
-     * @param loadFromSource
-     *            If true, data is loaded from hardcoded source files as
-     *            downloaded from casweb. Otherwise, data is loaded from
-     *            <code>this.formattedFile</code>
-     * @param n
-     *            The number of loaded data records to print out.
+     * @param loadFromSource If true, data is loaded from hardcoded source files
+     * as downloaded from casweb. Otherwise, data is loaded from
+     * <code>this.formattedFile</code>
+     * @param n The number of loaded data records to print out.
      */
     private void run2(int n) throws IOException {
         File file = new File(
@@ -130,6 +127,7 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
 
     /**
      * Loads <code>CAS001DataRecords</code> and prints out n randomly
+     *
      * @param directory to load source data from
      * @param n the number of loaded data records to print out.
      * @throws java.io.IOException
@@ -138,7 +136,7 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
             File directory,
             int n)
             throws IOException {
-        _RandomAccessFile = new RandomAccessFile(this._File, "rw");
+        rAF = new RandomAccessFile(this.file, "rw");
         // Load from source
         File infile;
         long long0 = 0L;
@@ -170,8 +168,8 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
                 "KS09bNorthernIrelandOA.csv");
         RecordID = format(infile, RecordID);
         log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 5022
-        _RandomAccessFile.close();
-        load(_File);
+        rAF.close();
+        load(file);
         print(20, new Random());
     }
 
@@ -181,57 +179,54 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
      * to <code>CASKS09bDataRecords</code> and written to
      * <code>this.tRandomAccessFile</code>.
      *
-     * @param sourceFile
-     *            The source CASKS09bDataRecords file to be formatted and
-     *            written to <code>this.tRandomAccessFile</code>.
-     * @param RecordID
-     *            The <code>RecordID</code> to assign to the first
-     *            <code>Census_CASKS09bDataRecord</code>.
+     * @param sourceFile The source CASKS09bDataRecords file to be formatted and
+     * written to <code>this.tRandomAccessFile</code>.
+     * @param RecordID The <code>RecordID</code> to assign to the first
+     * <code>Census_CASKS09bDataRecord</code>.
      * @return The <code>RecordID</code> assigned to the last
-     *         <code>CASKS09bDataRecords</code>.
+     * <code>CASKS09bDataRecords</code>.
      * @throws java.io.IOException
      */
     protected long format(File sourceFile, long RecordID) throws IOException {
         log("format( File( " + sourceFile.toString() + " ), RecordID( " + RecordID + " ))");
-        BufferedReader aBufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(sourceFile)));
-        StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-        env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
+        BufferedReader br = env.env.io.getBufferedReader(sourceFile);
+        StreamTokenizer st = new StreamTokenizer(br);
+        env.env.io.setStreamTokenizerSyntax1(st);
         String string0 = new String();
         String string1;
         String string2;
         long long0;
         long longZero = 0L;
-        Census_CASKS09bDataRecord aCASKS09bDataRecord = new Census_CASKS09bDataRecord();
+        Census_CASKS09bDataRecord rec = new Census_CASKS09bDataRecord();
         boolean print = false;
         int int1000 = 1000;
         // Skip the first line
-        int tokenType = aStreamTokenizer.nextToken();
+        int tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOL) {
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
-        tokenType = aStreamTokenizer.nextToken();
+        tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOF) {
             switch (tokenType) {
                 case StreamTokenizer.TT_EOL:
                     long0 = RecordID % int1000;
                     print = (long0 == longZero);
                     if (print) {
-                        string2 = aCASKS09bDataRecord.toString();
+                        string2 = rec.toString();
                         log(string2);
                         string2 = string0;
                     }
                     // Write out
-                    aCASKS09bDataRecord.write(_RandomAccessFile);
+                    rec.write(rAF);
                     RecordID++;
                     break;
                 case StreamTokenizer.TT_WORD:
-                    string1 = aStreamTokenizer.sval;
-                    aCASKS09bDataRecord = new Census_CASKS09bDataRecord(RecordID, string1);
+                    string1 = st.sval;
+                    rec = new Census_CASKS09bDataRecord(RecordID, string1);
                     break;
             }
             string1 = string0;
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
         log("Number of Records loaded = " + RecordID);
         return RecordID;
@@ -239,9 +234,9 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
 
     /**
      * @return a <code>Census_CASKS09bDataRecord</code> with
-     *         <code>Census_AbstractDataRecord.RecordID = RecordID</code>
-     * @param RecordID
-     *            The RecordID of the Census_CASKS09bDataRecord to be returned.
+     * <code>Census_AbstractDataRecord.RecordID = RecordID</code>
+     * @param RecordID The RecordID of the Census_CASKS09bDataRecord to be
+     * returned.
      */
     public Census_AbstractDataRecord getDataRecord(long RecordID) {
         return getCASKS09bDataRecord(RecordID);
@@ -249,15 +244,15 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
 
     /**
      * @return a <code>Census_CASKS09bDataRecord</code> with
-     *         <code>Census_CASKS09bDataRecord.RecordID = RecordID</code>
-     * @param RecordID
-     *            The RecordID of the Census_CASKS09bDataRecord to be returned.
+     * <code>Census_CASKS09bDataRecord.RecordID = RecordID</code>
+     * @param RecordID The RecordID of the Census_CASKS09bDataRecord to be
+     * returned.
      */
     public Census_CASKS09bDataRecord getCASKS09bDataRecord(long RecordID) {
         Census_CASKS09bDataRecord result = null;
         try {
-            this._RandomAccessFile.seek(_RecordLength * RecordID);
-            result = new Census_CASKS09bDataRecord(this._RandomAccessFile);
+            this.rAF.seek(recordLength * RecordID);
+            result = new Census_CASKS09bDataRecord(this.rAF);
         } catch (IOException aIOException) {
             System.err.println(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
@@ -270,12 +265,11 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
      * records in the range [startRecordID,endRecordID] and writes the results
      * to aRandomAccessFile
      *
-     * @param aRandomAccessFile
-     *            <code>RandomAccessFile</code> to which results are written
-     * @param startRecordID
-     *            The first OA RecordID in the sequence to be aggregated.
-     * @param endRecordID
-     *            The last OA RecordID in the sequence to be aggregated.
+     * @param aRandomAccessFile <code>RandomAccessFile</code> to which results
+     * are written
+     * @param startRecordID The first OA RecordID in the sequence to be
+     * aggregated.
+     * @param endRecordID The last OA RecordID in the sequence to be aggregated.
      * @throws java.io.IOException
      */
     public void aggregateOAToWard(RandomAccessFile aRandomAccessFile,
@@ -307,12 +301,11 @@ public class Census_CASKS09bDataHandler extends Census_AbstractDataHandler {
      * records in the range [startRecordID,endRecordID] and writes the results
      * to aRandomAccessFile
      *
-     * @param aRandomAccessFile
-     *            <code>RandomAccessFile</code> to which results are written
-     * @param startRecordID
-     *            The first OA RecordID in the sequence to be aggregated.
-     * @param endRecordID
-     *            The last OA RecordID in the sequence to be aggregated.
+     * @param aRandomAccessFile <code>RandomAccessFile</code> to which results
+     * are written
+     * @param startRecordID The first OA RecordID in the sequence to be
+     * aggregated.
+     * @param endRecordID The last OA RecordID in the sequence to be aggregated.
      * @throws java.io.IOException
      */
     public void aggregateOAToMSOA(RandomAccessFile aRandomAccessFile,

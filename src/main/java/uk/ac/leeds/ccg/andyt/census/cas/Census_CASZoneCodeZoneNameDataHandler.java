@@ -55,7 +55,7 @@ public class Census_CASZoneCodeZoneNameDataHandler extends Census_Object {
      */
     public Census_CASZoneCodeZoneNameDataHandler(Census_Environment e, File formattedFile) {
         super(e);
-        zoneCodes = (HashSet) env.io.readObject(formattedFile);
+        zoneCodes = (HashSet) env.env.io.readObject(formattedFile);
     }
 
     /**
@@ -73,7 +73,7 @@ public class Census_CASZoneCodeZoneNameDataHandler extends Census_Object {
         File sourceDataDirectory = new File("/scratch01/Work/data/Census/2001/CAS/");
         loadSourceData(sourceDataDirectory);
         File formattedFile = new File(workspace, "UKLAD_ZoneCode_HashSet.thisFile");
-        env.io.writeObject(zoneCodes, formattedFile);
+        env.env.io.writeObject(zoneCodes, formattedFile);
         Census_CASZoneCodeZoneNameDataHandler h = new Census_CASZoneCodeZoneNameDataHandler(env, formattedFile);
         System.out.println("" + zoneCodes.size()); // 371
     }
@@ -112,33 +112,30 @@ public class Census_CASZoneCodeZoneNameDataHandler extends Census_Object {
         format(sourceFile);
     }
 
-    protected void format(
-            File sourceFile)
-            throws IOException {
-        BufferedReader aBufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(sourceFile)));
-        StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-        env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
+    protected void format(            File sourceFile)            throws IOException {
+        BufferedReader br = env.env.io.getBufferedReader(sourceFile);
+            StreamTokenizer st = new StreamTokenizer(br);
+        env.env.io.setStreamTokenizerSyntax1(st);
         String line = null;
         // Skip the first line
-        int tokenType = aStreamTokenizer.nextToken();
+        int tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOL) {
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
-        tokenType = aStreamTokenizer.nextToken();
+        tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOF) {
             switch (tokenType) {
                 case StreamTokenizer.TT_EOL:
                     System.out.println(line);
                     break;
                 case StreamTokenizer.TT_WORD:
-                    line = aStreamTokenizer.sval;
+                    line = st.sval;
                     String[] fields = line.split(",");
                     String aZone_Code = fields[0];
                     zoneCodes.add(aZone_Code);
-                    tokenType = aStreamTokenizer.nextToken();
+                    tokenType = st.nextToken();
             }
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
     }
 }

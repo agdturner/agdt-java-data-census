@@ -39,13 +39,13 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
         File directory = new File("C:/Work/Projects/GENESIS/Workspace/");
         this.init(directory);
         try {
-            this._File = new File(directory, "SWSDataRecords.dat");
-            if (!this._File.exists()) {
-                this._File.createNewFile();
+            this.file = new File(directory, "SWSDataRecords.dat");
+            if (!this.file.exists()) {
+                this.file.createNewFile();
             }
-            this._RecordLength = new Census_SWSDataRecord().getSizeInBytes();
+            this.recordLength = new Census_SWSDataRecord().getSizeInBytes();
             // log("this.recordLength " + this.recordLength);
-            this._RandomAccessFile = new RandomAccessFile(this._File, "r");
+            this.rAF = new RandomAccessFile(this.file, "r");
         } catch (IOException aIOException) {
             log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
@@ -55,23 +55,23 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
     public Census_SWSDataHandler(File a_File) {
         this.init(a_File.getParentFile());
         if (a_File.getName().endsWith("thisFile")){
-            Census_SWSDataHandler a_SWSDataHandler = (Census_SWSDataHandler) env.io.readObject(a_File);
-            this._File = a_SWSDataHandler._File;
-            load(_File);
+            Census_SWSDataHandler a_SWSDataHandler = (Census_SWSDataHandler) env.env.io.readObject(a_File);
+            this.file = a_SWSDataHandler.file;
+            load(file);
         } else {
             load(a_File);
         }
-        this._RecordLength = new Census_SWSDataRecord().getSizeInBytes();
+        this.recordLength = new Census_SWSDataRecord().getSizeInBytes();
         log("SWSDataRecords loaded successfully");
     }
     
     public Census_SWSDataHandler(File a_File, boolean flag) {
         this.init(a_File);
         File tSWSfile = new File(a_File,Census_SWSDataHandler.class.getName() + ".thisFile");
-        Census_SWSDataHandler a_SWSDataHandler = (Census_SWSDataHandler) env.io.readObject(tSWSfile);
-        this._File = a_SWSDataHandler._File;
-        load(_File);
-        this._RecordLength = new Census_SWSDataRecord().getSizeInBytes();
+        Census_SWSDataHandler a_SWSDataHandler = (Census_SWSDataHandler) env.env.io.readObject(tSWSfile);
+        this.file = a_SWSDataHandler.file;
+        load(file);
+        this.recordLength = new Census_SWSDataRecord().getSizeInBytes();
         log("SWSDataRecords loaded successfully");
     }
 
@@ -84,7 +84,7 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
             File directory,
             int n) {
         try {
-            _RandomAccessFile = new RandomAccessFile(this._File, "rw");
+            rAF = new RandomAccessFile(this.file, "rw");
             // Load from source
             File infile;
             long RecordID = 0L;
@@ -95,8 +95,8 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
                     "00DA_W301_OUT.csv");
             RecordID = format(infile, RecordID);
             log(infile.toString() + " formatted successfully " + RecordID + " records"); // 165665
-            _RandomAccessFile.close();
-            load(_File);
+            rAF.close();
+            load(file);
             print(20, new Random());
         } catch (IOException aIOException) {
             log(aIOException.getLocalizedMessage());
@@ -129,7 +129,7 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
                     new FileInputStream(sourceFile)));
             StreamTokenizer aStreamTokenizer =
                     new StreamTokenizer(aBufferedReader);
-            env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
+            env.env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
             String line;
             Census_SWSDataRecord a_SWSDataRecord = new Census_SWSDataRecord();
             // Skip the first line
@@ -147,7 +147,7 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
                         // Write out
                         if (new String(a_SWSDataRecord.getZone_Code()).startsWith("00DA") &&
                                 new String(a_SWSDataRecord._Destination_Zone_Code).startsWith("00DA")) {
-                            a_SWSDataRecord.write(_RandomAccessFile);
+                            a_SWSDataRecord.write(rAF);
                             RecordID++;
                         }
                         break;
@@ -173,8 +173,8 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
     public Census_SWSDataRecord getSWSDataRecord(long RecordID) {
         Census_SWSDataRecord result = null;
         try {
-            this._RandomAccessFile.seek(_RecordLength * RecordID);
-            result = new Census_SWSDataRecord(this._RandomAccessFile);
+            this.rAF.seek(recordLength * RecordID);
+            result = new Census_SWSDataRecord(this.rAF);
         } catch (IOException aIOException) {
             log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
@@ -184,7 +184,7 @@ public class Census_SWSDataHandler extends Census_AbstractDataHandler {
 
     
     public void setFile(File a_File) {
-        this._File = a_File;
-        load(_File);
+        this.file = a_File;
+        load(file);
     }
 }

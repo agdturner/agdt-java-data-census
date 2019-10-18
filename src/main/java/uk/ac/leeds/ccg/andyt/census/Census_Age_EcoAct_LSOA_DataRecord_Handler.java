@@ -30,6 +30,7 @@ import uk.ac.leeds.ccg.andyt.census.core.Census_Environment;
 import uk.ac.leeds.ccg.andyt.census.core.Census_Object;
 //import uk.ac.leeds.ccg.andyt.projects.digitalwelfare.data.census.Deprivation_DataHandler;
 //import uk.ac.leeds.ccg.andyt.projects.digitalwelfare.io.DW_Files;
+
 /**
  *
  * @author geoagdt
@@ -47,18 +48,15 @@ public class Census_Age_EcoAct_LSOA_DataRecord_Handler extends Census_Object {
      * @return TreeMap<String,LeedsCAB_DataRecord> representing records
      */
     public TreeMap<String, Census_Age_EcoAct_LSOA_DataRecord> loadInputData(
-            String filename,
-            File dir) {
+            String filename, File dir) {
         System.out.println("Loading " + filename);
         TreeMap<String, Census_Age_EcoAct_LSOA_DataRecord> result;
         result = new TreeMap<String, Census_Age_EcoAct_LSOA_DataRecord>();
-        File inputFile = new File(
-                dir,
-                filename);
+        File inputFile = new File(dir, filename);
         try {
-            BufferedReader br  = env.io.getBufferedReader(inputFile);
-            StreamTokenizer st  = new StreamTokenizer(br);
-            env.io.setStreamTokenizerSyntax5(st);
+            BufferedReader br = env.env.io.getBufferedReader(inputFile);
+            StreamTokenizer st = new StreamTokenizer(br);
+            env.env.io.setStreamTokenizerSyntax5(st);
             st.wordChars('`', '`');
             st.wordChars('\'', '\'');
             st.wordChars('(', '(');
@@ -80,7 +78,7 @@ public class Census_Age_EcoAct_LSOA_DataRecord_Handler extends Census_Object {
             // Skip the header
             int headerLines = 3;
             for (int i = 0; i < headerLines; i++) {
-                env.io.skipline(st);
+                env.env.io.skipline(st);
             }
             // Read data
             int tokenType;

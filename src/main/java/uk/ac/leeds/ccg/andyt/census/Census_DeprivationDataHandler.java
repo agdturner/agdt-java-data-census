@@ -95,17 +95,14 @@ public class Census_DeprivationDataHandler extends Census_Object {
      * @return TreeMap<String,LeedsCAB_DataRecord> representing records
      */
     public TreeMap<String, Census_DeprivationDataRecord> loadInputData(
-            File directory,
-            String filename) {
+            File directory,            String filename) {
         TreeMap<String, Census_DeprivationDataRecord> result;
-        result = new TreeMap<String, Census_DeprivationDataRecord>();
-        File inputFile = new File(
-                directory,
-                filename);
+        result = new TreeMap<>();
+        File inputFile = new File(                directory,                filename);
         try {
-            BufferedReader br  = env.io.getBufferedReader(inputFile);
+            BufferedReader br  = env.env.io.getBufferedReader(inputFile);
             StreamTokenizer st  = new StreamTokenizer(br);
-            env.io.setStreamTokenizerSyntax5(st);
+            env.env.io.setStreamTokenizerSyntax5(st);
             st.wordChars('`', '`');
             st.wordChars('\'', '\'');
             st.wordChars('*', '*');
@@ -117,7 +114,7 @@ public class Census_DeprivationDataHandler extends Census_Object {
             // Skip the header
             int headerLines = 1;
             for (int i = 0; i < headerLines; i++) {
-                env.io.skipline(st);
+                env.env.io.skipline(st);
             }
             // Read data
             int tokenType;

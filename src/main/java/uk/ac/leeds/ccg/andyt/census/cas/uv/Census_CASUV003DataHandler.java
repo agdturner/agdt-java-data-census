@@ -68,13 +68,13 @@ public class Census_CASUV003DataHandler extends Census_AbstractDataHandler {
         // Default this.directory, this.file, this.randomAccessFile
         File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
         this.init(directory);
-        this._File = new File(directory, "CASUV003DataRecords.dat");
-        if (!this._File.exists()) {
-            this._File.createNewFile();
+        this.file = new File(directory, "CASUV003DataRecords.dat");
+        if (!this.file.exists()) {
+            this.file.createNewFile();
         }
-        this._RecordLength = new Census_CASUV003DataRecord().getSizeInBytes();
+        this.recordLength = new Census_CASUV003DataRecord().getSizeInBytes();
         // log("this.recordLength " + this.recordLength);
-        this._RandomAccessFile = new RandomAccessFile(this._File, "r");
+        this.rAF = new RandomAccessFile(this.file, "r");
     }
 
     /**
@@ -87,7 +87,7 @@ public class Census_CASUV003DataHandler extends Census_AbstractDataHandler {
     public Census_CASUV003DataHandler(File formattedFile) {
         // initMemoryReserve();
         this.init(formattedFile.getParentFile());
-        this._RecordLength = new Census_CASUV003DataRecord().getSizeInBytes();
+        this.recordLength = new Census_CASUV003DataRecord().getSizeInBytes();
         load(formattedFile);
         log("CASUV003DataRecords loaded successfully");
     }
@@ -138,7 +138,7 @@ public class Census_CASUV003DataHandler extends Census_AbstractDataHandler {
             File directory,
             int n)
             throws IOException {
-        _RandomAccessFile = new RandomAccessFile(this._File, "rw");
+        rAF = new RandomAccessFile(this.file, "rw");
         // Load from source
         File infile;
         long long0 = 0L;
@@ -170,8 +170,8 @@ public class Census_CASUV003DataHandler extends Census_AbstractDataHandler {
                 "UV003NorthernIrelandOA.csv");
         RecordID = format(infile, RecordID);
         log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 5022
-        _RandomAccessFile.close();
-        load(_File);
+        rAF.close();
+        load(file);
         print(20, new Random());
     }
 
@@ -196,7 +196,7 @@ public class Census_CASUV003DataHandler extends Census_AbstractDataHandler {
         BufferedReader aBufferedReader = new BufferedReader(
                 new InputStreamReader(new FileInputStream(sourceFile)));
         StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-        env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
+        env.env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
         String string0 = new String();
         String string1;
         String string2;
@@ -222,7 +222,7 @@ public class Census_CASUV003DataHandler extends Census_AbstractDataHandler {
                         string2 = string0;
                     }
                     // Write out
-                    aCASUV003DataRecord.write(_RandomAccessFile);
+                    aCASUV003DataRecord.write(rAF);
                     RecordID++;
                     break;
                 case StreamTokenizer.TT_WORD:
@@ -256,8 +256,8 @@ public class Census_CASUV003DataHandler extends Census_AbstractDataHandler {
     public Census_CASUV003DataRecord getCASUV003DataRecord(long RecordID) {
         Census_CASUV003DataRecord result = null;
         try {
-            this._RandomAccessFile.seek(_RecordLength * RecordID);
-            result = new Census_CASUV003DataRecord(this._RandomAccessFile);
+            this.rAF.seek(recordLength * RecordID);
+            result = new Census_CASUV003DataRecord(this.rAF);
         } catch (IOException aIOException) {
             log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);

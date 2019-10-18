@@ -2,19 +2,19 @@
  * A component of a library for
  * <a href="http://www.geog.leeds.ac.uk/people/a.turner/projects/MoSeS">MoSeS</a>.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  */
 package uk.ac.leeds.ccg.andyt.census.cas;
 
@@ -33,8 +33,9 @@ import java.util.TreeMap;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 
 /**
- * A <code>class</code> for handling an individual <code>Census_CAS044DataRecord</code>
- * and collections of <code>CAS044DataRecords</code>.
+ * A <code>class</code> for handling an individual
+ * <code>Census_CAS044DataRecord</code> and collections of
+ * <code>CAS044DataRecords</code>.
  * <ul>
  * <li>Used for formatting source data and testing it can be loaded to and
  * retrieved from a formatted file.</li>
@@ -43,9 +44,9 @@ import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
  * href="http://www.geog.leeds.ac.uk/people/a.turner/">Andy Turner</a>, <a
  * href="http://www.leeds.ac.uk//">University of Leeds</a>.</li>
  * </ul>
- * 
+ *
  * @author <a href="http://www.geog.leeds.ac.uk/people/a.turner/">Andy
- *         Turner</a>
+ * Turner</a>
  * @version 1.0.0, 2007-05-24
  * @see Census_AbstractDataRecord
  */
@@ -57,6 +58,7 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
      * <code>File</code> is hard coded. To specify the <code>File</code> use
      * <code>CAS044DataHandler(File)</code>. To set a different default
      * <code>File</code> edit the source code and recompile.
+     *
      * @throws java.io.IOException
      */
     public Census_CAS044DataHandler() throws IOException {
@@ -67,33 +69,33 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
         // Default this.directory, this.file, this.randomAccessFile
         File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
         this.init(directory);
-        this._File = new File(directory, "CAS044DataRecords.dat");
-        if (!this._File.exists()) {
-            this._File.createNewFile();
+        this.file = new File(directory, "CAS044DataRecords.dat");
+        if (!this.file.exists()) {
+            this.file.createNewFile();
         }
-        this._RecordLength = new Census_CAS044DataRecord().getSizeInBytes();
+        this.recordLength = new Census_CAS044DataRecord().getSizeInBytes();
         // System.out.println("this.recordLength " + this.recordLength);
-        this._RandomAccessFile = new RandomAccessFile(this._File, "r");
+        this.rAF = new RandomAccessFile(this.file, "r");
     }
 
     /**
      * Creates a new instance of CAS044DataHandler with Records loaded from
      * formattedFile.
      *
-     * @param formattedFile
-     *            Formatted file of CAS044DataRecords
+     * @param formattedFile Formatted file of CAS044DataRecords
      * @throws java.io.IOException
      */
     public Census_CAS044DataHandler(File formattedFile) throws IOException {
         // initMemoryReserve();
         this.init(formattedFile.getParentFile());
-        this._RecordLength = new Census_CAS044DataRecord().getSizeInBytes();
+        this.recordLength = new Census_CAS044DataRecord().getSizeInBytes();
         load(formattedFile);
         System.out.println("CAS044DataRecords loaded successfully");
     }
 
     /**
      * Loads <code>CAS001DataRecords</code> and prints out n randomly
+     *
      * @param directory to load source data from
      * @param n the number of loaded data records to print out.
      * @throws java.io.IOException
@@ -102,7 +104,7 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
             File directory,
             int n)
             throws IOException {
-        _RandomAccessFile = new RandomAccessFile(this._File, "rw");
+        rAF = new RandomAccessFile(this.file, "rw");
         File infile;
         long long0 = 0L;
         long RecordID = 0L;
@@ -134,60 +136,56 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
     /**
      * Uses a <code>BufferedReader<code> and a <code>StreamTokenizer</code> to
      * read lines from the sourceFile <code>File</code>. The lines are converted
-     * to <code>CAS044DataRecords</code> and written to
-     * <code>this._RandomAccessFile</code>.
+     * to <code>CAS044DataRecords</code> and written to <code>this.rAF</code>.
      *
-     * @param sourceFile
-     *            The source CAS044DataRecords file to be formatted and written
-     *            to <code>this._RandomAccessFile</code>.
-     * @param RecordID
-     *            The <code>RecordID</code> to assign to the first
-     *            <code>Census_CAS044DataRecord</code>.
+     * @param sourceFile The source CAS044DataRecords file to be formatted and
+     * written to <code>this.rAF</code>.
+     * @param RecordID The <code>RecordID</code> to assign to the first
+     * <code>Census_CAS044DataRecord</code>.
      * @return The <code>RecordID</code> assigned to the last
-     *         <code>CAS044DataRecords</code>.
+     * <code>CAS044DataRecords</code>.
      * @throws java.io.IOException
      */
     protected long format(File sourceFile, long RecordID) throws IOException {
         System.out.println("format( File( " + sourceFile.toString() + " ), RecordID( " + RecordID + " ))");
-        BufferedReader aBufferedReader = new BufferedReader(
-                new InputStreamReader(new FileInputStream(sourceFile)));
-        StreamTokenizer aStreamTokenizer = new StreamTokenizer(aBufferedReader);
-        env.io.setStreamTokenizerSyntax1(aStreamTokenizer);
+        BufferedReader br = env.env.io.getBufferedReader(sourceFile);
+        StreamTokenizer st = new StreamTokenizer(br);
+        env.env.io.setStreamTokenizerSyntax1(st);
         String string0 = new String();
         String string1;
         String string2;
         long long0;
         long longZero = 0L;
-        Census_CAS044DataRecord aCAS044DataRecord = new Census_CAS044DataRecord();
+        Census_CAS044DataRecord rec = new Census_CAS044DataRecord();
         boolean print = false;
         int int10000 = 10000;
         // Skip the first line
-        int tokenType = aStreamTokenizer.nextToken();
+        int tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOL) {
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
-        tokenType = aStreamTokenizer.nextToken();
+        tokenType = st.nextToken();
         while (tokenType != StreamTokenizer.TT_EOF) {
             switch (tokenType) {
                 case StreamTokenizer.TT_EOL:
                     long0 = RecordID % int10000;
                     print = (long0 == longZero);
                     if (print) {
-                        string2 = aCAS044DataRecord.toString();
+                        string2 = rec.toString();
                         System.out.println(string2);
                         string2 = string0;
                     }
                     // Write out
-                    aCAS044DataRecord.write(_RandomAccessFile);
+                    rec.write(rAF);
                     RecordID++;
                     break;
                 case StreamTokenizer.TT_WORD:
-                    string1 = aStreamTokenizer.sval;
-                    aCAS044DataRecord = new Census_CAS044DataRecord(RecordID, string1);
+                    string1 = st.sval;
+                    rec = new Census_CAS044DataRecord(RecordID, string1);
                     break;
             }
             string1 = string0;
-            tokenType = aStreamTokenizer.nextToken();
+            tokenType = st.nextToken();
         }
         System.out.println("Number of Records loaded = " + RecordID);
         return RecordID;
@@ -195,9 +193,9 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
 
     /**
      * @return a <code>Census_CAS044DataRecord</code> with
-     *         <code>Census_AbstractDataRecord.RecordID = RecordID</code>
-     * @param RecordID
-     *            The RecordID of the Census_CAS044DataRecord to be returned.
+     * <code>Census_AbstractDataRecord.RecordID = RecordID</code>
+     * @param RecordID The RecordID of the Census_CAS044DataRecord to be
+     * returned.
      */
     public Census_AbstractDataRecord getDataRecord(long RecordID) {
         return getCAS044DataRecord(RecordID);
@@ -205,15 +203,15 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
 
     /**
      * @return a <code>Census_CAS044DataRecord</code> with
-     *         <code>Census_CAS044DataRecord.RecordID = RecordID</code>
-     * @param RecordID
-     *            The RecordID of the Census_CAS044DataRecord to be returned.
+     * <code>Census_CAS044DataRecord.RecordID = RecordID</code>
+     * @param RecordID The RecordID of the Census_CAS044DataRecord to be
+     * returned.
      */
     public Census_CAS044DataRecord getCAS044DataRecord(long RecordID) {
         Census_CAS044DataRecord result = null;
         try {
-            this._RandomAccessFile.seek(_RecordLength * RecordID);
-            result = new Census_CAS044DataRecord(this._RandomAccessFile);
+            this.rAF.seek(recordLength * RecordID);
+            result = new Census_CAS044DataRecord(this.rAF);
         } catch (IOException aIOException) {
             log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
@@ -226,12 +224,11 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
      * records in the range [startRecordID,endRecordID] and writes the results
      * to aRandomAccessFile
      *
-     * @param aRandomAccessFile
-     *            <code>RandomAccessFile</code> to which results are written
-     * @param startRecordID
-     *            The first OA RecordID in the sequence to be aggregated.
-     * @param endRecordID
-     *            The last OA RecordID in the sequence to be aggregated.
+     * @param aRandomAccessFile <code>RandomAccessFile</code> to which results
+     * are written
+     * @param startRecordID The first OA RecordID in the sequence to be
+     * aggregated.
+     * @param endRecordID The last OA RecordID in the sequence to be aggregated.
      * @throws java.io.IOException
      */
     public void aggregateOAToWard(RandomAccessFile aRandomAccessFile,
@@ -263,12 +260,11 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
      * records in the range [startRecordID,endRecordID] and writes the results
      * to aRandomAccessFile
      *
-     * @param aRandomAccessFile
-     *            <code>RandomAccessFile</code> to which results are written
-     * @param startRecordID
-     *            The first OA RecordID in the sequence to be aggregated.
-     * @param endRecordID
-     *            The last OA RecordID in the sequence to be aggregated.
+     * @param aRandomAccessFile <code>RandomAccessFile</code> to which results
+     * are written
+     * @param startRecordID The first OA RecordID in the sequence to be
+     * aggregated.
+     * @param endRecordID The last OA RecordID in the sequence to be aggregated.
      * @throws java.io.IOException
      */
     public void aggregateOAToMSOA(RandomAccessFile aRandomAccessFile,
