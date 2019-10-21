@@ -34,7 +34,11 @@ public class Census_Environment  {
     public final transient Generic_Environment env;
     
     public Census_Environment() throws IOException {
-        env = new Generic_Environment();
+        this(new Generic_Environment());
+    }
+    
+    public Census_Environment(Generic_Environment e) {
+        this.env = e;
     }
     
     /**
