@@ -2,19 +2,19 @@
  * A component of a library for
  * <a href="http://www.geog.leeds.ac.uk/people/a.turner/projects/MoSeS">MoSeS</a>.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * This library is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU Lesser General Public License as published by the Free
+ * Software Foundation; either version 2.1 of the License, or (at your option)
+ * any later version.
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ * This library is distributed in the hope that it will be useful, but WITHOUT
+ * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+ * FOR A PARTICULAR PURPOSE. See the GNU Lesser General Public License for more
+ * details.
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA.
+ * You should have received a copy of the GNU Lesser General Public License
+ * along with this library; if not, write to the Free Software Foundation, Inc.,
+ * 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
  */
 package uk.ac.leeds.ccg.andyt.census.cas.ks;
 
@@ -26,18 +26,19 @@ import uk.ac.leeds.ccg.andyt.math.Math_Integer;
 
 /**
  * For representing CAS KS14c Records and providing safe access to the data.
+ *
+ * Table KS014c National Statistics - Socio Economic Classification.
+ * <ol>
+ * <li>For long-term unemployed year last worked is 1999 or earlier.</li>
+ * <li>In the NS-SeC classification, all full-time students are recorded in the
+ * 'full-time students' category regardless of whether they are economically
+ * active or not.</li>
+ * <li>Not classifiable for other reasons' includes people whose occupation has
+ * not been coded.</li>
+ * </ol>
  */
 public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
-    /**
-     * Table KS014c National Statistics - Socio Economic Classification -
-     * females aged 16-74 Footnotes and Comments for Table KS014c 1. For
-     * long-term unemployed year last worked is 1999 or earlier. 2. In the
-     * NS-SeC classification, all full-time students are recorded in the
-     * 'full-time students' category regardless of whether they are economically
-     * active or not. 3. Not classifiable for other reasons' includes people
-     * whose occupation has not been coded.
-     */
     /**
      * KS014c0001 = femalesAged16to74
      */
@@ -94,7 +95,9 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
     // * KS014c0013 = femalesAged16to74NotClassifiableForOtherReasons
     // */
     // protected int femalesAged16to74NotClassifiableForOtherReasons;
-    /** Creates a new CASKS14cRecord */
+    /**
+     * Creates a new CASKS14cRecord
+     */
     public Census_CASKS14cDataRecord() {
         init();
     }
@@ -102,8 +105,7 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
     /**
      * Creates a new CASKS14cRecord cloned from aCASKS14cRecord
      *
-     * @param aCASKS14cRecord
-     *            The CASKS14cRecord from which this is cloned.
+     * @param aCASKS14cRecord The CASKS14cRecord from which this is cloned.
      */
     public Census_CASKS14cDataRecord(Census_CASKS14cDataRecord aCASKS14cRecord) {
         init(aCASKS14cRecord);
@@ -112,10 +114,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
     /**
      * Creates a new CASKS14cDataRecord
      *
-     * @param RecordID
-     *            The RecordID to be assigned to this
-     * @param line
-     *            The Comma Seperated Value <code>String</code>
+     * @param RecordID The RecordID to be assigned to this
+     * @param line The Comma Seperated Value <code>String</code>
      * @throws java.io.IOException
      */
     public Census_CASKS14cDataRecord(long RecordID, String line) throws IOException {
@@ -144,8 +144,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
         this.femalesAged16to74NeverWorked = Math_Integer.parseInt(fields[10]);
         this.femalesAged16to74LongTermUnemployed = Math_Integer.parseInt(fields[11]);
         this.femalesAged16to74FullTimeStudents = Math_Integer.parseInt(fields[12]);
-    // this.femalesAged16to74NotClassifiableForOtherReasons =
-    // Math_Integer.parseInt( fields[ 13 ] );
+        // this.femalesAged16to74NotClassifiableForOtherReasons =
+        // Math_Integer.parseInt( fields[ 13 ] );
     }
 
     /**
@@ -203,8 +203,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
     /**
      * Initialises all fields from those in cASKS14cRecord.
      *
-     * @param cASKS14cRecord
-     *            The CASKS14cRecord thats fields are used to initialise this.
+     * @param cASKS14cRecord The CASKS14cRecord thats fields are used to
+     * initialise this.
      */
     protected void init(Census_CASKS14cDataRecord cASKS14cRecord) {
         super.init(cASKS14cRecord);
@@ -224,7 +224,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * Returns a string description of this;
-     * @return 
+     *
+     * @return
      */
     public String toString() {
         return super.toString() + ", femalesAged16to74 " + femalesAged16to74 + ", femalesAged16to74LargeEmployersAndHigherManagerialOccupations " + femalesAged16to74LargeEmployersAndHigherManagerialOccupations + ", femalesAged16to74HigherProfessionalOccupations " + femalesAged16to74HigherProfessionalOccupations + ", femalesAged16to74LowerManagerialAndProfessionalOccupationsIntermediate " + femalesAged16to74LowerManagerialAndProfessionalOccupationsIntermediate + ", femalesAged16to74IntermediateOccupations " + femalesAged16to74IntermediateOccupations + ", femalesAged16to74SmallEmployersAndOwnAccountWorkers " + femalesAged16to74SmallEmployersAndOwnAccountWorkers + ", femalesAged16to74LowerSupervisoryAndTechnicalOccupations" + femalesAged16to74LowerSupervisoryAndTechnicalOccupations + ", femalesAged16to74SemiRoutineOccupations " + femalesAged16to74SemiRoutineOccupations + ", femalesAged16to74RoutineOccupations " + femalesAged16to74RoutineOccupations + ", femalesAged16to74NeverWorked " + femalesAged16to74NeverWorked + ", femalesAged16to74LongTermUnemployed " + femalesAged16to74LongTermUnemployed + ", femalesAged16to74FullTimeStudents " + femalesAged16to74FullTimeStudents;
@@ -232,7 +233,7 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * @return A Comma Seperated Version (CSV) <code>String</code> of the values
-     *         of the <code>Fields</code> of <code>this</code>.
+     * of the <code>Fields</code> of <code>this</code>.
      */
     @Override
     public String toCSVString() {
@@ -241,7 +242,7 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * @return A Comma Seperated Version (CSV) <code>String</code> of the names
-     *         of the <code>Fields</code> of <code>this</code>
+     * of the <code>Fields</code> of <code>this</code>
      */
     @Override
     public String toCSVStringFields() {
@@ -250,7 +251,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * Returns a copy of this.femalesAged16to74
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74() {
         return this.femalesAged16to74;
@@ -259,7 +261,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
     /**
      * Returns a copy of
      * this.femalesAged16to74LargeEmployersAndHigherManagerialOccupations
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74LargeEmployersAndHigherManagerialOccupations() {
         return this.femalesAged16to74LargeEmployersAndHigherManagerialOccupations;
@@ -267,7 +270,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * Returns a copy of this.femalesAged16to74HigherProfessionalOccupations
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74HigherProfessionalOccupations() {
         return this.femalesAged16to74HigherProfessionalOccupations;
@@ -276,7 +280,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
     /**
      * Returns a copy of this.
      * femalesAged16to74LowerManagerialAndProfessionalOccupationsIntermediate
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74LowerManagerialAndProfessionalOccupationsIntermediate() {
         return this.femalesAged16to74LowerManagerialAndProfessionalOccupationsIntermediate;
@@ -284,7 +289,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * Returns a copy of this.femalesAged16to74IntermediateOccupations
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74IntermediateOccupations() {
         return this.femalesAged16to74IntermediateOccupations;
@@ -293,7 +299,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
     /**
      * Returns a copy of
      * this.femalesAged16to74SmallEmployersAndOwnAccountWorkers
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74SmallEmployersAndOwnAccountWorkers() {
         return this.femalesAged16to74SmallEmployersAndOwnAccountWorkers;
@@ -302,7 +309,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
     /**
      * Returns a copy of
      * this.femalesAged16to74LowerSupervisoryAndTechnicalOccupations
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74LowerSupervisoryAndTechnicalOccupations() {
         return this.femalesAged16to74LowerSupervisoryAndTechnicalOccupations;
@@ -310,7 +318,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * Returns a copy of this.femalesAged16to74SemiRoutineOccupations
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74SemiRoutineOccupations() {
         return this.femalesAged16to74SemiRoutineOccupations;
@@ -318,7 +327,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * Returns a copy of this.femalesAged16to74RoutineOccupations
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74RoutineOccupations() {
         return this.femalesAged16to74RoutineOccupations;
@@ -326,7 +336,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * Returns a copy of this.femalesAged16to74NeverWorked
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74NeverWorked() {
         return this.femalesAged16to74NeverWorked;
@@ -334,7 +345,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * Returns a copy of this.femalesAged16to74LongTermUnemployed
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74LongTermUnemployed() {
         return this.femalesAged16to74LongTermUnemployed;
@@ -342,7 +354,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * Returns a copy of this.femalesAged16to74FullTimeStudents
-     * @return 
+     *
+     * @return
      */
     public int getFemalesAged16to74FullTimeStudents() {
         return this.femalesAged16to74FullTimeStudents;
@@ -352,8 +365,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
      * Writes <code>this</code> to <code>aRandomAccessFile</code> at the current
      * position.
      *
-     * @param aRandomAccessFile
-     *            The <code>RandomAccessFile</code> this is written to.
+     * @param aRandomAccessFile The <code>RandomAccessFile</code> this is
+     * written to.
      */
     @Override
     public void write(RandomAccessFile aRandomAccessFile) {
@@ -365,10 +378,9 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
      * Writes <code>this</code> to <code>aRandomAccessFile</code> at the current
      * position.
      *
-     * @param aRandomAccessFile
-     *            The <code>RandomAccessFile</code> this is written to.
-     * @param avoidCallToSuper
-     *            If true super.write() is not called
+     * @param aRandomAccessFile The <code>RandomAccessFile</code> this is
+     * written to.
+     * @param avoidCallToSuper If true super.write() is not called
      */
     public void write(RandomAccessFile aRandomAccessFile,
             boolean avoidCallToSuper) {
@@ -397,15 +409,14 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * @return An aggregated <code>Census_CASKS14cDataRecord</code> where:
-     *         <code>RecordID = this.RecordID</code>
-     *         <code>Zone_Code = this.Zone_Code</code> For aggregating
-     *         <code>CASKS14cDataRecords</code>. User needs to take care in
-     *         aggregating to ensure aggregation does not compromise (introduce
-     *         error) based on the numbers used (i.e. numbers may not be precise
-     *         or have sufficient magnitude).
-     * @param aCASKS14cDataRecord
-     *            The <code>Census_CASKS14cDataRecord</code> to be aggregated with
-     *            <code>this</code>.
+     * <code>RecordID = this.RecordID</code>
+     * <code>Zone_Code = this.Zone_Code</code> For aggregating
+     * <code>CASKS14cDataRecords</code>. User needs to take care in aggregating
+     * to ensure aggregation does not compromise (introduce error) based on the
+     * numbers used (i.e. numbers may not be precise or have sufficient
+     * magnitude).
+     * @param aCASKS14cDataRecord The <code>Census_CASKS14cDataRecord</code> to
+     * be aggregated with <code>this</code>.
      */
     public Census_CASKS14cDataRecord aggregate(Census_CASKS14cDataRecord aCASKS14cDataRecord) {
         Census_CASKS14cDataRecord newCASKS14cDataRecord = new Census_CASKS14cDataRecord(
@@ -427,19 +438,15 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
 
     /**
      * @return An aggregated <code>Census_CASKS14cDataRecord</code> where:
-     *         <code>RecordID = newRecordID</code>
-     *         <code>Zone_Code = newZone_Code</code> For aggregating
-     *         <code>CASKS14cDataRecords</code>. User needs to take care in
-     *         aggregating to ensure aggregation does not compromise (introduce
-     *         error) based on the numbers used (i.e. numbers may not be precise
-     *         or have sufficient magnitude).
-     * @param aCASKS14cDataRecord
-     *            The <code>Census_CASKS14cDataRecord</code> to be aggregated with
-     *            <code>this</code>.
-     * @param newRecordID
-     *            The <code>RecordID</code> assigned to result.
-     * @param newZone_Code
-     *            The <code>Zone_Code</code> assigned to result.
+     * <code>RecordID = newRecordID</code> <code>Zone_Code = newZone_Code</code>
+     * For aggregating <code>CASKS14cDataRecords</code>. User needs to take care
+     * in aggregating to ensure aggregation does not compromise (introduce
+     * error) based on the numbers used (i.e. numbers may not be precise or have
+     * sufficient magnitude).
+     * @param aCASKS14cDataRecord The <code>Census_CASKS14cDataRecord</code> to
+     * be aggregated with <code>this</code>.
+     * @param newRecordID The <code>RecordID</code> assigned to result.
+     * @param newZone_Code The <code>Zone_Code</code> assigned to result.
      */
     public Census_CASKS14cDataRecord aggregate(Census_CASKS14cDataRecord aCASKS14cDataRecord,
             long newRecordID, char[] newZone_Code) {
@@ -473,7 +480,8 @@ public class Census_CASKS14cDataRecord extends Census_AbstractDataRecord {
      * Returns the size of this CASKS14cRecord in bytes as a long. This does not
      * account for serialVersionUID. A boolean is assumed to be the same size as
      * an int in bytes.
-     * @return 
+     *
+     * @return
      */
     public long getSizeInBytes() {
         long result = super.getSizeInBytes();

@@ -15,7 +15,7 @@
  */
 package uk.ac.leeds.ccg.andyt.census.cas;
 
-import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractHandler;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import java.io.BufferedReader;
 import java.io.File;
@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.io.RandomAccessFile;
 import java.io.StreamTokenizer;
 import java.util.HashMap;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Environment;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 
 /**
@@ -33,44 +34,45 @@ import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
  * <code>Census_CASAreaEastingNorthingDataRecord</code> and collections of
  * <code>CASAreaEastingNorthingDataRecords</code>.
  */
-public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDataHandler {
+public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractHandler {
 
-    public Census_CASAreaEastingNorthingDataHandler() {
-        File directory = new File("C:/Work/Projects/GENESIS/Workspace/");
-        init(directory);
-        try {
-            this.file = new File(directory, "CASAreaEastingNorthingDataRecords.dat");
-            if (!this.file.exists()) {
-                this.file.createNewFile();
-            }
-            this.recordLength = new Census_CASAreaEastingNorthingDataRecord().getSizeInBytes();
-            // log("this.recordLength " + this.recordLength);
-            this.rAF = new RandomAccessFile(this.file, "r");
-        } catch (IOException aIOException) {
-            log(aIOException.getLocalizedMessage());
-            System.exit(Generic_ErrorAndExceptionHandler.IOException);
-        }
+    public Census_CASAreaEastingNorthingDataHandler(Census_Environment e) throws IOException {
+        super (e);
+//        File directory = new File("C:/Work/Projects/GENESIS/Workspace/");
+//        init(directory);
+//        try {
+//            this.file = new File(directory, "CASAreaEastingNorthingDataRecords.dat");
+//            if (!this.file.exists()) {
+//                this.file.createNewFile();
+//            }
+//            this.recordLength = new Census_CASAreaEastingNorthingDataRecord().getSizeInBytes();
+//            // env.env.log("this.recordLength " + this.recordLength);
+//            this.rAF = new RandomAccessFile(this.file, "r");
+//        } catch (IOException aIOException) {
+//            env.env.log(aIOException.getLocalizedMessage());
+//            System.exit(Generic_ErrorAndExceptionHandler.IOException);
+//        }
     }
 
-    /**
-     * Creates a new instance of CASAreaEastingNorthingDataHandler with Records
-     * loaded from formattedFile.
-     *
-     * @param file Formatted file of CASAreaEastingNorthingDataRecords
-     */
-    public Census_CASAreaEastingNorthingDataHandler(File file) {
-        this.init(file.getParentFile());
-        if (file.getName().endsWith("thisFile")) {
-            Census_CASAreaEastingNorthingDataHandler h;
-            h = (Census_CASAreaEastingNorthingDataHandler) env.env.io.readObject(file);
-            this.file = h.file;
-            load(this.file);
-        } else {
-            load(file);
-        }
-        this.recordLength = new Census_CASAreaEastingNorthingDataRecord().getSizeInBytes();
-        log("CASAreaEastingNorthingDataRecords loaded successfully");
-    }
+//    /**
+//     * Creates a new instance of CASAreaEastingNorthingDataHandler with Records
+//     * loaded from formattedFile.
+//     *
+//     * @param file Formatted file of CASAreaEastingNorthingDataRecords
+//     */
+//    public Census_CASAreaEastingNorthingDataHandler(File file) {
+//        this.init(file.getParentFile());
+//        if (file.getName().endsWith("thisFile")) {
+//            Census_CASAreaEastingNorthingDataHandler h;
+//            h = (Census_CASAreaEastingNorthingDataHandler) env.env.io.readObject(file);
+//            this.file = h.file;
+//            load(this.file);
+//        } else {
+//            load(file);
+//        }
+//        this.recordLength = new Census_CASAreaEastingNorthingDataRecord().getSizeInBytes();
+//        env.env.log("CASAreaEastingNorthingDataRecords loaded successfully");
+//    }
 
     /**
      * Loads <code>CAS001DataRecords</code> and prints out n randomly
@@ -92,33 +94,33 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
                     directory,
                     "England_OA_ZoneCode_Area_Easting_Northing.csv");
             RecordID = format(infile, RecordID);
-            log(infile.toString() + " formatted successfully " + RecordID + " records"); // 165665
+            env.env.log(infile.toString() + " formatted successfully " + RecordID + " records"); // 165665
             long0 = RecordID;
 //            // Load Wales
 //            infile = new File(
 //                    directory,
 //                    "Wales_OA_ZoneCode_Area_Easting_Northing.csv");
 //            RecordID = format(infile, RecordID);
-//            log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 9769
+//            env.env.log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 9769
 //            long0 = RecordID;
 //            // Load Scotland
 //            infile = new File(
 //                    directory,
 //                    "Scotland_OA_ZoneCode_Area_Easting_Northing.csv");
 //            RecordID = format(infile, RecordID);
-//            log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 42604
+//            env.env.log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 42604
 //            long0 = RecordID;
 //            // Load Northern Ireland
 //            infile = new File(
 //                    directory,
 //                    "NorthernIreland_OA_ZoneCode_Area_Easting_Northing.csv");
 //            RecordID = format(infile, RecordID);
-//            log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 5022
+//            env.env.log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 5022
 //            rAF.close();
 //            load(file);
 //            print(20, new Random());
         } catch (FileNotFoundException aIOException) {
-            log(aIOException.getLocalizedMessage());
+            env.env.log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
         }
     }
@@ -162,7 +164,7 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
                         print = (long0 == longZero);
                         if (print) {
                             string2 = rec.toString();
-                            log(string2);
+                            env.env.log(string2);
                             string2 = string0;
                         }
                         // Write out
@@ -177,9 +179,9 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
                 string1 = string0;
                 tokenType = st.nextToken();
             }
-            log("Number of Records loaded = " + RecordID);
+            env.env.log("Number of Records loaded = " + RecordID);
         } catch (IOException aIOException) {
-            log(aIOException.getLocalizedMessage());
+            env.env.log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
         }
         return RecordID;
@@ -214,7 +216,7 @@ public class Census_CASAreaEastingNorthingDataHandler extends Census_AbstractDat
         return result;
     }
 
-    public HashMap get_CASZoneCode_CASAreaEastingNorthingDataRecord_HashMap(String code) {
+    public HashMap get_CASZoneCode_CASAreaEastingNorthingDataRecord_HashMap(String code) throws IOException {
         HashMap _CASZoneCode_CASAreaEastingNorthingDataRecord_HashMap = new HashMap();
         Census_CASAreaEastingNorthingDataRecord a_CASAreaEastingNorthingDataRecord;
         Object _Easting_Northing;

@@ -65,37 +65,37 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
     /**
      * Creates a new instance of HSARDataHandler
      */
-    public Census_HSARDataHandler() {
+    public Census_HSARDataHandler(Census_Environment e) throws IOException {
+        super (e);
     }
 
-    /**
-     * Creates a new instance of HSARDataHandler from aFile.
-     *
-     * @param aFile
-     */
-    public Census_HSARDataHandler(
-            File aFile) {
-        dir = aFile.getParentFile();
-        init(dir);
-        if (aFile.getName().endsWith(".dat")) {
-            init(aFile.getParentFile());
-            load(aFile);
-            this.recordLength = new Census_ISARDataRecord().getSizeInBytes();
-            loadIntoCache();
-            File thisFile = new File(dir,
-                    this.getClass().getCanonicalName() + ".thisFile");
-            env.env.io.writeObject(this, thisFile);
-        } else {
-            Object object = env.env.io.readObject(aFile);
-            Census_HSARDataHandler aHSARDataHandler = (Census_HSARDataHandler) object;
-            load(aFile);
-            this.recordLength = aHSARDataHandler.recordLength;
-            //this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
-            this._HSARDataRecordArray = aHSARDataHandler._HSARDataRecordArray;
-            this._AgeSexHRP_HSARDataRecordVector_HashMap = aHSARDataHandler._AgeSexHRP_HSARDataRecordVector_HashMap;
-            this._HID_HSARDataRecordVector_HashMap = aHSARDataHandler._HID_HSARDataRecordVector_HashMap;
-        }
-    }
+//    /**
+//     * Creates a new instance of HSARDataHandler from aFile.
+//     *
+//     * @param aFile
+//     */
+//    public Census_HSARDataHandler( File aFile) {
+//        File dir = aFile.getParentFile();
+//        init(dir);
+//        if (aFile.getName().endsWith(".dat")) {
+//            init(aFile.getParentFile());
+//            load(aFile);
+//            this.recordLength = new Census_ISARDataRecord().getSizeInBytes();
+//            loadIntoCache();
+//            File thisFile = new File(dir,
+//                    this.getClass().getCanonicalName() + ".thisFile");
+//            env.env.io.writeObject(this, thisFile);
+//        } else {
+//            Object object = env.env.io.readObject(aFile);
+//            Census_HSARDataHandler aHSARDataHandler = (Census_HSARDataHandler) object;
+//            load(aFile);
+//            this.recordLength = aHSARDataHandler.recordLength;
+//            //this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
+//            this._HSARDataRecordArray = aHSARDataHandler._HSARDataRecordArray;
+//            this._AgeSexHRP_HSARDataRecordVector_HashMap = aHSARDataHandler._AgeSexHRP_HSARDataRecordVector_HashMap;
+//            this._HID_HSARDataRecordVector_HashMap = aHSARDataHandler._HID_HSARDataRecordVector_HashMap;
+//        }
+//    }
 
     /**
      * Loads from source file
@@ -106,7 +106,6 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
      */
     public void formatSource(File sourceFile, File formattedFile) 
             throws IOException {
-        logger.entering(this.getClass().getCanonicalName(), "formatSource(File,File)");
         file = formattedFile;
 //        file = new File (dir, HSARDataRecords.dat);
         if (!file.exists()) {
@@ -132,12 +131,12 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
             switch (tokenType) {
                 case StreamTokenizer.TT_EOL:
                     if (RecordID % 10000 == 0) {
-                        log(aHSARDataRecord.toString());
+                        env.env.log(aHSARDataRecord.toString());
                     }
                     // Write out householdSARRecord
                     if (parsed) {
                         aHSARDataRecord.write(this.rAF);
-                        // log( "this.tRandomAccessFile.length() " +
+                        // env.env.log( "this.tRandomAccessFile.length() " +
                         // this.tRandomAccessFile.length() );
                         RecordID++;
                     }
@@ -151,10 +150,9 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
             }
             tokenType = st.nextToken();
         }
-        log("Number of HSARDataRecords loaded " + (RecordID + 1L));
+        env.env.log("Number of HSARDataRecords loaded " + (RecordID + 1L));
         this.rAF.close();
         this.rAF = new RandomAccessFile(this.file, "r");
-        logger.exiting(this.getClass().getCanonicalName(), "formatSource(File,File)");
     }
 
     /**
@@ -204,7 +202,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
                         aHSARDataRecordsVector);
             }
         }
-        //log("this.tHouseholdVectors.size() " + this._HID_HSARDataRecordsVector_HashMap.size());
+        //env.env.log("this.tHouseholdVectors.size() " + this._HID_HSARDataRecordsVector_HashMap.size());
     }
 
     /**
@@ -230,7 +228,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
                     aRandom,
                     aAgeSex);
             if (aHSARDataRecord != null) {
-                log(aHSARDataRecord.toString());
+                env.env.log(aHSARDataRecord.toString());
             }
         }
     }
@@ -238,11 +236,10 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
     /**
      * Loads HSARDataRecords into the cache.
      */
-    public void loadIntoCache() {
-        logger.entering(this.getClass().getCanonicalName(), "loadIntoCache()");
+    public void loadIntoCache() throws IOException {
         long nDataRecords = super.getNDataRecords();
         if (nDataRecords > Integer.MAX_VALUE) {
-            log("nDataRecords>Integer.MAX_VALUE");
+            env.env.log("nDataRecords>Integer.MAX_VALUE");
             System.exit(4);
         }
         this._HSARDataRecordArray = new Census_HSARDataRecord[(int) nDataRecords];
@@ -255,11 +252,10 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
             this._HSARDataRecordArray[_HSARRecordID] = new Census_HSARDataRecord(
                     this.rAF);
             if (_HSARRecordID % 10000 == 0) {
-                log("loadIntoCache " + _HSARRecordID);
+                env.env.log("loadIntoCache " + _HSARRecordID);
             }
         }
         initVectors();
-        logger.exiting(this.getClass().getCanonicalName(), "loadIntoCache()");
     }
 
     /**
@@ -323,7 +319,7 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
         if (this._HID_HSARDataRecordVector_HashMap.containsKey(aHRPHSARDataRecord.get_HHID())) {
             return (Vector) this._HID_HSARDataRecordVector_HashMap.get(aHRPHSARDataRecord.get_HHID());
         } else {
-            log("HSARDataRecord" + aHRPHSARDataRecord.toString() + "is not an HRP!");
+            env.env.log("HSARDataRecord" + aHRPHSARDataRecord.toString() + "is not an HRP!");
             return (Vector) null;
         }
     }
@@ -376,10 +372,10 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
         Vector result = new Vector();
         Vector aHousehold;
         for (int i = 0; i < tHPHRPs.length; i++) {
-            // log("i " + i + " from " + tHPHRPs.length );
+            // env.env.log("i " + i + " from " + tHPHRPs.length );
             if (tHPHRPs[i] == null) {
                 boolean debug = true;
-                log("Null in getHSARDataRecords(HSARDataRecord[])!");
+                env.env.log("Null in getHSARDataRecords(HSARDataRecord[])!");
             } else {
                 aHousehold = getHSARDataRecordsVector(tHPHRPs[i]);
                 result.addAll(aHousehold);
@@ -398,9 +394,9 @@ public class Census_HSARDataHandler extends Data_AbstractHandler {
         Vector result = new Vector();
         Vector aHousehold;
         for (int i = 0; i < tHPHRPRecordIDs.size(); i++) {
-            // log("i " + i + " from " + tHPHRPs.length );
+            // env.env.log("i " + i + " from " + tHPHRPs.length );
             if (tHPHRPRecordIDs.get(i) == null) {
-                log("Null in getHSARDataRecords(Vector)!");
+                env.env.log("Null in getHSARDataRecords(Vector)!");
             } else {
                 aHousehold = getHSARDataRecordsVector(getHSARDataRecord((Long) tHPHRPRecordIDs.get(i)));
                 result.addAll(aHousehold);

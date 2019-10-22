@@ -1,89 +1,55 @@
 /*
- * Copyright (C) 2014 geoagdt.
+ * Copyright 2019 Centre for Computational Geography, University of Leeds.
  *
- * This library is free software; you can redistribute it and/or
- * modify it under the terms of the GNU Lesser General Public
- * License as published by the Free Software Foundation; either
- * version 2.1 of the License, or (at your option) any later version.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- * This library is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
- * Lesser General Public License for more details.
+ *      http://www.apache.org/licenses/LICENSE-2.0
  *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this library; if not, write to the Free Software
- * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
- * MA 02110-1301  USA
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 package uk.ac.leeds.ccg.andyt.census.core;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.StreamTokenizer;
-import java.util.TreeSet;
+import uk.ac.leeds.ccg.andyt.census.io.Census_Files;
+import uk.ac.leeds.ccg.andyt.data.core.Data_Environment;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_Environment;
+import uk.ac.leeds.ccg.andyt.generic.io.Generic_Defaults;
 
 /**
  *
  * @author geoagdt
  */
-public class Census_Environment  {
+public class Census_Environment extends Data_Environment {
 
-    public final transient Generic_Environment env;
-    
+    //public transient final Generic_Environment env;
+    //public transient final Census_Files files;
+            
     public Census_Environment() throws IOException {
         this(new Generic_Environment());
     }
     
-    public Census_Environment(Generic_Environment e) {
-        this.env = e;
+    public Census_Environment(Generic_Environment e) throws IOException {
+        this(e, Generic_Defaults.getDefaultDir());
     }
     
     /**
-     * @param area
-     * @param level "OA" or "LSOA" or "MSOA" currently...
-     * @param dir Census Data Directory
-     * @return <code>TreeSet&ltString&gt</code> of LSOA codes for the Leeds
-     * Local Authority District loaded from a specific file within
-     * digitalWelfareDir.
+     * 
+     * @param env What {@link #env} is set to. 
+     * @param dir Directory used to initialise {@link #files}. 
      */
-    public TreeSet<String> getCensusCodes(String area, String level, File dir) {
-        TreeSet<String> r = null;
-        File file = new File(dir, "censusCodes.csv");
-        if (file.exists()) {
-            try {
-                BufferedReader br = env.io.getBufferedReader(file);
-                if (br != null) {
-                    r = new TreeSet<String>();
-                    StreamTokenizer st = new StreamTokenizer(br);
-                    env.io.setStreamTokenizerSyntax1(st);
-                    int token = st.nextToken();
-//                    long RecordID = 0;
-                    String line = "";
-                    while (!(token == StreamTokenizer.TT_EOF)) {
-                        switch (token) {
-                            case StreamTokenizer.TT_EOL:
-//                                if (RecordID % 100 == 0) {
-//                                    System.out.println(line);
-//                                }
-//                                RecordID++;
-                                break;
-                            case StreamTokenizer.TT_WORD:
-                                line = st.sval;
-                                r.add(line);
-                                break;
-                        }
-                        token = st.nextToken();
-                    }
-                    br.close();
-                }
-            } catch (IOException e) {
-                System.err.println(e.getMessage());
-            }
-        }
-        return r;
+    public Census_Environment(Generic_Environment env, File dir) throws IOException {
+        this.env = env;
+        files = new Census_Files(dir);
     }
 
+    public Census_Files getFiles() {
+        return (Census_Files) files;
+    }
 }

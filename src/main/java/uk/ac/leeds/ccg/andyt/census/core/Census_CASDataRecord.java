@@ -190,11 +190,11 @@ public class Census_CASDataRecord extends Census_AbstractDataRecord {
             Census_CASDataHandler tCASDataHandler,
             long tRecordID) {
 		this.tCAS001DataRecord = (Census_CAS001DataRecord) tCASDataHandler
-				.getCAS001DataHandler().getDataRecord(tRecordID);
+				.CAS001Handler.getDataRecord(tRecordID);
 		this.tCAS002DataRecord = (Census_CAS002DataRecord) tCASDataHandler
 				.getCAS002DataHandler().getDataRecord(tRecordID);
 		this.tCAS003DataRecord = (Census_CAS003DataRecord) tCASDataHandler
-				.getCAS003DataHandler().getDataRecord(tRecordID);
+				.CAS003Handler.getDataRecord(tRecordID);
 		this.tCASKS002DataRecord = (Census_CASKS002DataRecord) tCASDataHandler
 				.getCASKS002DataHandler().getDataRecord(tRecordID);
 		this.tCASKS008DataRecord = (Census_CASKS008DataRecord) tCASDataHandler

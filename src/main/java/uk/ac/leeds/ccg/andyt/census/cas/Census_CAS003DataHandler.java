@@ -18,7 +18,7 @@
  */
 package uk.ac.leeds.ccg.andyt.census.cas;
 
-import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractHandler;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import uk.ac.leeds.ccg.andyt.census.sar.Census_ISARDataHandler;
 import java.io.BufferedReader;
@@ -31,47 +31,49 @@ import java.io.StreamTokenizer;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.TreeMap;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Environment;
 import uk.ac.leeds.ccg.andyt.census.sar.Census_ISARDataHandler.AgeSexType;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 
 /**
  * Class for handling an individual CAS003DataRecords.
  */
-public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
+public class Census_CAS003DataHandler extends Census_AbstractHandler {
 
     /**
      * Creates a new instance of CAS003DataHandler loading a default file.
      */
-    public Census_CAS003DataHandler() {
-        File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
-        this.init(directory);
-        try {
-            this.file = new File(directory, "CAS003DataRecords.dat");
-            if (!this.file.exists()) {
-                this.file.createNewFile();
-            }
-            this.recordLength = new Census_CAS003DataRecord().getSizeInBytes();
-            // log("this.recordLength " + this.recordLength);
-            this.rAF = new RandomAccessFile(this.file, "r");
-        } catch (IOException aIOException) {
-            log(aIOException.getLocalizedMessage());
-            System.exit(Generic_ErrorAndExceptionHandler.IOException);
-        }
+    public Census_CAS003DataHandler(Census_Environment e) throws IOException {
+        super (e);
+//        File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
+//        this.init(directory);
+//        try {
+//            this.file = new File(directory, "CAS003DataRecords.dat");
+//            if (!this.file.exists()) {
+//                this.file.createNewFile();
+//            }
+//            this.recordLength = new Census_CAS003DataRecord().getSizeInBytes();
+//            // env.env.log("this.recordLength " + this.recordLength);
+//            this.rAF = new RandomAccessFile(this.file, "r");
+//        } catch (IOException aIOException) {
+//            env.env.log(aIOException.getLocalizedMessage());
+//            System.exit(Generic_ErrorAndExceptionHandler.IOException);
+//        }
     }
 
-    /**
-     * Creates a new instance of CAS003DataHandler with Records loaded from
-     * aFile.
-     *
-     * @param aFile Formatted file of CAS003DataRecords.
-     */
-    public Census_CAS003DataHandler(File aFile) {
-        // initMemoryReserve();
-        this.init(aFile.getParentFile());
-        this.recordLength = new Census_CAS003DataRecord().getSizeInBytes();
-        load(aFile);
-        log("CAS003DataRecords loaded successfully");
-    }
+//    /**
+//     * Creates a new instance of CAS003DataHandler with Records loaded from
+//     * aFile.
+//     *
+//     * @param aFile Formatted file of CAS003DataRecords.
+//     */
+//    public Census_CAS003DataHandler(File aFile) {
+//        // initMemoryReserve();
+//        this.init(aFile.getParentFile());
+//        this.recordLength = new Census_CAS003DataRecord().getSizeInBytes();
+//        load(aFile);
+//        env.env.log("CAS003DataRecords loaded successfully");
+//    }
 
     public void formatSourceData(
             File directory,
@@ -86,21 +88,21 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                 directory,
                 "CAS003EnglandOA.csv");
         RecordID = format(infile, RecordID);
-        log(infile.toString() + " formatted successfully " + RecordID + " records"); // 165665
+        env.env.log(infile.toString() + " formatted successfully " + RecordID + " records"); // 165665
         long0 = RecordID;
         // Load Wales
         infile = new File(
                 directory,
                 "CAS003WalesOA.csv");
         RecordID = format(infile, RecordID);
-        log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 9769
+        env.env.log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 9769
         long0 = RecordID;
         // Load Scotland
         infile = new File(
                 directory,
                 "CAS003ScotlandOA.csv");
         RecordID = format(infile, RecordID);
-        log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 42604
+        env.env.log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 42604
         long0 = RecordID;
         // Different Table Layout for Northern Ireland
         // Load Northern Ireland
@@ -108,7 +110,7 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                 directory,
                 "CAS003NorthernIrelandOA.csv");
         RecordID = format(infile, RecordID, true);
-        log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 5022
+        env.env.log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 5022
         rAF.close();
         load(file);
         print(20, new Random());
@@ -141,7 +143,7 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                     print = (long0 == longZero);
                     if (print) {
                         string2 = rec.toString();
-                        log(string2);
+                        env.env.log(string2);
                         string2 = string0;
                     }
                     // Write out
@@ -156,7 +158,7 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
             string1 = string0;
             tokenType = st.nextToken();
         }
-        log("Number of Records loaded = " + RecordID);
+        env.env.log("Number of Records loaded = " + RecordID);
         return RecordID;
     }
 
@@ -186,7 +188,7 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                         print = (long0 == longZero);
                         if (print) {
                             string2 = aCAS003DataRecord.toString();
-                            log(string2);
+                            env.env.log(string2);
                             string2 = string0;
                         }
                         // Write out
@@ -202,9 +204,9 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                 string1 = string0;
                 tokenType = st.nextToken();
             }
-            log("Number of Records loaded = " + RecordID);
+            env.env.log("Number of Records loaded = " + RecordID);
         } catch (IOException aIOException) {
-            log(aIOException.getLocalizedMessage());
+            env.env.log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
         }
         return RecordID;
@@ -232,7 +234,7 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
             this.rAF.seek(recordLength * RecordID);
             result = new Census_CAS003DataRecord(this.rAF);
         } catch (IOException aIOException) {
-            log(aIOException.getLocalizedMessage());
+            env.env.log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
         }
         return result;
@@ -272,12 +274,12 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                 result.put(zoneCodeWard, aCAS003DataRecord);
             }
         }
-        try {
-            write(aRandomAccessFile, result);
-        } catch (IOException aIOException) {
-            log(aIOException.getLocalizedMessage());
-            System.exit(Generic_ErrorAndExceptionHandler.IOException);
-        }
+//        try {
+//            write(aRandomAccessFile, result);
+//        } catch (IOException aIOException) {
+//            env.env.log(aIOException.getLocalizedMessage());
+//            System.exit(Generic_ErrorAndExceptionHandler.IOException);
+//        }
     }
 
     /**
@@ -297,7 +299,7 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
             long startRecordID,
             long endRecordID) throws IOException {
         TreeMap result = new TreeMap();
-        HashMap lookUpMSOAfromOAHashMap = get_LookUpMSOAfromOAHashMap();
+        HashMap lookUpMSOAfromOAHashMap = null;//getOA2MSOA();
         Census_CAS003DataRecord aCAS003DataRecord;
         Census_CAS003DataRecord bCAS003DataRecord;
         String zoneCode;
@@ -316,7 +318,7 @@ public class Census_CAS003DataHandler extends Census_AbstractDataHandler {
                 result.put(zoneCodeMSOA, aCAS003DataRecord);
             }
         }
-        write(aRandomAccessFile, result);
+        //write(aRandomAccessFile, result);
     }
 
     /**

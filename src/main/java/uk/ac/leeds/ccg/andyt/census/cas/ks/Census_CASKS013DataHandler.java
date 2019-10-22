@@ -29,8 +29,9 @@ import java.io.StreamTokenizer;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.TreeMap;
-import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractHandler;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Environment;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 
 /**
@@ -51,7 +52,7 @@ import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
  * @version 1.0.0, 2006-08-10
  * @see Census_AbstractDataRecord
  */
-public class Census_CASKS013DataHandler extends Census_AbstractDataHandler {
+public class Census_CASKS013DataHandler extends Census_AbstractHandler {
 
     /**
      * Creates a new instance of <code>CASKS013DataHandler</code> for handling
@@ -61,14 +62,14 @@ public class Census_CASKS013DataHandler extends Census_AbstractDataHandler {
      * <code>File</code> edit the source code and recompile.
      * @throws java.io.IOException
      */
-    public Census_CASKS013DataHandler() throws IOException {
+    public Census_CASKS013DataHandler(Census_Environment e) throws IOException {
+        super (e);
         // this( new File(
         // "C:/Work/Projects/MoSeS/Workspace/CASKS013DataRecords.dat" ) );
         // Want also to setDirectory();
         // initMemoryReserve();
         // Default this.directory, this.file, this.randomAccessFile
         File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
-        this.init(directory);
         this.file = new File(directory, "CASKS013DataRecords.dat");
         if (!this.file.exists()) {
             this.file.createNewFile();
@@ -78,74 +79,74 @@ public class Census_CASKS013DataHandler extends Census_AbstractDataHandler {
         this.rAF = new RandomAccessFile(this.file, "r");
     }
 
-    /**
-     * Creates a new instance of CASKS013DataHandler with Records loaded from
-     * formattedFile.
-     *
-     * @param formattedFile
-     *            Formatted file of CASKS013DataRecords
-     * @throws java.io.IOException
-     */
-    public Census_CASKS013DataHandler(File formattedFile) throws IOException {
-        // initMemoryReserve();
-        this.init(formattedFile.getParentFile());
-        this.recordLength = new Census_CASKS013DataRecord().getSizeInBytes();
-        load(formattedFile);
-        System.out.println("CASKS013DataRecords loaded successfully");
-    }
+//    /**
+//     * Creates a new instance of CASKS013DataHandler with Records loaded from
+//     * formattedFile.
+//     *
+//     * @param formattedFile
+//     *            Formatted file of CASKS013DataRecords
+//     * @throws java.io.IOException
+//     */
+//    public Census_CASKS013DataHandler(File formattedFile) throws IOException {
+//        // initMemoryReserve();
+//        this.init(formattedFile.getParentFile());
+//        this.recordLength = new Census_CASKS013DataRecord().getSizeInBytes();
+//        load(formattedFile);
+//        System.out.println("CASKS013DataRecords loaded successfully");
+//    }
 
-    /**
-     * @param args
-     *            the command line arguments No arguments are used.
-     * @throws java.io.IOException
-     */
-    public static void main(String[] args) throws IOException {
-        Census_CASKS013DataHandler aCASKS013DataHandler = new Census_CASKS013DataHandler();
-        aCASKS013DataHandler.run();
-    }
+//    /**
+//     * @param args
+//     *            the command line arguments No arguments are used.
+//     * @throws java.io.IOException
+//     */
+//    public static void main(String[] args) throws IOException {
+//        Census_CASKS013DataHandler aCASKS013DataHandler = new Census_CASKS013DataHandler();
+//        aCASKS013DataHandler.run();
+//    }
 
-    /**
-     * Top level run method
-     */
-    private void run() throws IOException {
-        // run1( true, 20 );
-        runAggregate();
-        run2(20);
-    }
-
-    /**
-     * Aggregates <code>CASKS013DataRecords</code>
-     */
-    private void runAggregate() throws IOException {
-        // Aggregate to MSOA for Leeds
-        long nDataRecords = this.getNDataRecords();
-        long nrecordsInLeeds = 2439L;
-        long startRecordIDForLeeds = 56749L;
-        long startRecordID = startRecordIDForLeeds;
-        long endRecordID = startRecordIDForLeeds + nrecordsInLeeds;
-        File _File = new File(
-                "C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS013DataRecordsMSOA.dat");
-        _File.createNewFile();
-        RandomAccessFile _RandomAccessFile = new RandomAccessFile(_File, "rw");
-        aggregateOAToMSOA(_RandomAccessFile, startRecordID, endRecordID);
-        _RandomAccessFile.close();
-        Census_CASKS013DataHandler _CASKS013DataHandler = new Census_CASKS013DataHandler(
-                _File);
-        nDataRecords = _CASKS013DataHandler.getNDataRecords();
-        System.out.println("nDataRecords " + nDataRecords);
-        Census_CASKS013DataRecord _CASKS013DataRecord = new Census_CASKS013DataRecord();
-        _File = new File(
-                "C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS013DataRecordsMSOA.csv");
-        PrintWriter _PrintWriter = new PrintWriter(_File);
-        _PrintWriter.println(_CASKS013DataRecord.toCSVStringFields());
-        for (long along = 0L; along < nDataRecords; along++) {
-            _CASKS013DataRecord = _CASKS013DataHandler.getCASKS013DataRecord(along);
-            _PrintWriter.println(_CASKS013DataRecord.toCSVString());
-            System.out.println(_CASKS013DataRecord.toString());
-        }
-        _PrintWriter.flush();
-        _PrintWriter.close();
-    }
+//    /**
+//     * Top level run method
+//     */
+//    private void run() throws IOException {
+//        // run1( true, 20 );
+//        runAggregate();
+//        run2(20);
+//    }
+//
+//    /**
+//     * Aggregates <code>CASKS013DataRecords</code>
+//     */
+//    private void runAggregate() throws IOException {
+//        // Aggregate to MSOA for Leeds
+//        long nDataRecords = this.getNDataRecords();
+//        long nrecordsInLeeds = 2439L;
+//        long startRecordIDForLeeds = 56749L;
+//        long startRecordID = startRecordIDForLeeds;
+//        long endRecordID = startRecordIDForLeeds + nrecordsInLeeds;
+//        File _File = new File(
+//                "C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS013DataRecordsMSOA.dat");
+//        _File.createNewFile();
+//        RandomAccessFile _RandomAccessFile = new RandomAccessFile(_File, "rw");
+//        aggregateOAToMSOA(_RandomAccessFile, startRecordID, endRecordID);
+//        _RandomAccessFile.close();
+//        Census_CASKS013DataHandler _CASKS013DataHandler = new Census_CASKS013DataHandler(
+//                _File);
+//        nDataRecords = _CASKS013DataHandler.getNDataRecords();
+//        System.out.println("nDataRecords " + nDataRecords);
+//        Census_CASKS013DataRecord _CASKS013DataRecord = new Census_CASKS013DataRecord();
+//        _File = new File(
+//                "C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS013DataRecordsMSOA.csv");
+//        PrintWriter _PrintWriter = new PrintWriter(_File);
+//        _PrintWriter.println(_CASKS013DataRecord.toCSVStringFields());
+//        for (long along = 0L; along < nDataRecords; along++) {
+//            _CASKS013DataRecord = _CASKS013DataHandler.getCASKS013DataRecord(along);
+//            _PrintWriter.println(_CASKS013DataRecord.toCSVString());
+//            System.out.println(_CASKS013DataRecord.toString());
+//        }
+//        _PrintWriter.flush();
+//        _PrintWriter.close();
+//    }
 
     /**
      * Loads <code>CASKS013DataRecords</code> and prints out n randomly
@@ -347,7 +348,7 @@ public class Census_CASKS013DataHandler extends Census_AbstractDataHandler {
                 result.put(zoneCodeWard, aCASKS013DataRecord);
             }
         }
-        write(aRandomAccessFile, result);
+        //write(aRandomAccessFile, result);
     }
 
     /**
@@ -366,7 +367,7 @@ public class Census_CASKS013DataHandler extends Census_AbstractDataHandler {
     public void aggregateOAToMSOA(RandomAccessFile aRandomAccessFile,
             long startRecordID, long endRecordID) throws IOException {
         TreeMap result = new TreeMap();
-        HashMap lookUpMSOAfromOAHashMap = get_LookUpMSOAfromOAHashMap();
+        HashMap lookUpMSOAfromOAHashMap = null;//getOA2MSOA();
         Census_CASKS013DataRecord aCASKS013DataRecord;
         Census_CASKS013DataRecord bCASKS013DataRecord;
         String zoneCode;
@@ -385,6 +386,6 @@ public class Census_CASKS013DataHandler extends Census_AbstractDataHandler {
                 result.put(zoneCodeMSOA, aCASKS013DataRecord);
             }
         }
-        write(aRandomAccessFile, result);
+        //write(aRandomAccessFile, result);
     }
 }

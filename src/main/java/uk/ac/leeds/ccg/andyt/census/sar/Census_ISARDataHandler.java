@@ -39,8 +39,6 @@ import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
  */
 public class Census_ISARDataHandler extends Data_AbstractHandler {
 
-    public final Census_Environment env;
-
     /**
      * For storing ISARDataRecords.
      */
@@ -52,46 +50,45 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
      * Creates a new instance of ISARDataHandler
      */
     public Census_ISARDataHandler(Census_Environment e) {
-        env = e;
+        super(e);
     }
 
-    /**
-     * Creates a new instance of ISARDataHandler from aFile.
-     *
-     * @param f
-     */
-    public Census_ISARDataHandler(Census_Environment e, File f) {
-        env = e;
-        dir = f.getParentFile();
-        init(dir);
-        if (f.getName().endsWith(".dat")) {
-            init(f.getParentFile());
-            load(f);
-            this.recordLength = new Census_ISARDataRecord().getSizeInBytes();
-            loadIntoCache();
-            File thisFile = new File(dir,
-                    this.getClass().getCanonicalName() + ".thisFile");
-            init_AgeSexType_ISARDataRecordVector_HashMap_0();
-            env.env.io.writeObject(this, thisFile);
-        } else {
-            Object object = env.env.io.readObject(f);
-            Census_ISARDataHandler aISARDataHandler = (Census_ISARDataHandler) object;
-            load(f);
-            this.recordLength = aISARDataHandler.recordLength;
-            //this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
-            this._ISARDataRecordArray = aISARDataHandler._ISARDataRecordArray;
-            this._AgeSexType_ISARDataRecordVector_HashMap_0 = aISARDataHandler._AgeSexType_ISARDataRecordVector_HashMap_0;
-        }
-    }
+//    /**
+//     * Creates a new instance of ISARDataHandler from aFile.
+//     *
+//     * @param f
+//     */
+//    public Census_ISARDataHandler(Census_Environment e, File f) {
+//        env = e;
+//        dir = f.getParentFile();
+//        init(dir);
+//        if (f.getName().endsWith(".dat")) {
+//            init(f.getParentFile());
+//            load(f);
+//            this.recordLength = new Census_ISARDataRecord().getSizeInBytes();
+//            loadIntoCache();
+//            File thisFile = new File(dir,
+//                    this.getClass().getCanonicalName() + ".thisFile");
+//            init_AgeSexType_ISARDataRecordVector_HashMap_0();
+//            env.env.io.writeObject(this, thisFile);
+//        } else {
+//            Object object = env.env.io.readObject(f);
+//            Census_ISARDataHandler aISARDataHandler = (Census_ISARDataHandler) object;
+//            load(f);
+//            this.recordLength = aISARDataHandler.recordLength;
+//            //this._RecordLength = new Census_ISARDataRecord().getSizeInBytes();
+//            this._ISARDataRecordArray = aISARDataHandler._ISARDataRecordArray;
+//            this._AgeSexType_ISARDataRecordVector_HashMap_0 = aISARDataHandler._AgeSexType_ISARDataRecordVector_HashMap_0;
+//        }
+//    }
 
     /**
      * Loads ISARDataRecords into the cache.
      */
-    public void loadIntoCache() {
-        logger.entering(this.getClass().getCanonicalName(), "loadIntoCache()");
+    public void loadIntoCache() throws IOException {
         long nDataRecords = super.getNDataRecords();
         if (nDataRecords > Integer.MAX_VALUE) {
-            log("nDataRecords>Integer.MAX_VALUE");
+            env.env.log("nDataRecords>Integer.MAX_VALUE");
             System.exit(Generic_ErrorAndExceptionHandler.NumberFormatException);
         }
         this._ISARDataRecordArray = new Census_ISARDataRecord[(int) nDataRecords];
@@ -104,11 +101,10 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
             this._ISARDataRecordArray[_ISARRecordID] = new Census_ISARDataRecord(
                     this.rAF);
             if (_ISARRecordID % 10000 == 0) {
-                log("loadIntoCache " + _ISARRecordID);
+                env.env.log("loadIntoCache " + _ISARRecordID);
             }
         }
         init_AgeSexType_ISARDataRecordVector_HashMap_0();
-        logger.exiting(this.getClass().getCanonicalName(), "loadIntoCache()");
     }
 
     /**
@@ -118,13 +114,8 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
      * @param formattedFile
      * @throws java.io.IOException
      */
-    public void formatSource(
-            File sourceFile,
-            File formattedFile)
+    public void formatSource(            File sourceFile,            File formattedFile)
             throws IOException {
-        logger.entering(
-                this.getClass().getCanonicalName(),
-                "formatSource(File,File)");
         file = formattedFile;
 //        file = new File (
 //                dir,
@@ -156,12 +147,12 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
             switch (tokenType) {
                 case StreamTokenizer.TT_EOL:
                     if (RecordID % 10000 == 0) {
-                        log(aISARDataRecord.toString());
+                        env.env.log(aISARDataRecord.toString());
                     }
                     // Write out householdSARRecord
                     if (parsed) {
                         aISARDataRecord.write(this.rAF);
-                        // log( "this.tRandomAccessFile.length() " +
+                        // env.env.log( "this.tRandomAccessFile.length() " +
                         // this.tRandomAccessFile.length() );
                         RecordID++;
                     }
@@ -175,12 +166,9 @@ public class Census_ISARDataHandler extends Data_AbstractHandler {
             }
             tokenType = aStreamTokenizer.nextToken();
         }
-        log("Number of ISARDataRecords loaded " + (RecordID + 1L));
+        env.env.log("Number of ISARDataRecords loaded " + (RecordID + 1L));
         this.rAF.close();
         this.rAF = new RandomAccessFile(this.file, "r");
-        logger.exiting(
-                this.getClass().getCanonicalName(),
-                "formatSource(File,File)");
     }
 
     /**

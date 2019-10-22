@@ -18,7 +18,7 @@
  */
 package uk.ac.leeds.ccg.andyt.census.cas;
 
-import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractHandler;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
 import java.io.BufferedReader;
 import java.io.File;
@@ -30,6 +30,7 @@ import java.io.StreamTokenizer;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.TreeMap;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Environment;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 
 /**
@@ -50,7 +51,7 @@ import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
  * @version 1.0.0, 2007-05-24
  * @see Census_AbstractDataRecord
  */
-public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
+public class Census_CAS044DataHandler extends Census_AbstractHandler {
 
     /**
      * Creates a new instance of <code>CAS044DataHandler</code> for handling
@@ -61,37 +62,38 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
      *
      * @throws java.io.IOException
      */
-    public Census_CAS044DataHandler() throws IOException {
-        // this( new File(
-        // "C:/Work/Projects/MoSeS/Workspace/CAS044DataRecords.dat" ) );
-        // Want also to setDirectory();
-        // initMemoryReserve();
-        // Default this.directory, this.file, this.randomAccessFile
-        File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
-        this.init(directory);
-        this.file = new File(directory, "CAS044DataRecords.dat");
-        if (!this.file.exists()) {
-            this.file.createNewFile();
-        }
-        this.recordLength = new Census_CAS044DataRecord().getSizeInBytes();
-        // System.out.println("this.recordLength " + this.recordLength);
-        this.rAF = new RandomAccessFile(this.file, "r");
+    public Census_CAS044DataHandler(Census_Environment e) throws IOException {
+        super (e);
+//        // this( new File(
+//        // "C:/Work/Projects/MoSeS/Workspace/CAS044DataRecords.dat" ) );
+//        // Want also to setDirectory();
+//        // initMemoryReserve();
+//        // Default this.directory, this.file, this.randomAccessFile
+//        File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
+//        this.init(directory);
+//        this.file = new File(directory, "CAS044DataRecords.dat");
+//        if (!this.file.exists()) {
+//            this.file.createNewFile();
+//        }
+//        this.recordLength = new Census_CAS044DataRecord().getSizeInBytes();
+//        // System.out.println("this.recordLength " + this.recordLength);
+//        this.rAF = new RandomAccessFile(this.file, "r");
     }
 
-    /**
-     * Creates a new instance of CAS044DataHandler with Records loaded from
-     * formattedFile.
-     *
-     * @param formattedFile Formatted file of CAS044DataRecords
-     * @throws java.io.IOException
-     */
-    public Census_CAS044DataHandler(File formattedFile) throws IOException {
-        // initMemoryReserve();
-        this.init(formattedFile.getParentFile());
-        this.recordLength = new Census_CAS044DataRecord().getSizeInBytes();
-        load(formattedFile);
-        System.out.println("CAS044DataRecords loaded successfully");
-    }
+//    /**
+//     * Creates a new instance of CAS044DataHandler with Records loaded from
+//     * formattedFile.
+//     *
+//     * @param formattedFile Formatted file of CAS044DataRecords
+//     * @throws java.io.IOException
+//     */
+//    public Census_CAS044DataHandler(File formattedFile) throws IOException {
+//        // initMemoryReserve();
+//        this.init(formattedFile.getParentFile());
+//        this.recordLength = new Census_CAS044DataRecord().getSizeInBytes();
+//        load(formattedFile);
+//        System.out.println("CAS044DataRecords loaded successfully");
+//    }
 
     /**
      * Loads <code>CAS001DataRecords</code> and prints out n randomly
@@ -213,7 +215,7 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
             this.rAF.seek(recordLength * RecordID);
             result = new Census_CAS044DataRecord(this.rAF);
         } catch (IOException aIOException) {
-            log(aIOException.getLocalizedMessage());
+            env.env.log(aIOException.getLocalizedMessage());
             System.exit(Generic_ErrorAndExceptionHandler.IOException);
         }
         return result;
@@ -252,7 +254,7 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
                 result.put(zoneCodeWard, aCAS044DataRecord);
             }
         }
-        write(aRandomAccessFile, result);
+        //write(aRandomAccessFile, result);
     }
 
     /**
@@ -270,7 +272,7 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
     public void aggregateOAToMSOA(RandomAccessFile aRandomAccessFile,
             long startRecordID, long endRecordID) throws IOException {
         TreeMap result = new TreeMap();
-        HashMap lookUpMSOAfromOAHashMap = get_LookUpMSOAfromOAHashMap();
+        HashMap lookUpMSOAfromOAHashMap = null;//getOA2MSOA();
         Census_CAS044DataRecord aCAS044DataRecord;
         Census_CAS044DataRecord bCAS044DataRecord;
         String zoneCode;
@@ -289,6 +291,6 @@ public class Census_CAS044DataHandler extends Census_AbstractDataHandler {
                 result.put(zoneCodeMSOA, aCAS044DataRecord);
             }
         }
-        write(aRandomAccessFile, result);
+        //write(aRandomAccessFile, result);
     }
 }

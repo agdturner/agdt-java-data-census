@@ -39,7 +39,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.RandomAccessFile; //import java.util.HashMap;
-import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS001DataHandler;
+import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS001Handler;
 import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS002DataHandler;
 import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS003DataHandler;
 
@@ -48,7 +48,7 @@ import uk.ac.leeds.ccg.andyt.census.cas.Census_CAS003DataHandler;
  * <code>AbstractCASDataHandlers</code> so as to access respective
  * <code>AbstractCASDataRecords</code>:
  * <ul>
- * <li>Census_CAS001DataHandler</li>
+ * <li>Census_CAS001Handler</li>
  * <li>Census_CAS002DataHandler</li>
  * <li>Census_CAS003DataHandler</li>
  * <li>Census_CASKS002DataHandler</li>
@@ -93,95 +93,97 @@ public class Census_CASDataHandler_2 extends Census_CASDataHandler {
 	 * Creates a new Census_CASDataHandler
      * @throws java.io.IOException
 	 */
-	public Census_CASDataHandler_2() throws IOException {
-		init();
+	public Census_CASDataHandler_2(Census_Environment e) throws IOException {
+            super(e);
+		//init();
 	}
 
-	/**
-	 * Creates a new Census_CASDataHandler using <code>Files</code> in directory
-	 * 
-	 * @param directory
-	 *            The directory containing <code>Files</code>
-	 * @param aggregation
-	 *            A <code>String</code> part of the filename indicating the
-	 *            aggregation (e.g. OA, MSOA, WARD, etc... )
-     * @throws java.io.IOException
-	 */
-	public Census_CASDataHandler_2(
-            File directory,
-            String aggregation)
-			throws IOException {
-		if (aggregation.equalsIgnoreCase("OA")) {
-			aggregation = "";
-		}
-		this.init(directory);
-		this._CAS001DataHandler = new Census_CAS001DataHandler(new File(directory, ("CAS001DataRecords" + aggregation + ".dat")));
-		this._CAS002DataHandler = new Census_CAS002DataHandler(new File(directory, ("CAS002DataRecords" + aggregation + ".dat")));
-		this._CAS003DataHandler = new Census_CAS003DataHandler(new File(directory, ("CAS003DataRecords" + aggregation + ".dat")));
-		this._CASKS002DataHandler = new Census_CASKS002DataHandler(new File(directory, ("CASKS002DataRecords" + aggregation + ".dat")));
-		this._CASKS006DataHandler = new Census_CASKS006DataHandler(new File(directory, ("CASKS006DataRecords" + aggregation + ".dat")));
-		this._CASKS008DataHandler = new Census_CASKS008DataHandler(new File(directory, ("CASKS008DataRecords" + aggregation + ".dat")));
-		this._CASKS010DataHandler = new Census_CASKS010DataHandler(new File(directory, ("CASKS010DataRecords" + aggregation + ".dat")));
-		this._CASKS015DataHandler = new Census_CASKS015DataHandler(new File(directory, ("CASKS015DataRecords" + aggregation + ".dat")));
-		this._CASKS017DataHandler = new Census_CASKS017DataHandler(new File(directory, ("CASKS017DataRecords" + aggregation + ".dat")));
-		this._CASKS020DataHandler = new Census_CASKS020DataHandler(new File(directory, ("CASKS020DataRecords" + aggregation + ".dat")));
-		this._CASKS023DataHandler = new Census_CASKS023DataHandler(new File(directory, ("CASKS023DataRecords" + aggregation + ".dat")));
-		this._CASKS09bDataHandler = new Census_CASKS09bDataHandler(new File(directory, ("CASKS09bDataRecords" + aggregation + ".dat")));
-		this._CASKS09cDataHandler = new Census_CASKS09cDataHandler(new File(directory, ("CASKS09cDataRecords" + aggregation + ".dat")));
-		this._CASKS12bDataHandler = new Census_CASKS12bDataHandler(new File(directory, ("CASKS12bDataRecords" + aggregation + ".dat")));
-		this._CASKS12cDataHandler = new Census_CASKS12cDataHandler(new File(directory, ("CASKS12cDataRecords" + aggregation + ".dat")));
-		this._CASKS14bDataHandler = new Census_CASKS14bDataHandler(new File(directory, ("CASKS14bDataRecords" + aggregation + ".dat")));
-		this._CASKS14cDataHandler = new Census_CASKS14cDataHandler(new File(directory, ("CASKS14cDataRecords" + aggregation + ".dat")));
-		this._CASUV003DataHandler = new Census_CASUV003DataHandler(new File(directory, ("CASUV003DataRecords" + aggregation + ".dat")));
-	}
+//	/**
+//	 * Creates a new Census_CASDataHandler using <code>Files</code> in directory
+//	 * 
+//	 * @param directory
+//	 *            The directory containing <code>Files</code>
+//	 * @param aggregation
+//	 *            A <code>String</code> part of the filename indicating the
+//	 *            aggregation (e.g. OA, MSOA, WARD, etc... )
+//     * @throws java.io.IOException
+//	 */
+//	public Census_CASDataHandler_2(
+//            File directory,
+//            String aggregation)
+//			throws IOException {
+//		if (aggregation.equalsIgnoreCase("OA")) {
+//			aggregation = "";
+//		}
+//		this.init(directory);
+//		this.CAS001Handler = new Census_CAS001Handler(new File(directory, ("CAS001DataRecords" + aggregation + ".dat")));
+//		this._CAS002DataHandler = new Census_CAS002DataHandler(new File(directory, ("CAS002DataRecords" + aggregation + ".dat")));
+//		this.CAS003Handler = new Census_CAS003DataHandler(new File(directory, ("CAS003DataRecords" + aggregation + ".dat")));
+//		this._CASKS002DataHandler = new Census_CASKS002DataHandler(new File(directory, ("CASKS002DataRecords" + aggregation + ".dat")));
+//		this._CASKS006DataHandler = new Census_CASKS006DataHandler(new File(directory, ("CASKS006DataRecords" + aggregation + ".dat")));
+//		this._CASKS008DataHandler = new Census_CASKS008DataHandler(new File(directory, ("CASKS008DataRecords" + aggregation + ".dat")));
+//		this._CASKS010DataHandler = new Census_CASKS010DataHandler(new File(directory, ("CASKS010DataRecords" + aggregation + ".dat")));
+//		this._CASKS015DataHandler = new Census_CASKS015DataHandler(new File(directory, ("CASKS015DataRecords" + aggregation + ".dat")));
+//		this._CASKS017DataHandler = new Census_CASKS017DataHandler(new File(directory, ("CASKS017DataRecords" + aggregation + ".dat")));
+//		this._CASKS020DataHandler = new Census_CASKS020DataHandler(new File(directory, ("CASKS020DataRecords" + aggregation + ".dat")));
+//		this._CASKS023DataHandler = new Census_CASKS023DataHandler(new File(directory, ("CASKS023DataRecords" + aggregation + ".dat")));
+//		this._CASKS09bDataHandler = new Census_CASKS09bDataHandler(new File(directory, ("CASKS09bDataRecords" + aggregation + ".dat")));
+//		this._CASKS09cDataHandler = new Census_CASKS09cDataHandler(new File(directory, ("CASKS09cDataRecords" + aggregation + ".dat")));
+//		this._CASKS12bDataHandler = new Census_CASKS12bDataHandler(new File(directory, ("CASKS12bDataRecords" + aggregation + ".dat")));
+//		this._CASKS12cDataHandler = new Census_CASKS12cDataHandler(new File(directory, ("CASKS12cDataRecords" + aggregation + ".dat")));
+//		this._CASKS14bDataHandler = new Census_CASKS14bDataHandler(new File(directory, ("CASKS14bDataRecords" + aggregation + ".dat")));
+//		this._CASKS14cDataHandler = new Census_CASKS14cDataHandler(new File(directory, ("CASKS14cDataRecords" + aggregation + ".dat")));
+//		this._CASUV003DataHandler = new Census_CASUV003DataHandler(new File(directory, ("CASUV003DataRecords" + aggregation + ".dat")));
+//	}
 
 	/**
 	 * Initialises all fields.
      * @throws java.io.IOException
 	 */
 	protected void init() throws IOException {
-		this._CAS001DataHandler = new Census_CAS001DataHandler();
-		this._CAS002DataHandler = new Census_CAS002DataHandler();
-		this._CAS003DataHandler = new Census_CAS003DataHandler();
-		this._CASKS002DataHandler = new Census_CASKS002DataHandler();
-		this._CASKS006DataHandler = new Census_CASKS006DataHandler();
-		this._CASKS008DataHandler = new Census_CASKS008DataHandler();
-		this._CASKS010DataHandler = new Census_CASKS010DataHandler();
-		this._CASKS015DataHandler = new Census_CASKS015DataHandler();
-		this._CASKS017DataHandler = new Census_CASKS017DataHandler();
-		this._CASKS020DataHandler = new Census_CASKS020DataHandler();
-		this._CASKS023DataHandler = new Census_CASKS023DataHandler();
-		this._CASKS09bDataHandler = new Census_CASKS09bDataHandler();
-		this._CASKS09cDataHandler = new Census_CASKS09cDataHandler();
-		this._CASKS12bDataHandler = new Census_CASKS12bDataHandler();
-		this._CASKS12cDataHandler = new Census_CASKS12cDataHandler();
-		this._CASKS14bDataHandler = new Census_CASKS14bDataHandler();
-		this._CASKS14cDataHandler = new Census_CASKS14cDataHandler();
-		this._CASUV003DataHandler = new Census_CASUV003DataHandler();
+            Census_Environment env = getEnv();
+		this.CAS001Handler = new Census_CAS001Handler(env);
+		this._CAS002DataHandler = new Census_CAS002DataHandler(env);
+		this.CAS003Handler = new Census_CAS003DataHandler(env);
+		this._CASKS002DataHandler = new Census_CASKS002DataHandler(env);
+		this._CASKS006DataHandler = new Census_CASKS006DataHandler(env);
+		this._CASKS008DataHandler = new Census_CASKS008DataHandler(env);
+		this._CASKS010DataHandler = new Census_CASKS010DataHandler(env);
+		this._CASKS015DataHandler = new Census_CASKS015DataHandler(env);
+		this._CASKS017DataHandler = new Census_CASKS017DataHandler(env);
+		this._CASKS020DataHandler = new Census_CASKS020DataHandler(env);
+		this._CASKS023DataHandler = new Census_CASKS023DataHandler(env);
+		this._CASKS09bDataHandler = new Census_CASKS09bDataHandler(env);
+		this._CASKS09cDataHandler = new Census_CASKS09cDataHandler(env);
+		this._CASKS12bDataHandler = new Census_CASKS12bDataHandler(env);
+		this._CASKS12cDataHandler = new Census_CASKS12cDataHandler(env);
+		this._CASKS14bDataHandler = new Census_CASKS14bDataHandler(env);
+		this._CASKS14cDataHandler = new Census_CASKS14cDataHandler(env);
+		this._CASUV003DataHandler = new Census_CASUV003DataHandler(env);
 	}
 
-	/**
-	 * @param args
-	 *            the command line arguments
-     * @throws java.io.IOException
-	 */
-	public static void main(String[] args) throws IOException {
-		// TODO code application logic here
-		Census_CASDataHandler aCASDataHandler = new Census_CASDataHandler();
-		aCASDataHandler.run();
-	}
-
-	/**
-	 * Top level run method
-     * @throws java.io.IOException
-	 */
-	// private void run() throws IOException {
-        @Override
-	public void run() throws IOException {
-		// formatSourceData();
-		aggregateOAToMSOAForLeeds();
-		// aggregateOAToWardForLeeds();
-	}
+//	/**
+//	 * @param args
+//	 *            the command line arguments
+//     * @throws java.io.IOException
+//	 */
+//	public static void main(String[] args) throws IOException {
+//		// TODO code application logic here
+//		Census_CASDataHandler aCASDataHandler = new Census_CASDataHandler();
+//		aCASDataHandler.run();
+//	}
+//
+//	/**
+//	 * Top level run method
+//     * @throws java.io.IOException
+//	 */
+//	// private void run() throws IOException {
+//        @Override
+//	public void run() throws IOException {
+//		// formatSourceData();
+//		aggregateOAToMSOAForLeeds();
+//		// aggregateOAToWardForLeeds();
+//	}
 
 	/**
 	 * Returns this._CASKS006DataHandler
@@ -213,9 +215,9 @@ public class Census_CASDataHandler_2 extends Census_CASDataHandler {
         File directory;
         directory = new File(
 					"C:/work/data/census/2001/CAS/CAS/");
-		_CAS001DataHandler.formatSourceData(directory,n);
+		CAS001Handler.formatSourceData(directory,n);
 		_CAS002DataHandler.formatSourceData(directory,n);
-		_CAS003DataHandler.formatSourceData(directory,n);
+		CAS003Handler.formatSourceData(directory,n);
         directory = new File(
 					"C:/work/data/census/2001/CAS/KeyStatistics/");
 		_CASKS002DataHandler.formatSourceData(directory,n);
@@ -252,32 +254,32 @@ public class Census_CASDataHandler_2 extends Census_CASDataHandler {
 		RandomAccessFile aRandomAccessFile;
 		long nDataRecords;
 		long along;
-		PrintWriter aPrintWriter;
-
-		// CASKS006DataRecords
-		aFile = new File(
-				"C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS006DataRecordsWard.dat");
-		aFile.createNewFile();
-		aRandomAccessFile = new RandomAccessFile(aFile, "rw");
-		_CASKS006DataHandler.aggregateOAToWard(aRandomAccessFile,
-				startRecordID, endRecordID);
-		aRandomAccessFile.close();
-		_CASKS006DataHandler = new Census_CASKS006DataHandler(aFile);
-		nDataRecords = _CASKS006DataHandler.getNDataRecords();
-		System.out.println("nDataRecords " + nDataRecords);
-		Census_CASKS006DataRecord aCASKS006DataRecord = new Census_CASKS006DataRecord();
-		aFile = new File(
-				"C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS006DataRecordsWard.csv");
-		aPrintWriter = new PrintWriter(aFile);
-		aPrintWriter.println(aCASKS006DataRecord.toCSVStringFields());
-		for (along = 0L; along < nDataRecords; along++) {
-			aCASKS006DataRecord = _CASKS006DataHandler
-					.getCASKS006DataRecord(along);
-			aPrintWriter.println(aCASKS006DataRecord.toCSVString());
-			System.out.println(aCASKS006DataRecord.toString());
-		}
-		aPrintWriter.flush();
-		aPrintWriter.close();
+//		PrintWriter aPrintWriter;
+//
+//		// CASKS006DataRecords
+//		aFile = new File(
+//				"C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS006DataRecordsWard.dat");
+//		aFile.createNewFile();
+//		aRandomAccessFile = new RandomAccessFile(aFile, "rw");
+//		_CASKS006DataHandler.aggregateOAToWard(aRandomAccessFile,
+//				startRecordID, endRecordID);
+//		aRandomAccessFile.close();
+//		_CASKS006DataHandler = new Census_CASKS006DataHandler(aFile);
+//		nDataRecords = _CASKS006DataHandler.getNDataRecords();
+//		System.out.println("nDataRecords " + nDataRecords);
+//		Census_CASKS006DataRecord aCASKS006DataRecord = new Census_CASKS006DataRecord();
+//		aFile = new File(
+//				"C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS006DataRecordsWard.csv");
+//		aPrintWriter = new PrintWriter(aFile);
+//		aPrintWriter.println(aCASKS006DataRecord.toCSVStringFields());
+//		for (along = 0L; along < nDataRecords; along++) {
+//			aCASKS006DataRecord = _CASKS006DataHandler
+//					.getCASKS006DataRecord(along);
+//			aPrintWriter.println(aCASKS006DataRecord.toCSVString());
+//			System.out.println(aCASKS006DataRecord.toString());
+//		}
+//		aPrintWriter.flush();
+//		aPrintWriter.close();
 	}
 
 	/**
@@ -295,31 +297,31 @@ public class Census_CASDataHandler_2 extends Census_CASDataHandler {
 		RandomAccessFile aRandomAccessFile;
 		long nDataRecords;
 		long along;
-		PrintWriter aPrintWriter;
-
-		// CASKS006DataRecords
-		aFile = new File(
-				"C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS006DataRecordsMSOA.dat");
-		aFile.createNewFile();
-		aRandomAccessFile = new RandomAccessFile(aFile, "rw");
-		_CASKS006DataHandler.aggregateOAToMSOA(aRandomAccessFile,
-				startRecordID, endRecordID);
-		aRandomAccessFile.close();
-		_CASKS006DataHandler = new Census_CASKS006DataHandler(aFile);
-		nDataRecords = _CASKS006DataHandler.getNDataRecords();
-		System.out.println("nDataRecords " + nDataRecords);
-		Census_CASKS006DataRecord aCASKS006DataRecord = new Census_CASKS006DataRecord();
-		aFile = new File(
-				"C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS006DataRecordsMSOA.csv");
-		aPrintWriter = new PrintWriter(aFile);
-		aPrintWriter.println(aCASKS006DataRecord.toCSVStringFields());
-		for (along = 0L; along < nDataRecords; along++) {
-			aCASKS006DataRecord = _CASKS006DataHandler
-					.getCASKS006DataRecord(along);
-			aPrintWriter.println(aCASKS006DataRecord.toCSVString());
-			System.out.println(aCASKS006DataRecord.toString());
-		}
-		aPrintWriter.flush();
-		aPrintWriter.close();
+//		PrintWriter aPrintWriter;
+//
+//		// CASKS006DataRecords
+//		aFile = new File(
+//				"C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS006DataRecordsMSOA.dat");
+//		aFile.createNewFile();
+//		aRandomAccessFile = new RandomAccessFile(aFile, "rw");
+//		_CASKS006DataHandler.aggregateOAToMSOA(aRandomAccessFile,
+//				startRecordID, endRecordID);
+//		aRandomAccessFile.close();
+//		_CASKS006DataHandler = new Census_CASKS006DataHandler(aFile);
+//		nDataRecords = _CASKS006DataHandler.getNDataRecords();
+//		System.out.println("nDataRecords " + nDataRecords);
+//		Census_CASKS006DataRecord aCASKS006DataRecord = new Census_CASKS006DataRecord();
+//		aFile = new File(
+//				"C:/Work/Projects/MoSeS/Workspace/Leeds/CASKS006DataRecordsMSOA.csv");
+//		aPrintWriter = new PrintWriter(aFile);
+//		aPrintWriter.println(aCASKS006DataRecord.toCSVStringFields());
+//		for (along = 0L; along < nDataRecords; along++) {
+//			aCASKS006DataRecord = _CASKS006DataHandler
+//					.getCASKS006DataRecord(along);
+//			aPrintWriter.println(aCASKS006DataRecord.toCSVString());
+//			System.out.println(aCASKS006DataRecord.toString());
+//		}
+//		aPrintWriter.flush();
+//		aPrintWriter.close();
 	}
 }

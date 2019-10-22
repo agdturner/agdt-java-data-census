@@ -28,8 +28,9 @@ import java.io.StreamTokenizer;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.TreeMap;
-import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataHandler;
+import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractHandler;
 import uk.ac.leeds.ccg.andyt.census.core.Census_AbstractDataRecord;
+import uk.ac.leeds.ccg.andyt.census.core.Census_Environment;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
 
 /**
@@ -50,7 +51,7 @@ import uk.ac.leeds.ccg.andyt.generic.core.Generic_ErrorAndExceptionHandler;
  * @version 1.0.0, 2006-08-10
  * @see Census_AbstractDataRecord
  */
-public class Census_CASKS12bDataHandler extends Census_AbstractDataHandler {
+public class Census_CASKS12bDataHandler extends Census_AbstractHandler {
 
     /**
      * Creates a new instance of <code>CASKS12bDataHandler</code> for handling
@@ -61,69 +62,69 @@ public class Census_CASKS12bDataHandler extends Census_AbstractDataHandler {
      *
      * @throws java.io.IOException
      */
-    public Census_CASKS12bDataHandler() throws IOException {
+    public Census_CASKS12bDataHandler(Census_Environment e) throws IOException {
+        super (e);
         // this( new File(
         // "C:/Work/Projects/MoSeS/Workspace/CASKS12bDataRecords.dat" ) );
         // Want also to setDirectory();
         // initMemoryReserve();
         // Default this.directory, this.file, this.randomAccessFile
         File directory = new File("C:/Work/Projects/MoSeS/Workspace/");
-        this.init(directory);
         this.file = new File(directory, "CASKS12bDataRecords.dat");
         if (!this.file.exists()) {
             this.file.createNewFile();
         }
         this.recordLength = new Census_CASKS12bDataRecord().getSizeInBytes();
-        // log("this.recordLength " + this.recordLength);
+        // env.env.log("this.recordLength " + this.recordLength);
         this.rAF = new RandomAccessFile(this.file, "r");
     }
 
-    /**
-     * Creates a new instance of CASKS12bDataHandler with Records loaded from
-     * formattedFile.
-     *
-     * @param formattedFile Formatted file of CASKS12bDataRecords
-     */
-    public Census_CASKS12bDataHandler(File formattedFile) {
-        // initMemoryReserve();
-        this.init(formattedFile.getParentFile());
-        this.recordLength = new Census_CASKS12bDataRecord().getSizeInBytes();
-        load(formattedFile);
-        log("CASKS12bDataRecords loaded successfully");
-    }
-
-    /**
-     * @param args the command line arguments No arguments are used.
-     * @throws java.io.IOException
-     */
-    public static void main(String[] args) throws IOException {
-        Census_CASKS12bDataHandler aCASKS12bDataHandler = new Census_CASKS12bDataHandler();
-        aCASKS12bDataHandler.run();
-    }
-
-    /**
-     * Top level run method
-     */
-    private void run() throws IOException {
-        // run1( true, 20 );
-        // run1( false, 20 );
-        run2(20);
-    }
-
-    /**
-     * Loads <code>CASKS12bDataRecords</code> and prints out n randomly
-     *
-     * @param loadFromSource If true, data is loaded from hardcoded source files
-     * as downloaded from casweb. Otherwise, data is loaded from
-     * <code>this.formattedFile</code>
-     * @param n The number of loaded data records to print out.
-     */
-    private void run2(int n) throws IOException {
-        File file = new File(
-                "C:/Work/Projects/MoSeS/Workspace/Leeds/MSOA/CASKS12bDataRecords.dat");
-        load(file);
-        print(n, new Random());
-    }
+//    /**
+//     * Creates a new instance of CASKS12bDataHandler with Records loaded from
+//     * formattedFile.
+//     *
+//     * @param formattedFile Formatted file of CASKS12bDataRecords
+//     */
+//    public Census_CASKS12bDataHandler(File formattedFile) {
+//        // initMemoryReserve();
+//        this.init(formattedFile.getParentFile());
+//        this.recordLength = new Census_CASKS12bDataRecord().getSizeInBytes();
+//        load(formattedFile);
+//        env.env.log("CASKS12bDataRecords loaded successfully");
+//    }
+//
+//    /**
+//     * @param args the command line arguments No arguments are used.
+//     * @throws java.io.IOException
+//     */
+//    public static void main(String[] args) throws IOException {
+//        Census_CASKS12bDataHandler aCASKS12bDataHandler = new Census_CASKS12bDataHandler();
+//        aCASKS12bDataHandler.run();
+//    }
+//
+//    /**
+//     * Top level run method
+//     */
+//    private void run() throws IOException {
+//        // run1( true, 20 );
+//        // run1( false, 20 );
+//        run2(20);
+//    }
+//
+//    /**
+//     * Loads <code>CASKS12bDataRecords</code> and prints out n randomly
+//     *
+//     * @param loadFromSource If true, data is loaded from hardcoded source files
+//     * as downloaded from casweb. Otherwise, data is loaded from
+//     * <code>this.formattedFile</code>
+//     * @param n The number of loaded data records to print out.
+//     */
+//    private void run2(int n) throws IOException {
+//        File file = new File(
+//                "C:/Work/Projects/MoSeS/Workspace/Leeds/MSOA/CASKS12bDataRecords.dat");
+//        load(file);
+//        print(n, new Random());
+//    }
 
     /**
      * Loads <code>CAS001DataRecords</code> and prints out n randomly
@@ -146,28 +147,28 @@ public class Census_CASKS12bDataHandler extends Census_AbstractDataHandler {
                 directory,
                 "KS12bEnglandOA.csv");
         RecordID = format(infile, RecordID);
-        log(infile.toString() + " formatted successfully " + RecordID + " records"); // 165665
+        env.env.log(infile.toString() + " formatted successfully " + RecordID + " records"); // 165665
         long0 = RecordID;
         // Load Wales
         infile = new File(
                 directory,
                 "KS12bWalesOA.csv");
         RecordID = format(infile, RecordID);
-        log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 9769
+        env.env.log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 9769
         long0 = RecordID;
         // Load Scotland
         infile = new File(
                 directory,
                 "KS12bScotlandOA.csv");
         RecordID = format(infile, RecordID);
-        log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 42604
+        env.env.log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 42604
         long0 = RecordID;
         // Load Northern Ireland
         infile = new File(
                 directory,
                 "KS12bNorthernIrelandOA.csv");
         RecordID = format(infile, RecordID);
-        log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 5022
+        env.env.log(infile.toString() + " formatted successfully " + (RecordID - long0) + " records"); // 5022
         rAF.close();
         load(file);
         print(20, new Random());
@@ -188,7 +189,7 @@ public class Census_CASKS12bDataHandler extends Census_AbstractDataHandler {
      * @throws java.io.IOException
      */
     protected long format(File sourceFile, long RecordID) throws IOException {
-        log("format( File( " + sourceFile.toString() + " ), RecordID( " + RecordID + " ))");
+        env.env.log("format( File( " + sourceFile.toString() + " ), RecordID( " + RecordID + " ))");
         BufferedReader br = env.env.io.getBufferedReader(sourceFile);
         StreamTokenizer st = new StreamTokenizer(br);
         env.env.io.setStreamTokenizerSyntax1(st);
@@ -213,7 +214,7 @@ public class Census_CASKS12bDataHandler extends Census_AbstractDataHandler {
                     print = (long0 == longZero);
                     if (print) {
                         string2 = rec.toString();
-                        log(string2);
+                        env.env.log(string2);
                         string2 = string0;
                     }
                     // Write out
@@ -228,7 +229,7 @@ public class Census_CASKS12bDataHandler extends Census_AbstractDataHandler {
             string1 = string0;
             tokenType = st.nextToken();
         }
-        log("Number of Records loaded = " + RecordID);
+        env.env.log("Number of Records loaded = " + RecordID);
         return RecordID;
     }
 
@@ -296,7 +297,7 @@ public class Census_CASKS12bDataHandler extends Census_AbstractDataHandler {
                 result.put(zoneCodeWard, aCASKS12bDataRecord);
             }
         }
-        write(aRandomAccessFile, result);
+        //write(aRandomAccessFile, result);
     }
 
     /**
@@ -314,7 +315,7 @@ public class Census_CASKS12bDataHandler extends Census_AbstractDataHandler {
     public void aggregateOAToMSOA(RandomAccessFile aRandomAccessFile,
             long startRecordID, long endRecordID) throws IOException {
         TreeMap result = new TreeMap();
-        HashMap lookUpMSOAfromOAHashMap = get_LookUpMSOAfromOAHashMap();
+        HashMap lookUpMSOAfromOAHashMap = null;//getOA2MSOA();
         Census_CASKS12bDataRecord aCASKS12bDataRecord;
         Census_CASKS12bDataRecord bCASKS12bDataRecord;
         String zoneCode;
@@ -333,6 +334,6 @@ public class Census_CASKS12bDataHandler extends Census_AbstractDataHandler {
                 result.put(zoneCodeMSOA, aCASKS12bDataRecord);
             }
         }
-        write(aRandomAccessFile, result);
+        //write(aRandomAccessFile, result);
     }
 }
