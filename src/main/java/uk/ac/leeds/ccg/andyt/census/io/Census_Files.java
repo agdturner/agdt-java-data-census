@@ -16,6 +16,7 @@
 package uk.ac.leeds.ccg.andyt.census.io;
 
 import java.io.File;
+import java.io.IOException;
 import uk.ac.leeds.ccg.andyt.census.core.Census_Strings;
 import uk.ac.leeds.ccg.andyt.data.io.Data_Files;
 
@@ -27,8 +28,9 @@ public class Census_Files extends Data_Files {
 
     /**
      * @param dir The data directory.
+     * @throws java.io.IOException
      */
-    public Census_Files(File dir) {
+    public Census_Files(File dir) throws IOException {
         super(dir);
     }
 
