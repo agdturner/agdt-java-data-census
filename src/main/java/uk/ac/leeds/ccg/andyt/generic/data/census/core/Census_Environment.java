@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import uk.ac.leeds.ccg.andyt.generic.data.census.io.Census_Files;
 import uk.ac.leeds.ccg.andyt.data.core.Data_Environment;
-import uk.ac.leeds.ccg.andyt.generic.io.Generic_Defaults;
 
 /**
  *

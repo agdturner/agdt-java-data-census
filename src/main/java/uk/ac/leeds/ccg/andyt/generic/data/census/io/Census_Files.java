@@ -21,8 +21,10 @@ import uk.ac.leeds.ccg.andyt.generic.data.census.core.Census_Strings;
 import uk.ac.leeds.ccg.andyt.data.io.Data_Files;
 
 /**
- *
- * @author geoagdt
+ * For Census files.
+ * 
+ * @author Andy Turner
+ * @version 1.0.0.
  */
 public class Census_Files extends Data_Files {
 
