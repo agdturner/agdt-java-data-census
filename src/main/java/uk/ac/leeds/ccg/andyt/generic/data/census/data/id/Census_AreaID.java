@@ -15,7 +15,7 @@
  */
 package uk.ac.leeds.ccg.andyt.generic.data.census.data.id;
 
-import uk.ac.leeds.ccg.andyt.data.id.Data_ID_long;
+import uk.ac.leeds.ccg.andyt.data.id.Data_ID_int;
 
 /**
  * An ID for an area.
@@ -23,9 +23,9 @@ import uk.ac.leeds.ccg.andyt.data.id.Data_ID_long;
  * @author Andy Turner
  * @version 1.0.0
  */
-public class Census_AreaID extends Data_ID_long {
+public class Census_AreaID extends Data_ID_int {
 
-    public Census_AreaID(long l) {
-        super(l);
+    public Census_AreaID(int i) {
+        super(i);
     }
 }

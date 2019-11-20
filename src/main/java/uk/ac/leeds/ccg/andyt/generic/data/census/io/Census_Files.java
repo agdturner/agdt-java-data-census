@@ -36,34 +36,32 @@ public class Census_Files extends Data_Files {
         super(dir);
     }
 
-    @Override
-    public File getInputDir() {
-        return new File(super.getInputDir(), Census_Strings.s_Census);
+    public File getInput2001Dir() {
+        return new File(getInputDir(), Census_Strings.s_2001);
     }
 
-    public File getInput2001Dir() {
-        return new File(getGeneratedDir(), Census_Strings.s_2001);
+    public File getInput2011Dir() {
+        return new File(getInputDir(), Census_Strings.s_2011);
     }
 
     public File getInput2001LUTDir() {
-        return new File(getInput2001Dir(), Census_Strings.s_LUT);
+        return new File(getInput2001Dir(), Census_Strings.s_lut);
     }
 
-    public File getInput2001LUT() {
-        return new File(getInput2001LUTDir(), "OA_LSOA_MSOA_LA_Apr05.txt");
+    public File getInput2011LUTDir() {
+        return new File(getInput2011Dir(), Census_Strings.s_lut);
     }
 
-    @Override
-    public File getGeneratedDir() {
-        return new File(super.getGeneratedDir(), Census_Strings.s_Census);
-    }
+//    public File getInput2001LUT() {
+//        return new File(getInput2001LUTDir(), "OA_LSOA_MSOA_LA_Apr05.txt");
+//    }
 
     public File getGenerated2001Dir() {
         return new File(getGeneratedDir(), Census_Strings.s_2001);
     }
 
     public File getGenerated2001LUTDir() {
-        return new File(getGenerated2001Dir(), Census_Strings.s_LUT);
+        return new File(getGenerated2001Dir(), Census_Strings.s_lut);
     }
 
 }

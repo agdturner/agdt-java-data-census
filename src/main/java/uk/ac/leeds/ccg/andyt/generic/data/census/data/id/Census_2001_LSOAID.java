@@ -23,7 +23,7 @@ package uk.ac.leeds.ccg.andyt.generic.data.census.data.id;
  */
 public class Census_2001_LSOAID extends Census_AreaID {
    
-    public Census_2001_LSOAID(long l) {
-        super(l);
+    public Census_2001_LSOAID(int i) {
+        super(i);
     } 
 }

@@ -29,7 +29,9 @@ public class Census_Strings extends Data_Strings {
     public static String s_2001 = "2001";
     public static String s_2011 = "2011";
     public static String s_Census = "Census";
+    public static String s_census = "census";
     public static String s_LUT = "LUT";
+    public static String s_lut = "lut";
     
     
 }

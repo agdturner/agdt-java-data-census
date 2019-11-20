@@ -16,14 +16,14 @@
 package uk.ac.leeds.ccg.andyt.generic.data.census.data.id;
 
 /**
- * An ID for a 2001 Output Area (OA).
+ * An ID for a 2011 Lower Layer Super Output Area (OA).
  *
  * @author Andy Turner
  * @version 1.0.0
  */
-public class Census_2001_OAID extends Census_AreaID {
+public class Census_2011_LSOAID extends Census_AreaID {
    
-    public Census_2001_OAID(int i) {
+    public Census_2011_LSOAID(int i) {
         super(i);
     } 
 }

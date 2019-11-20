@@ -49,15 +49,15 @@ public class Census_JavaCodeGenerator extends Census_Object implements Runnable 
 
     @Override
     public void run() {
-        try {
-            File f = this.env.getFiles().getInput2001LUT();
-            Data_ReadTXT rt = new Data_ReadTXT(env.de);
-            BufferedReader br = io.getBufferedReader(f);
-            StreamTokenizer st = new StreamTokenizer(br);
-            rt.readLine(st);
-        } catch (IOException ex) {
-            ex.printStackTrace(System.err);
-        }
+//        try {
+//            File f = this.env.getFiles().getInput2001LUT();
+//            Data_ReadTXT rt = new Data_ReadTXT(env.de);
+//            BufferedReader br = io.getBufferedReader(f);
+//            StreamTokenizer st = new StreamTokenizer(br);
+//            rt.readLine(st);
+//        } catch (IOException ex) {
+//            ex.printStackTrace(System.err);
+//        }
     }
 
 }
