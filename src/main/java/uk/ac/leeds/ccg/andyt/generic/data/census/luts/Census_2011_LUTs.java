@@ -231,41 +231,48 @@ public class Census_2011_LUTs extends Census_Object {
                 //env.de.env.log(line); // For testing.
                 String[] split = line.split(",");
                 // Add to OAIDs, OA2OAID and OAID2OA
-                if (!OA2OAID.containsKey(split[0])) {
-                    Census_2011_OAID oaid = new Census_2011_OAID(OAIDs.size());
-                    OAIDs.add(oaid);
-                    OA2OAID.put(split[0], oaid);
-                    OAID2OA.put(oaid, split[0]);
-                }
-                // Add to LSOAIDs, LSOA2LSOAID and LSOAID2LSOA                
-                if (!LSOA2LSOAID.containsKey(split[1])) {
-                    Census_2011_LSOAID lsoaid = new Census_2011_LSOAID(LSOAIDs.size());
+                Census_2011_OAID oaid = new Census_2011_OAID(OAIDs.size());
+                OAIDs.add(oaid);
+                OA2OAID.put(split[0], oaid);
+                OAID2OA.put(oaid, split[0]);
+                // Add to LSOAIDs, LSOA2LSOAID and LSOAID2LSOA
+                Census_2011_LSOAID lsoaid;
+                if (LSOA2LSOAID.containsKey(split[1])) {
+                    lsoaid = LSOA2LSOAID.get(split[1]);
+                } else {
+                    lsoaid = new Census_2011_LSOAID(LSOAIDs.size());
                     LSOAIDs.add(lsoaid);
                     LSOA2LSOAID.put(split[1], lsoaid);
                     LSOAID2LSOA.put(lsoaid, split[1]);
+                    // Add to OAID2LSOAID and LSOAID2OAIDs
+                    OAID2LSOAID.put(oaid, lsoaid);
+                    Generic_Collections.addToMap(LSOAID2OAIDs, lsoaid, oaid);
                 }
                 // Add to MSOAIDs, MSOA2MSOAID and MSOAID2MSOA                
-                if (!MSOA2MSOAID.containsKey(split[3])) {
-                    Census_MSOAID msoaid = new Census_MSOAID(MSOAIDs.size());
+                Census_MSOAID msoaid;
+                if (MSOA2MSOAID.containsKey(split[3])) {
+                    msoaid = MSOA2MSOAID.get(split[3]);
+                } else {
+                    msoaid = new Census_MSOAID(MSOAIDs.size());
                     MSOAIDs.add(msoaid);
                     MSOA2MSOAID.put(split[3], msoaid);
                     MSOAID2MSOA.put(msoaid, split[3]);
+                    // Add to OAID2MSOAID and MSOAID2OAIDs
+                    OAID2MSOAID.put(oaid, msoaid);
+                    Generic_Collections.addToMap(MSOAID2OAIDs, msoaid, oaid);
                 }
                 // Add to LADIDs, LAD2LADID and LADID2LAD, and LADNAME2LADID and LADID2LADNAME                
-                if (!LAD2LADID.containsKey(split[5])) {
-                    Census_2011_LADID ladid = new Census_2011_LADID(LADIDs.size());
+                Census_2011_LADID ladid;
+                if (LAD2LADID.containsKey(split[5])) {
+                    ladid = LAD2LADID.get(split[5]);
+                } else {
+                    ladid = new Census_2011_LADID(LADIDs.size());
                     LADIDs.add(ladid);
                     LAD2LADID.put(split[5], ladid);
                     LADID2LAD.put(ladid, split[5]);
                     LADNAME2LADID.put(split[6], ladid);
                     LADID2LADNAME.put(ladid, split[6]);
                 }
-                // Add to OAID2LSOAID and LSOAID2OAIDs
-                OAID2LSOAID.put(oaid, lsoaid);
-                Generic_Collections.addToMap(LSOAID2OAIDs, lsoaid, oaid);
-                // Add to OAID2MSOAID and MSOAID2OAIDs
-                OAID2MSOAID.put(oaid, msoaid);
-                Generic_Collections.addToMap(MSOAID2OAIDs, msoaid, oaid);
                 // Add to OAID2LADID and LADID2OAIDs
                 OAID2LADID.put(oaid, ladid);
                 Generic_Collections.addToMap(LADID2OAIDs, ladid, oaid);

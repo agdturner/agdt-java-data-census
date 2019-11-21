@@ -189,22 +189,32 @@ public class Census_2001_LUTs extends Census_Object {
                 OAIDs.add(oaid);
                 OA2OAID.put(split[0], oaid);
                 OAID2OA.put(oaid, split[0]);
-                // Add to LSOAIDs, LSOA2LSOAID and LSOAID2LSOA                
-                Census_2001_LSOAID lsoaid = new Census_2001_LSOAID(LSOAIDs.size());
-                LSOAIDs.add(lsoaid);
-                LSOA2LSOAID.put(split[1], lsoaid);
-                LSOAID2LSOA.put(lsoaid, split[0]);
+                // Add to LSOAIDs, LSOA2LSOAID and LSOAID2LSOA
+                Census_2001_LSOAID lsoaid;
+                if (LSOA2LSOAID.containsKey(split[1])) {
+                    lsoaid = LSOA2LSOAID.get(split[1]);
+                } else {
+                    lsoaid = new Census_2001_LSOAID(LSOAIDs.size());
+                    LSOAIDs.add(lsoaid);
+                    LSOA2LSOAID.put(split[1], lsoaid);
+                    LSOAID2LSOA.put(lsoaid, split[1]);
+                    // Add to OAID2LSOAID and LSOAID2OAIDs
+                    OAID2LSOAID.put(oaid, lsoaid);
+                    Generic_Collections.addToMap(LSOAID2OAIDs, lsoaid, oaid);
+                }
                 // Add to MSOAIDs, MSOA2MSOAID and MSOAID2MSOA                
-                Census_MSOAID msoaid = new Census_MSOAID(MSOAIDs.size());
-                MSOAIDs.add(msoaid);
-                MSOA2MSOAID.put(split[1], msoaid);
-                MSOAID2MSOA.put(msoaid, split[0]);
-                // Add to OAID2LSOAID and LSOAID2OAIDs
-                OAID2LSOAID.put(oaid, lsoaid);
-                Generic_Collections.addToMap(LSOAID2OAIDs, lsoaid, oaid);
-                // Add to OAID2MSOAID and MSOAID2OAIDs
-                OAID2MSOAID.put(oaid, msoaid);
-                Generic_Collections.addToMap(MSOAID2OAIDs, msoaid, oaid);
+                Census_MSOAID msoaid;
+                if (MSOA2MSOAID.containsKey(split[3])) {
+                    msoaid = MSOA2MSOAID.get(split[3]);
+                } else {
+                    msoaid = new Census_MSOAID(MSOAIDs.size());
+                    MSOAIDs.add(msoaid);
+                    MSOA2MSOAID.put(split[3], msoaid);
+                    MSOAID2MSOA.put(msoaid, split[3]);
+                    // Add to OAID2MSOAID and MSOAID2OAIDs
+                    OAID2MSOAID.put(oaid, msoaid);
+                    Generic_Collections.addToMap(MSOAID2OAIDs, msoaid, oaid);
+                }
                 // Add to LSOAID2MSOAID and MSOAID2LSOAIDs
                 LSOAID2MSOAID.put(lsoaid, msoaid);
                 Generic_Collections.addToMap(MSOAID2LSOAIDs, msoaid, lsoaid);
@@ -221,6 +231,10 @@ public class Census_2001_LUTs extends Census_Object {
             Census_Environment e = new Census_Environment(de, dataDir);
             Census_2001_LUTs p = new Census_2001_LUTs(e);
             p.load();
+            // Test
+            p.env.de.env.log("OAIDs.size()=" + p.OAIDs.size());
+            p.env.de.env.log("LSOAIDs.size()=" + p.LSOAIDs.size());
+            p.env.de.env.log("MSOAIDs.size()=" + p.MSOAIDs.size());
         } catch (Exception ex) {
             ex.printStackTrace(System.err);
         }
