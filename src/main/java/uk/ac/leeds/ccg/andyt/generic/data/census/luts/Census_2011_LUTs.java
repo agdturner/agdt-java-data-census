@@ -22,6 +22,7 @@ import java.io.IOException;
 import java.io.StreamTokenizer;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import uk.ac.leeds.ccg.andyt.data.core.Data_Environment;
 import uk.ac.leeds.ccg.andyt.data.format.Data_ReadTXT;
 import uk.ac.leeds.ccg.andyt.generic.core.Generic_Environment;
@@ -48,138 +49,135 @@ public class Census_2011_LUTs extends Census_Object {
     /**
      * For storing a list of all OA IDs.
      */
-    protected HashSet<Census_2011_OAID> OAIDs;
+    public HashSet<Census_2011_OAID> OAIDs;
 
     /**
      * For storing a list of all Lower Layer Super Output Area IDs.
      */
-    protected HashSet<Census_2011_LSOAID> LSOAIDs;
+    public HashSet<Census_2011_LSOAID> LSOAIDs;
 
     /**
      * For storing a list of all Middle Layer Super Output Area IDs.
      */
-    protected HashSet<Census_MSOAID> MSOAIDs;
+    public HashSet<Census_MSOAID> MSOAIDs;
 
     /**
-     * For storing a list of all Middle Layer Super Output Area IDs.
+     * For storing a list of all 2011 Local Authority District IDs.
      */
-    protected HashSet<Census_2011_LADID> LADIDs;
+    public HashSet<Census_2011_LADID> LADIDs;
 
     /**
      * For storing a lookup from an OA code to an OAID.
      */
-    protected HashMap<String, Census_2011_OAID> OA2OAID;
+    public HashMap<String, Census_2011_OAID> OA2OAID;
 
     /**
      * For storing a lookup from an OAID to an OA code.
      */
-    protected HashMap<Census_2011_OAID, String> OAID2OA;
+    public HashMap<Census_2011_OAID, String> OAID2OA;
 
     /**
      * For storing a lookup from an LSOA code to an LSOAID.
      */
-    protected HashMap<String, Census_2011_LSOAID> LSOA2LSOAID;
+    public HashMap<String, Census_2011_LSOAID> LSOA2LSOAID;
 
     /**
      * For storing a lookup from an LSOAID to an LSOA code.
      */
-    protected HashMap<Census_2011_LSOAID, String> LSOAID2LSOA;
+    public HashMap<Census_2011_LSOAID, String> LSOAID2LSOA;
 
     /**
      * For storing a lookup from an MSOA code to an MSOAID.
      */
-    protected HashMap<String, Census_MSOAID> MSOA2MSOAID;
+    public HashMap<String, Census_MSOAID> MSOA2MSOAID;
 
     /**
      * For storing a lookup from an MSOAID to an MSOA code.
      */
-    protected HashMap<Census_MSOAID, String> MSOAID2MSOA;
+    public HashMap<Census_MSOAID, String> MSOAID2MSOA;
 
     /**
      * For storing a lookup from an LAD code to an LADID.
      */
-    protected HashMap<String, Census_2011_LADID> LAD2LADID;
+    public HashMap<String, Census_2011_LADID> LAD2LADID;
 
     /**
      * For storing a lookup from an LADID to an LAD code.
      */
-    protected HashMap<Census_2011_LADID, String> LADID2LAD;
+    public HashMap<Census_2011_LADID, String> LADID2LAD;
 
     /**
      * For storing a lookup from an LAD name to an LADID.
      */
-    protected HashMap<String, Census_2011_LADID> LADNAME2LADID;
+    public HashMap<String, Census_2011_LADID> LADNAME2LADID;
 
     /**
      * For storing a lookup from an LADID to an LAD name.
      */
-    protected HashMap<Census_2011_LADID, String> LADID2LADNAME;
+    public HashMap<Census_2011_LADID, String> LADID2LADNAME;
 
     /**
      * For a lookup from an OAID to a LSOAID
      */
-    protected HashMap<Census_2011_OAID, Census_2011_LSOAID> OAID2LSOAID;
+    public HashMap<Census_2011_OAID, Census_2011_LSOAID> OAID2LSOAID;
 
     /**
      * For a lookup from an LSOAID to a set of OAIDs
      */
-    protected HashMap<Census_2011_LSOAID, HashSet<Census_2011_OAID>> LSOAID2OAIDs;
+    public HashMap<Census_2011_LSOAID, HashSet<Census_2011_OAID>> LSOAID2OAIDs;
 
     /**
      * For a lookup from an OAID to a MSOAID
      */
-    protected HashMap<Census_2011_OAID, Census_MSOAID> OAID2MSOAID;
+    public HashMap<Census_2011_OAID, Census_MSOAID> OAID2MSOAID;
 
     /**
      * For a lookup from an MSOAID to a set of OAIDs
      */
-    protected HashMap<Census_MSOAID, HashSet<Census_2011_OAID>> MSOAID2OAIDs;
+    public HashMap<Census_MSOAID, HashSet<Census_2011_OAID>> MSOAID2OAIDs;
 
     /**
      * For a lookup from an OAID to a LADID
      */
-    protected HashMap<Census_2011_OAID, Census_2011_LADID> OAID2LADID;
+    public HashMap<Census_2011_OAID, Census_2011_LADID> OAID2LADID;
 
     /**
      * For a lookup from an LADID to a set of OAIDs
      */
-    protected HashMap<Census_2011_LADID, HashSet<Census_2011_OAID>> LADID2OAIDs;
+    public HashMap<Census_2011_LADID, HashSet<Census_2011_OAID>> LADID2OAIDs;
 
     /**
      * For a lookup from an LSOAID to a MSOAID
      */
-    protected HashMap<Census_2011_LSOAID, Census_MSOAID> LSOAID2MSOAID;
+    public HashMap<Census_2011_LSOAID, Census_MSOAID> LSOAID2MSOAID;
 
     /**
      * For a lookup from an MSOAID to a set of LSOAIDs
      */
-    protected HashMap<Census_MSOAID, HashSet<Census_2011_LSOAID>> MSOAID2LSOAIDs;
+    public HashMap<Census_MSOAID, HashSet<Census_2011_LSOAID>> MSOAID2LSOAIDs;
+    
+    /**
+     * For a lookup from an LADID to a set of LSOAIDs
+     */
+    public HashMap<Census_2011_LADID, HashSet<Census_2011_LSOAID>> LADID2LSOAIDs;
 
-    public Census_2011_LUTs(Census_Environment e) {
+    /**
+     * For a lookup from an LSOAID to a set of LSOAIDs
+     */
+    public HashMap<Census_2011_LSOAID, Census_2011_LADID> LSOAID2LADID;
+    
+    /**
+     * For a lookup from an LADID to a set of MSOAIDs
+     */
+    public HashMap<Census_2011_LADID, HashSet<Census_MSOAID>> LADID2MSOAIDs;
+
+    /**
+     * For a lookup from an LSOAID to a set of LSOAIDs
+     */
+    public HashMap<Census_MSOAID, Census_2011_LADID> MSOAID2LADID;
+    
+    public Census_2011_LUTs(Census_Environment e) throws FileNotFoundException, IOException {
         super(e);
-    }
-
-    /**
-     * If {@link #OAIDs} is null then it and other fields are initialised and
-     * then it is returned.
-     *
-     * @return {@link #OAIDs}
-     * @throws java.io.IOException IFF IOException is encountered.
-     */
-    public HashSet<Census_2011_OAID> getOAIDs() throws IOException {
-        if (OAIDs == null) {
-            load();
-        }
-        return OAIDs;
-    }
-
-    /**
-     * For loading the look-ups from source files.
-     *
-     * @throws FileNotFoundException
-     * @throws IOException
-     */
-    public void load() throws FileNotFoundException, IOException {
         // Initialise collections.
         // ID sets
         OAIDs = new HashSet<>();
@@ -206,6 +204,10 @@ public class Census_2011_LUTs extends Census_Object {
         LADID2OAIDs = new HashMap<>();
         LSOAID2MSOAID = new HashMap<>();
         MSOAID2LSOAIDs = new HashMap<>();
+        LADID2LSOAIDs = new HashMap<>();
+        LSOAID2LADID = new HashMap<>();
+        LADID2MSOAIDs = new HashMap<>();
+        MSOAID2LADID = new HashMap<>();
 
         // Common things for loading from the files.
         String fn;
@@ -279,6 +281,12 @@ public class Census_2011_LUTs extends Census_Object {
                 // Add to LSOAID2MSOAID and MSOAID2LSOAIDs
                 LSOAID2MSOAID.put(lsoaid, msoaid);
                 Generic_Collections.addToMap(MSOAID2LSOAIDs, msoaid, lsoaid);
+                // Add to LSOAID2LADID and LADID2LSOAIDs 
+                LSOAID2LADID.put(lsoaid, ladid);
+                Generic_Collections.addToMap(LADID2LSOAIDs, ladid, lsoaid);
+                // Add to MSOAID2LADID and LADID2MSOAIDs 
+                MSOAID2LADID.put(msoaid, ladid);
+                Generic_Collections.addToMap(LADID2MSOAIDs, ladid, msoaid);
                 // Get next line.
                 line = reader.readLine(st);
             }
@@ -291,12 +299,26 @@ public class Census_2011_LUTs extends Census_Object {
             File dataDir = new File(de.files.getDataDir(), Census_Strings.s_census);
             Census_Environment e = new Census_Environment(de, dataDir);
             Census_2011_LUTs p = new Census_2011_LUTs(e);
-            p.load();
-            // Test
+            // Log sizes of sets of IDs.
             p.env.de.env.log("OAIDs.size()=" + p.OAIDs.size());
             p.env.de.env.log("LSOAIDs.size()=" + p.LSOAIDs.size());
             p.env.de.env.log("MSOAIDs.size()=" + p.MSOAIDs.size());
             p.env.de.env.log("LADIDs.size()=" + p.LADIDs.size());
+            // Log names of all LADs.
+            p.LADNAME2LADID.keySet().stream().forEach(i ->
+                    p.env.de.env.log(i)
+            );
+            // Get all OAIDs in Leeds
+            String area = Census_Strings.s_Leeds;
+            Census_2011_LADID ladid = p.LADNAME2LADID.get(area);
+            HashSet<Census_2011_OAID> oas = p.LADID2OAIDs.get(ladid);
+             p.env.de.env.log("There are " + oas.size() + " output areas in " 
+                     + area + " Local Authority District.");
+            Iterator<Census_2011_OAID> oasite = oas.iterator();
+            while(oasite.hasNext()) {
+                String oa = p.OAID2OA.get(oasite.next());
+                 p.env.de.env.log(oa);
+            }
             //p.env.de.env.log("LADIDs.size()=" + p.LSOAID2LSOA.get(p.LSOAIDs.get());
 
         } catch (Exception ex) {

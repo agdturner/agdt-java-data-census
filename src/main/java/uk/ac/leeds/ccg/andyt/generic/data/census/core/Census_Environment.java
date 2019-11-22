@@ -17,8 +17,18 @@ package uk.ac.leeds.ccg.andyt.generic.data.census.core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.Iterator;
 import uk.ac.leeds.ccg.andyt.generic.data.census.io.Census_Files;
 import uk.ac.leeds.ccg.andyt.data.core.Data_Environment;
+import uk.ac.leeds.ccg.andyt.generic.data.census.data.id.Census_2001_LSOAID;
+import uk.ac.leeds.ccg.andyt.generic.data.census.data.id.Census_2001_OAID;
+import uk.ac.leeds.ccg.andyt.generic.data.census.data.id.Census_2011_LADID;
+import uk.ac.leeds.ccg.andyt.generic.data.census.data.id.Census_2011_LSOAID;
+import uk.ac.leeds.ccg.andyt.generic.data.census.data.id.Census_2011_OAID;
+import uk.ac.leeds.ccg.andyt.generic.data.census.data.id.Census_MSOAID;
+import uk.ac.leeds.ccg.andyt.generic.data.census.luts.Census_2001_LUTs;
+import uk.ac.leeds.ccg.andyt.generic.data.census.luts.Census_2011_LUTs;
 
 /**
  *
@@ -28,11 +38,14 @@ public class Census_Environment {
 
     public transient final Data_Environment de;
     public transient final Census_Files files;
-            
+
+    public transient Census_2001_LUTs c01LUTs;
+    public transient Census_2011_LUTs c11LUTs;
+
     /**
-     * 
-     * @param e What {@link #de} is set to. 
-     * @param dir Directory used to initialise {@link #files}. 
+     *
+     * @param e What {@link #de} is set to.
+     * @param dir Directory used to initialise {@link #files}.
      * @throws java.io.IOException If dir cannot be set up as a data directory.
      */
     public Census_Environment(Data_Environment e, File dir) throws IOException {
@@ -42,5 +55,209 @@ public class Census_Environment {
 
     public Census_Files getFiles() {
         return (Census_Files) files;
+    }
+
+    /**
+     * If {@link #c01LUTs} is {@code null} is it initialised.
+     *
+     * @return {@link #c01LUTs}
+     * @throws java.io.IOException
+     */
+    public Census_2001_LUTs getC01LUTs() throws IOException {
+        if (c01LUTs == null) {
+            c01LUTs = new Census_2001_LUTs(this);
+        }
+        return c01LUTs;
+    }
+
+    /**
+     * If {@link #c11LUTs} is {@code null} is it initialised.
+     *
+     * @return {@link #c11LUTs}
+     * @throws java.io.IOException
+     */
+    public Census_2011_LUTs getC11LUTs() throws IOException {
+        if (c11LUTs == null) {
+            c11LUTs = new Census_2011_LUTs(this);
+        }
+        return c11LUTs;
+    }
+
+    /**
+     *
+     * @param area 2001 Local Authority District Name
+     * @param level The level for which codes are wanted.
+     */
+    /**
+     * Provides all 2011 Output Area Codes in the 2011 Local Authority given by
+     * {@code name}.
+     *
+     * @param name 2011 Local Authority District Name
+     * @return A set of all 2011 Output Area Codes in the 2011 Local Authority
+     * given by {@code name}.
+     * @throws java.io.IOException
+     */
+    public HashSet<String> get2011OACodes(String name) throws IOException {
+        c11LUTs = getC11LUTs();
+        if (c11LUTs.LADNAME2LADID.containsKey(name)) {
+            Census_2011_LADID ladid = c11LUTs.LADNAME2LADID.get(name);
+            HashSet<Census_2011_OAID> s = c11LUTs.LADID2OAIDs.get(ladid);
+            HashSet<String> r = new HashSet<>();
+            de.env.log("There are " + s.size() + " 2011 Output Areas in " 
+                     + name + " Local Authority District.");
+            Iterator<Census_2011_OAID> ite = s.iterator();
+            while (ite.hasNext()) {
+                r.add(c11LUTs.OAID2OA.get(ite.next()));
+            }
+            return r;
+        } else {
+            throw new IOException("Local Authority District Name " + name
+                    + " not recognised.");
+        }
+    }
+
+    /**
+     * Provides all 2011 Lower Layer Super Output Area Codes in the 2011 Local
+     * Authority given by {@code name}.
+     *
+     * @param name 2011 Local Authority District Name
+     * @return A set of all 2011 Lower Layer Super Output Area Codes in the 2011
+     * Local Authority given by {@code name}.
+     * @throws java.io.IOException
+     */
+    public HashSet<String> get2011LSOACodes(String name) throws IOException {
+        c11LUTs = getC11LUTs();
+        if (c11LUTs.LADNAME2LADID.containsKey(name)) {
+            Census_2011_LADID ladid = c11LUTs.LADNAME2LADID.get(name);
+            HashSet<Census_2011_LSOAID> s = c11LUTs.LADID2LSOAIDs.get(ladid);
+            HashSet<String> r = new HashSet<>();
+            de.env.log("There are " + s.size() 
+                    + " Lower Layer Super Output Areas in " 
+                    + name + " Local Authority District.");
+            Iterator<Census_2011_LSOAID> ite = s.iterator();
+            while (ite.hasNext()) {
+                r.add(c11LUTs.LSOAID2LSOA.get(ite.next()));
+            }
+            return r;
+        } else {
+            throw new IOException("Local Authority District Name " + name
+                    + " not recognised.");
+        }
+    }
+
+    /**
+     * Provides all 2011 Middle Layer Super Output Area Codes in the 2011 Local
+     * Authority given by {@code name}.
+     *
+     * @param name 2011 Local Authority District Name
+     * @return A set of all 2011 Middle Layer Super Output Area Codes in the
+     * 2011 Local Authority given by {@code name}.
+     * @throws java.io.IOException
+     */
+    public HashSet<String> get2011MSOACodes(String name) throws IOException {
+        c11LUTs = getC11LUTs();
+        if (c11LUTs.LADNAME2LADID.containsKey(name)) {
+            Census_2011_LADID ladid = c11LUTs.LADNAME2LADID.get(name);
+            HashSet<Census_MSOAID> s = c11LUTs.LADID2MSOAIDs.get(ladid);
+            HashSet<String> r = new HashSet<>();
+            de.env.log("There are " + s.size() 
+                    + " 2011 Middle Layer Super Output Areas in " 
+                    + name + " Local Authority District.");
+            Iterator<Census_MSOAID> ite = s.iterator();
+            while (ite.hasNext()) {
+                r.add(c11LUTs.MSOAID2MSOA.get(ite.next()));
+            }
+            return r;
+        } else {
+            throw new IOException("Local Authority District Name " + name
+                    + " not recognised.");
+        }
+    }
+
+    /**
+     * Provides all 2001 Output Area Codes in the 2011 Local Authority given by
+     * {@code name}.
+     *
+     * @param name 2011 Local Authority District Name
+     * @return A set of all 2001 Output Area Codes in the 2011 Local Authority
+     * given by {@code name}.
+     * @throws java.io.IOException
+     */
+    public HashSet<String> get2001OACodes(String name) throws IOException {
+        c01LUTs = getC01LUTs();
+        if (c01LUTs.LADNAME2LADID.containsKey(name)) {
+            Census_2011_LADID ladid = c01LUTs.LADNAME2LADID.get(name);
+            HashSet<Census_2001_OAID> s = c01LUTs.LADID2OAIDs.get(ladid);
+            HashSet<String> r = new HashSet<>();
+            de.env.log("There are " + s.size() + " 2001 Output Areas in " 
+                     + name + " Local Authority District.");
+            Iterator<Census_2001_OAID> ite = s.iterator();
+            while (ite.hasNext()) {
+                String oa = c01LUTs.OAID2OA.get(ite.next());
+                r.add(oa);
+            }
+            return r;
+        } else {
+            throw new IOException("Local Authority District Name " + name
+                    + " not recognised.");
+        }
+    }
+
+    /**
+     * Provides all 2001 Lower Layer Super Output Area Codes in the 2011 Local
+     * Authority given by {@code name}.
+     *
+     * @param name 2011 Local Authority District Name
+     * @return A set of all 2001 Lower Layer Super Output Area Codes in the 2011
+     * Local Authority given by {@code name}.
+     * @throws java.io.IOException
+     */
+    public HashSet<String> get2001LSOACodes(String name) throws IOException {
+        c01LUTs = getC01LUTs();
+        if (c01LUTs.LADNAME2LADID.containsKey(name)) {
+            Census_2011_LADID ladid = c01LUTs.LADNAME2LADID.get(name);
+            HashSet<Census_2001_LSOAID> s = c01LUTs.LADID2LSOAIDs.get(ladid);
+            HashSet<String> r = new HashSet<>();
+            de.env.log("There are " + s.size() 
+                    + " 2001 Lower Layer Super Output Areas in "
+                    + name + " Local Authority District.");
+            Iterator<Census_2001_LSOAID> ite = s.iterator();
+            while (ite.hasNext()) {
+                r.add(c01LUTs.LSOAID2LSOA.get(ite.next()));
+            }
+            return r;
+        } else {
+            throw new IOException("Local Authority District Name " + name
+                    + " not recognised.");
+        }
+    }
+    
+    /**
+     * Provides all 2001 Middle Layer Super Output Area Codes in the 2011 Local
+     * Authority given by {@code name}.
+     *
+     * @param name 2011 Local Authority District Name
+     * @return A set of all 2001 Lower Layer Super Output Area Codes in the 2011
+     * Local Authority given by {@code name}.
+     * @throws java.io.IOException
+     */
+    public HashSet<String> get2001MSOACodes(String name) throws IOException {
+        c01LUTs = getC01LUTs();
+        if (c01LUTs.LADNAME2LADID.containsKey(name)) {
+            Census_2011_LADID ladid = c01LUTs.LADNAME2LADID.get(name);
+            HashSet<Census_MSOAID> s = c01LUTs.LADID2MSOAIDs.get(ladid);
+            HashSet<String> r = new HashSet<>();
+            de.env.log("There are " + s.size() 
+                    + " 2001 Middle Layer Super Output Areas in "
+                    + name + " Local Authority District.");
+            Iterator<Census_MSOAID> ite = s.iterator();
+            while (ite.hasNext()) {
+                r.add(c01LUTs.MSOAID2MSOA.get(ite.next()));
+            }
+            return r;
+        } else {
+            throw new IOException("Local Authority District Name " + name
+                    + " not recognised.");
+        }
     }
 }
