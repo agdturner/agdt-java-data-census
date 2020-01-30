@@ -387,7 +387,7 @@ public class Census_HSARRecord extends Census_Record {
     @Override
     public String toString() {
         return super.toString()
-                + ", ID=" + ID
+                + ", id=" + id
                 + ", HHID=" + HHID
                 + ", ISCO3=" + ISCO3
                 + ", SOCMIN=" + SOCMIN
@@ -454,7 +454,7 @@ public class Census_HSARRecord extends Census_Record {
      */
     @Override
     public String toCSV() {
-        return super.toCSV() + "," + ID + "," + HHID + "," + ISCO3 + "," 
+        return super.toCSV() + "," + id + "," + HHID + "," + ISCO3 + "," 
                 + SOCMIN + "," + HEDISDON + "," + HRP + "," + SELFCONT + "," 
                 + SEX + "," + STUDENT + "," + ACCTYPE + "," + AGEH + "," 
                 + BATHWC + "," + CARSH + "," + CENHEAT0 + "," + COBIRT0 + "," 

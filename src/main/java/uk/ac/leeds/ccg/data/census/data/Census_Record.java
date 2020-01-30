@@ -38,6 +38,6 @@ public abstract class Census_Record extends Data_Record {
      */
     @Override
     public Census_RecordID getID() {
-        return (Census_RecordID) this.ID;
+        return (Census_RecordID) id;
     }
 }

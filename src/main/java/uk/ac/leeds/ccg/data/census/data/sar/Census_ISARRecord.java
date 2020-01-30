@@ -523,7 +523,7 @@ public class Census_ISARRecord extends Census_Record {
     @Override
     public String toString() {
         return super.toString()
-                + " ,ID=" + ID
+                + " ,id=" + id
                 + " ,PNUM=" + PNUM
                 + " ,SEX=" + SEX
                 + " ,STUDENT=" + STUDENT
